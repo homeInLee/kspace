@@ -1,0 +1,394 @@
+@charset "utf-8"; 
+/* * @ 초기화용 CSS * ------------------------------- */ 
+html, body, div, p, span, strong, b, em, iframe, pre, 
+h1, h2, h3, h4, h5, h6, img, dl, dt, dd, fieldset, form, legend, 
+label, table, caption, thead, tbody, tfoot, tr, th, td, 
+ul, ol, li, a, input, select, textarea {
+    margin: 0;
+    padding: 0; 
+    border: 0 none; 
+} 
+
+html {
+    width: 1024px;
+    height: 100%;
+    min-height: 768px;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+body {
+    height: 100%;
+    position: relative;
+    font-family: 'NanumBarunGothic', sans-serif;
+    font-size: 16px; 
+    line-height: 1.5;
+} 
+
+ul, ol, li {list-style: none;} 
+em, address {font-style: normal;} 
+img {border: 0 none; font-size: 0;line-height: 0;} 
+sup {position: relative;top: 2px;font-size: 11px;line-height: 100%;} 
+table {border-collapse: collapse; border-spacing:0; } 
+caption {overflow: hidden;width: 0;height: 0;font-size: 0; line-height: 0;} 
+th, td { vertical-align: middle;/* white-space: nowrap */} 
+a {color: #333; text-decoration: none; line-height: 1.5;} 
+a:hover, a:focus, a:active {text-decoration: none;} 
+a:visited {color: #333;} 
+*, html {box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; } 
+*, *:before, *:after {box-sizing: border-box;-webkit-box-sizing: border-box; -moz-box-sizing: border-box;}
+select:focus {outline: none;}
+/*
+출처: https://webclub.tistory.com/370 [Web Club]
+*/
+
+/*공통 css*/
+.clearfix {
+    overflow: hidden;
+}
+
+.fw600 {
+    font-weight: 600;
+}
+
+.fw500 {
+    font-weight: 500;
+}
+
+.fw400 {
+    font-weight: 400;
+}
+
+.fw300 {
+    font-weight: 300;
+}
+
+.dp_block {
+    display: block;
+}
+
+.dp_ib {
+    display: inline-block;
+}
+
+.dp_inline {
+    display: inline;
+}
+
+.txt_center {
+    text-align: center;
+}
+
+.txt_left {
+    text-align: left;
+}
+
+.txt_right {
+    text-align: right;
+}
+
+.w100 {
+    width: 100%;
+}
+
+.h100 {
+    height: 100%;
+}
+
+/*헤더*/
+#header {
+    position: relative;
+    padding: 20px;
+    background: #fff;
+    box-sizing: border-box;
+}
+
+#header::after {
+    content: '';
+    clear: both;
+    display: block;
+}
+
+#logo {
+    float: left;
+    font-size: 30px;
+}
+
+#logo span {
+    color: #FDBB00;
+}
+
+#search-area {
+    float: left;
+    width: 425px;
+    margin: 0 0 0 20px;
+    box-sizing: border-box;
+}
+
+#spaceSrch {
+    float: left;
+    display: block;
+    width: 380px;
+    height: 45px;
+    background: #FDBB00;
+    padding-left: 15px;
+    font-size: 15px;
+}
+
+#srchBtn {
+    float: right;
+    display: block;
+    width: 45px;
+    height: 45px;  
+    background: url("/space/images/search.png") no-repeat center center #FDBB00;
+    background-size: 28px;
+    font-size: 0;
+    cursor: pointer;
+}
+
+#spaceSrch:focus,
+#srchBtn:focus {
+    outline: none;
+}
+
+.go-space {
+    float: left;
+    font-size: 20px;
+    margin: 10px 0 0 230px;
+    box-sizing: border-box;
+}
+
+.menu-btn {
+    float: right;
+    width: 40px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.menu-btn p {
+    width: 35px;
+    height: 3px;
+    background:#3c3c3c;
+}
+
+.menu-btn p:nth-child(2) {
+    margin: 8px 0;
+}
+
+.tit {
+    padding-bottom: 30px;
+    font-size: 26px;
+    color: #000;
+    letter-spacing: -0.5px;
+}
+
+#dim-layer {
+    position: fixed;
+    top:0;
+    left: 0;
+    width: 1024px;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    z-index: 9;
+    display: none;
+}
+
+#nav_wrap {
+    position: fixed;
+    top: 0;
+    left: 1024px;
+    width: 360px;
+    height: 100%;
+    background: #f6f6f6;
+    z-index: 99;
+    transition: all .3s linear;
+}
+
+#nav_wrap > div {
+	max-height: 100%;
+    overflow-y: scroll;	
+}
+
+#nav-top {
+    position: relative;
+    padding: 30px 20px;
+    box-sizing: border-box;
+    background: #FDBB00;
+}
+
+#nav-top .menu-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+}
+
+.nav-ico {
+    float: left;
+    width: 100px;
+    height: 100px;
+    background: #fff;
+    border-radius: 50%;
+}
+
+#nav-top p {
+    float: left;
+    font-size: 20px;
+    padding: 37px 0 0 20px;
+    box-sizing: border-box;
+}
+
+#nav-top p a {
+    color: #F1685E;
+    font-weight: 600;
+}
+
+#nav-bottom > div a {
+    padding: 30px 5px 0;
+    color: #949494;
+}
+
+#nav-bottom p {
+    padding: 20px 0;
+    color: #949494;
+    font-size: 14px; 
+}
+
+#menu {
+    background: #fff;
+}
+
+#menu li a {
+    padding: 17px;
+    font-size: 17px;
+    border-bottom: 1px solid #ebebeb;
+    box-sizing: border-box;
+}
+
+#menu li:first-child a {
+    background: #ACC800;
+    color: #fff;
+}
+
+.sec > article {
+    width: 904px;
+    margin: auto;
+    padding: 60px 0;
+}
+
+.recom-space > li {
+    float: left;
+    width: 291.33px;
+    margin: 0 15px 15px 0;
+    background: #fff;
+    border: 1px solid #ebebeb;
+    box-sizing: border-box;
+}
+
+.recom-space > li:nth-child(3n) {
+    margin-right: 0;
+}
+
+.recom-tit {
+    font-size: 21px;
+    line-height: 23px;
+}
+
+.recom-space-conts {
+    padding: 15px;
+    border-top: 1px solid #ebebeb;
+    box-sizing: border-box;
+}
+
+.recom-space > li p.recom-cont {
+    font-size: 15px;
+    padding: 10px 0 3px;
+}
+
+.recom-price {
+    font-size: 15px;
+}
+
+.recom-price span {
+    font-size: 19px;
+    color: #F1685E;
+}
+
+.recom-space-img {
+    height: 170px;
+    overflow: hidden;
+}
+
+.recom-space-img img {
+    width: 100%;
+    height: 100%;
+    transition: transform .3s linear;
+    -webkit-transition: transform .3s linear;
+}
+
+.recom-space > li:hover img {
+    transform: scale(1.2);
+    -webkit-transform: scale(1.2);
+}
+
+#footer {
+    background: #ebebeb;
+    box-sizing: border-box;
+}
+
+#footer article {
+    width: 904px;
+    margin: auto;
+    padding: 40px 0;
+}
+
+#f_logo {
+    font-size: 24px;
+    line-height: 24px;
+}
+
+#f_logo span {
+    color: #FDBB00;
+}
+
+.f_info {
+    padding: 15px 0;
+    font-size: 14px;
+    color: #656565;
+    line-height: 22px;
+}
+
+#footer article > div p {
+    font-size: 13px;
+    color: #9e9e99;
+}
+
+#footer article > div p.f_info2 {
+    float: left;
+}
+
+#footer article > div p.cop {
+    float: right;
+    padding-top: 20px;
+}
+
+/*서브페이지*/
+.subPage {
+    padding: 60px 0;
+    background: #f6f6f6;
+    box-sizing: border-box;
+}
+
+.spacePage {
+    position: relative;
+    padding: 60px 0;
+    border-bottom: 1px solid #ebebeb;
+    box-sizing: border-box;
+}
+
+.subPage > article,
+.spacePage > article,
+.srchFilter-wrap > div {
+    width: 904px;
+    margin: auto;
+}

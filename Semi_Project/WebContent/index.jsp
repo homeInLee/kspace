@@ -1,49 +1,225 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>주소로 장소 표시하기</title>
-<script src="<%=request.getContextPath()%>/js/jquery-3.4.1.js"></script>
-</head>
-<body>
-	<div id="map" style="width: 600px; height: 350px;"></div>
-	<br>
-	<button><a id="searchMap" href="">길찾기</a></button>
-	<script type="text/javascript"
-		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=17a175acb43ce7feb97791cd23eb85e7&libraries=services"></script>
-	<script>
-var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-    mapOption = {
-        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-        level: 3 // 지도의 확대 레벨
-    };  
-// 지도를 생성합니다    
-var map = new kakao.maps.Map(mapContainer, mapOption);
-// 주소-좌표 변환 객체를 생성합니다
-var geocoder = new kakao.maps.services.Geocoder();
-// 주소로 좌표를 검색합니다
-geocoder.addressSearch('서울특별시 강남구 강남구 테헤란로14길 6', function(result, status) {
-    // 정상적으로 검색이 완료됐으면
-     if (status === kakao.maps.services.Status.OK) {
-        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-        // 결과값으로 받은 위치를 마커로 표시합니다
-        var marker = new kakao.maps.Marker({
-            map: map,
-            position: coords
-        });
-        // 인포윈도우로 장소에 대한 설명을 표시합니다
-        var infowindow = new kakao.maps.InfoWindow({
-            content: '<div style="width:150px;text-align:center;padding:6px 0;">kh정보교육원</div>'
-        });
-        infowindow.open(map, marker);
-        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-        map.setCenter(coords);
-        console.log(coords)
-        $("#searchMap").attr("href", "https://map.kakao.com/link/to/kh정보교육원,"+coords.Ha+","+coords.Ga);
-    } 
-});    
-</script>
-</body>
-</html>
+    pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
+    <div id="main_container">
+        <section id="main-sec1">
+            <div id="main-banner-wrap" class="clearfix">
+                <div class="main-banner"><img src="<%=request.getContextPath() %>/images/example2.jpeg" alt=""></div>
+                <div class="main-banner"><img src="<%=request.getContextPath() %>/images/example2.jpeg" alt=""></div>
+                <div class="main-banner"><img src="<%=request.getContextPath() %>/images/example2.jpeg" alt=""></div>
+            </div>
+        </section>
+        <section id="main-sec2" class="sec">
+            <article>
+                <h3 class="tit txt_center">유형으로 검색하기</h3>
+                <ul class="space-type clearfix">
+                    <li><a href="" class="dp_block">스터디룸</a></li>
+                    <li><a href="" class="dp_block">공연장</a></li>
+                    <li><a href="" class="dp_block">세미나실</a></li>
+                    <li><a href="" class="dp_block">파티룸</a></li>
+                    <li><a href="" class="dp_block">카페</a></li>
+                    <li><a href="" class="dp_block">기타</a></li>
+                </ul>
+            </article>
+            <article>
+                <h3 class="tit txt_center">에디터 추천 공간</h3>
+                <ul class="recom-space clearfix">
+                    <li>
+                        <a href="" class="dp_block">
+                            <div class="recom-space-img"><img src="<%=request.getContextPath() %>/images/example.jpeg" alt="이미지영역" class="dp_block"></div>
+                            <div class="recom-space-conts">
+                                <h4 class="recom-tit">제목</h4>
+                                <p class="recom-cont">
+                                    <span class="dp_ib fw600">위치 |</span>
+                                    <span class="dp_ib">해시태그</span>
+                                </p>
+                                <p class="recom-price">
+                                    <span class="fw600">가격</span>원/시간
+                                </p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" class="dp_block">
+                            <div class="recom-space-img"><img src="<%=request.getContextPath() %>/images/example.jpeg" alt="이미지영역" class="dp_block"></div>
+                            <div class="recom-space-conts">
+                                <h4 class="recom-tit">제목</h4>
+                                <p class="recom-cont">
+                                    <span class="dp_ib fw600">위치 |</span>
+                                    <span class="dp_ib">해시태그</span>
+                                </p>
+                                <p class="recom-price">
+                                    <span class="fw600">가격</span>원/시간
+                                </p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" class="dp_block">
+                            <div class="recom-space-img"><img src="<%=request.getContextPath() %>/images/example.jpeg" alt="이미지영역" class="dp_block"></div>
+                            <div class="recom-space-conts">
+                                <h4 class="recom-tit">제목</h4>
+                                <p class="recom-cont">
+                                    <span class="dp_ib fw600">위치 |</span>
+                                    <span class="dp_ib">해시태그</span>
+                                </p>
+                                <p class="recom-price">
+                                    <span class="fw600">가격</span>원/시간
+                                </p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" class="dp_block">
+                            <div class="recom-space-img"><img src="<%=request.getContextPath() %>/images/example.jpeg" alt="이미지영역" class="dp_block"></div>
+                            <div class="recom-space-conts">
+                                <h4 class="recom-tit">제목</h4>
+                                <p class="recom-cont">
+                                    <span class="dp_ib fw600">위치 |</span>
+                                    <span class="dp_ib">해시태그</span>
+                                </p>
+                                <p class="recom-price">
+                                    <span class="fw600">가격</span>원/시간
+                                </p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" class="dp_block">
+                            <div class="recom-space-img"><img src="<%=request.getContextPath() %>/images/example.jpeg" alt="이미지영역" class="dp_block"></div>
+                            <div class="recom-space-conts">
+                                <h4 class="recom-tit">제목</h4>
+                                <p class="recom-cont">
+                                    <span class="dp_ib fw600">위치 |</span>
+                                    <span class="dp_ib">해시태그</span>
+                                </p>
+                                <p class="recom-price">
+                                    <span class="fw600">가격</span>원/시간
+                                </p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" class="dp_block">
+                            <div class="recom-space-img"><img src="<%=request.getContextPath() %>/images/example.jpeg" alt="이미지영역" class="dp_block"></div>
+                            <div class="recom-space-conts">
+                                <h4 class="recom-tit">제목</h4>
+                                <p class="recom-cont">
+                                    <span class="dp_ib fw600">위치 |</span>
+                                    <span class="dp_ib">해시태그</span>
+                                </p>
+                                <p class="recom-price">
+                                    <span class="fw600">가격</span>원/시간
+                                </p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </article>
+        </section>
+        <section id="main-sec3" class="sec">
+            <article>
+                <h3 class="tit txt_center">회원 추천 공간</h3>
+                <ul class="member-recom-wrap clearfix">
+                    <li>
+                        <a href="" class="dp_block">
+                            <div class="recom-space-img"><img src="<%=request.getContextPath() %>/images/example3.jpeg" alt="이미지영역" class="dp_block"></div>
+                            <div class="member-recom-conts">
+                                <p class="hashTag">
+                                    <span class="dp_ib">해시태그1</span>
+                                    <span class="dp_ib">해시태그2</span>
+                                    <span class="dp_ib">해시태그3</span>
+                                </p>
+                                <h4 class="recom-tit">제목</h4>
+                                <p class="recom-price"><span class="fw600">가격</span>원/시간</p>
+                                <p class="star">★★★★★</p>
+                                <p class="member-conts">댓글 내용</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" class="dp_block">
+                            <div class="recom-space-img"><img src="<%=request.getContextPath() %>/images/example3.jpeg" alt="이미지영역" class="dp_block"></div>
+                            <div class="member-recom-conts">
+                                <p class="hashTag">
+                                    <span class="dp_ib">해시태그1</span>
+                                    <span class="dp_ib">해시태그2</span>
+                                    <span class="dp_ib">해시태그3</span>
+                                </p>
+                                <h4 class="recom-tit">제목</h4>
+                                <p class="recom-price"><span class="fw600">가격</span>원/시간</p>
+                                <p class="star">★★★★★</p>
+                                <p class="member-conts">댓글 내용</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" class="dp_block">
+                            <div class="recom-space-img"><img src="<%=request.getContextPath() %>/images/example3.jpeg" alt="이미지영역" class="dp_block"></div>
+                            <div class="member-recom-conts">
+                                <p class="hashTag">
+                                    <span class="dp_ib">해시태그1</span>
+                                    <span class="dp_ib">해시태그2</span>
+                                    <span class="dp_ib">해시태그3</span>
+                                </p>
+                                <h4 class="recom-tit">제목</h4>
+                                <p class="recom-price"><span class="fw600">가격</span>원/시간</p>
+                                <p class="star">★★★★★</p>
+                                <p class="member-conts">댓글 내용</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" class="dp_block">
+                            <div class="recom-space-img"><img src="<%=request.getContextPath() %>/images/example3.jpeg" alt="이미지영역" class="dp_block"></div>
+                            <div class="member-recom-conts">
+                                <p class="hashTag">
+                                    <span class="dp_ib">해시태그1</span>
+                                    <span class="dp_ib">해시태그2</span>
+                                    <span class="dp_ib">해시태그3</span>
+                                </p>
+                                <h4 class="recom-tit">제목</h4>
+                                <p class="recom-price"><span class="fw600">가격</span>원/시간</p>
+                                <p class="star">★★★★★</p>
+                                <p class="member-conts">댓글 내용</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" class="dp_block">
+                            <div class="recom-space-img"><img src="<%=request.getContextPath() %>/images/example3.jpeg" alt="이미지영역" class="dp_block"></div>
+                            <div class="member-recom-conts">
+                                <p class="hashTag">
+                                    <span class="dp_ib">해시태그1</span>
+                                    <span class="dp_ib">해시태그2</span>
+                                    <span class="dp_ib">해시태그3</span>
+                                </p>
+                                <h4 class="recom-tit">제목</h4>
+                                <p class="recom-price"><span class="fw600">가격</span>원/시간</p>
+                                <p class="star">★★★★★</p>
+                                <p class="member-conts">댓글 내용</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="" class="dp_block">
+                            <div class="recom-space-img"><img src="<%=request.getContextPath() %>/images/example3.jpeg" alt="이미지영역" class="dp_block"></div>
+                            <div class="member-recom-conts">
+                                <p class="hashTag">
+                                    <span class="dp_ib">해시태그1</span>
+                                    <span class="dp_ib">해시태그2</span>
+                                    <span class="dp_ib">해시태그3</span>
+                                </p>
+                                <h4 class="recom-tit">제목</h4>
+                                <p class="recom-price"><span class="fw600">가격</span>원/시간</p>
+                                <p class="star">★★★★★</p>
+                                <p class="member-conts">댓글 내용</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </article>
+        </section>
+    </div>
+
+<%@ include file="/WEB-INF/views/common/footer.jsp" %>
