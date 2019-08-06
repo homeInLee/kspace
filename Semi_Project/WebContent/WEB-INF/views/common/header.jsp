@@ -19,7 +19,7 @@
 <body>
     <header id="header">
         <h1 id="logo">
-            <a href="index.html" class="dp_block fw700"><span>KH</span> Space</a>
+            <a href="<%=request.getContextPath() %>" class="dp_block fw700"><span>KH</span> Space</a>
         </h1>
         <div id="search-area">
             <form action="" method="get" name="spaceSearchFrm"  class="dp_block clearfix">

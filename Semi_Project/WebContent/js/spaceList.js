@@ -64,20 +64,32 @@ $(document).ready(function(){
     }
 
     document.addEventListener("click", closeAllSelect);
-
+    
+    $(".noFilter a").click(function(e){
+    	e.preventDefault();
+    	$(".srchFilter-wrap").fadeToggle(300);
+    });
+    
     $("input[name=chkAll]").click(function(){
-        if($("input[name=chkAll]").prop("checked")){
-            $(".facility-list input[name=facility]").attr("checked", true);
-        } else {
-            $(".facility-list input[name=facility]").attr("checked", false);
-        }
+    	var chk = $(this).prop("checked");
+    	for(var i=0; i<8; i++){
+    		$("#facility"+i).prop("checked", chk);
+    	}
     });
 
-    $("input[name=chkTotal]").click(function(){
-        if($("input[name=chkAll]").prop("disabled")){
-            $("#srchPrice1, #srchPrice2").attr("disabled", "true");
+    $(".facility-list input[name=facility]").change(function(){
+        if($(".facility-list input[name=facility]:checked").length==8) {
+        	$("input[name=chkAll]").prop("checked", true);
+         } else {
+        	 $("input[name=chkAll]").prop("checked", false);
+         }
+    });
+    
+    $("input[name=chkTotal]").change(function(){
+        if($("#srchPrice1, #srchPrice2").attr("disabled") != "disabled"){
+        	$("#srchPrice1, #srchPrice2").attr("disabled", true);
         } else {
-            $("#srchPrice1, #srchPrice2").attr("disabled", "false");
+        	$("#srchPrice1, #srchPrice2").attr("disabled", false);
         }
     });
 });

@@ -107,6 +107,7 @@
     font-size: 15px;
     color: #333;
     z-index: 1;
+    display: none;
 }
 
 .srchFilter-wrap h4 span {
