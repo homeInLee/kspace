@@ -14,11 +14,15 @@ public class Space implements Serializable {
 	private String spaceThema;
 	private String spaceCheck;
 	private String hashtag;
+	private String spaceName;
+	private String spaceFacilities;
+	private String spaceSlogan;
 	
 	public Space() {}
 
 	public Space(int spaceNo, String spaceIntro, String bookingTime, int maxBookingPeople, int minBookingPeople,
-			String spaceThema, String spaceCheck, String hashtag) {
+			String spaceThema, String spaceCheck, String hashtag, String spaceName, String spaceFacilities,
+			String spaceSlogan) {
 		super();
 		this.spaceNo = spaceNo;
 		this.spaceIntro = spaceIntro;
@@ -28,6 +32,9 @@ public class Space implements Serializable {
 		this.spaceThema = spaceThema;
 		this.spaceCheck = spaceCheck;
 		this.hashtag = hashtag;
+		this.spaceName = spaceName;
+		this.spaceFacilities = spaceFacilities;
+		this.spaceSlogan = spaceSlogan;
 	}
 
 	public int getSpaceNo() {
@@ -96,6 +103,30 @@ public class Space implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public String getSpaceName() {
+		return spaceName;
+	}
+
+	public void setSpaceName(String spaceName) {
+		this.spaceName = spaceName;
+	}
+
+	public String getSpaceFacilities() {
+		return spaceFacilities;
+	}
+
+	public void setSpaceFacilities(String spaceFacilities) {
+		this.spaceFacilities = spaceFacilities;
+	}
+
+	public String getSpaceSlogan() {
+		return spaceSlogan;
+	}
+
+	public void setSpaceSlogan(String spaceSlogan) {
+		this.spaceSlogan = spaceSlogan;
 	}
 
 	@Override
