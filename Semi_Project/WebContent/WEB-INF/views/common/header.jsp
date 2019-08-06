@@ -27,7 +27,7 @@
                 <input type="submit" id="srchBtn" value="검색">
             </form>
         </div>
-        <a href="" class="go-space dp_block">공간 등록하기</a>
+        <a href="<%=request.getContextPath() %>/host/spaceEnroll" class="go-space dp_block">공간 등록하기</a>
         <div class="menu-btn clearfix">
             <p></p>
             <p></p>

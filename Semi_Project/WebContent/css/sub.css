@@ -135,6 +135,7 @@
     border-right: 0;
     font-size: 17px;
     color: #656565;
+    background: #fff;
     box-sizing: border-box;
 }
 
@@ -298,4 +299,65 @@
 
 .filter-btn button[type=submit] {
     background: #ACC800;
+}
+
+.space-list li {
+    width: 301px;
+    border-bottom: 0;
+    border-right: 0;
+}
+
+.space-list li:nth-child(3n) {
+    border-right: 1px solid #ccc;
+}
+
+.space-list li:nth-child(4n) {
+    border-right: 0;
+}
+
+.space-list li:nth-child(4),
+.space-list li:nth-child(5),
+.space-list li:last-child {
+    border-bottom: 1px solid #ccc;
+}
+
+.filebox input[type="file"] { 
+	position: absolute; 
+	width: 1px; 
+	height: 1px; 
+	padding: 0; 
+	margin: -1px; 
+	overflow: hidden; 
+	clip:rect(0,0,0,0); 
+	border: 0; 
+} 
+
+.filebox label { 
+	display: inline-block; 
+	padding: .5em .75em; 
+	color: #999; 
+	font-size: inherit; 
+	line-height: normal; 
+	vertical-align: middle; 
+	background-color: #fdfdfd; 
+	cursor: pointer; 
+	border: 1px solid #ebebeb; 
+	border-bottom-color: #e2e2e2; 
+	border-radius: .25em; 
+} /* named upload */ 
+
+.filebox .upload-name { 
+	display: inline-block; 
+	padding: .5em .75em; /* label의 패딩값과 일치 */ 
+	font-size: inherit; 
+	font-family: inherit; 
+	line-height: normal; 
+	vertical-align: middle; 
+	background-color: #f5f5f5; 
+	border: 1px solid #ebebeb; 
+	border-bottom-color: #e2e2e2; 
+	border-radius: .25em; 
+	-webkit-appearance: none; /* 네이티브 외형 감추기 */ 
+	-moz-appearance: none; 
+	appearance: none; 
 }
