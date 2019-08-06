@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/sub.css" />
+<script src="<%=request.getContextPath()%>/js/spaceList.js"></script>
 
 <div class="sub_container">
     <section class="spacePage">
