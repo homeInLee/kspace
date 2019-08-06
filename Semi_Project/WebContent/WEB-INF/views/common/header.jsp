@@ -19,7 +19,7 @@
 <body>
     <header id="header">
         <h1 id="logo">
-            <a href="index.html" class="dp_block fw700"><span>KH</span> Space</a>
+            <a href="<%=request.getContextPath() %>" class="dp_block fw700"><span>KH</span> Space</a>
         </h1>
         <div id="search-area">
             <form action="" method="get" name="spaceSearchFrm"  class="dp_block clearfix">
@@ -27,7 +27,7 @@
                 <input type="submit" id="srchBtn" value="검색">
             </form>
         </div>
-        <a href="" class="go-space dp_block">공간 등록하기</a>
+        <a href="<%=request.getContextPath() %>/host/spaceEnroll" class="go-space dp_block">공간 등록하기</a>
         <div class="menu-btn clearfix">
             <p></p>
             <p></p>
