@@ -14,8 +14,13 @@
                         <p>공간 유형</p>
                         <div class="custom-select">
                             <select name="spaceType" id="spaceType">
-                                <option value="1">공간 유형1</option>
-                                <option value="2">공간 유형2</option>
+                            	<option value="spaceTypeTotal">전체</option>
+                                <option value="studyroom">스터디룸</option>
+                                <option value="concertHall">공연장</option>
+                                <option value="seminar">세미나실</option>
+                                <option value="partyroom">파티룸</option>
+                                <option value="cafe">카페</option>
+                                <option value="etc">기타</option>
                             </select>
                         </div>
                     </div>
@@ -23,6 +28,7 @@
                         <p>지역</p>
                         <div class="custom-select">
                             <select name="spaceArea" id="spaceArea"  class="dp_block">
+                            	<option value="spaceAreaTotal">전체</option>
                                 <option value="1">지역 1</option>
                                 <option value="2">지역 2</option>
                             </select>

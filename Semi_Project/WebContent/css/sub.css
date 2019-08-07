@@ -25,6 +25,10 @@
     color: #333;
 }
 
+.noFilter p {
+	padding-bottom:8px;
+}
+
 .noFilter a {
     width: 110px;
     height: 45px;
@@ -261,6 +265,18 @@
     color: #656565;
 }
 
+.bookingsrchPrice {
+	width: 183px !important;
+}
+
+.bookingsrchPrice input {
+	width:180px !important;
+}
+
+.bookingsrchPrice:after {
+    content: '명';
+}
+
 .srchPrice input {
     width: 283px;
     height: 43px;
@@ -378,4 +394,223 @@
 	background: #fff;
 	border: 1px solid #ccc;
 	box-sizing: border-box;
+}
+
+.spaceEnrollPrice {
+    position: relative;
+    width: 285px;
+    height: 45px;
+    line-height: 45px;
+    margin-bottom: 40px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.spaceEnrollPrice:after {
+    content: '원';
+    display: block;
+    position: absolute;
+    right: 15px;
+    top: 0;
+    font-weight: 600;
+    font-size: 17px;
+    color: #656565;
+}
+
+.spaceEnrollPrice input {
+    width: 283px;
+    height: 43px;
+    line-height: 43px;
+    text-align: right;  
+    padding-right: 40px;
+    font-weight: 600;
+    box-sizing: border-box;
+    font-size: 17px;
+    color: #656565;
+}
+
+.spaceEnroll > div:after {
+	content: '';
+	display: block;
+	clear: both;
+}
+
+.spaceEnroll > div .custom-select {
+	float: left;
+    width: 301px;
+}
+
+.spaceEnroll .select-items {
+	overflow: hidden;
+	overflow-y: scroll;
+	height: 250px;
+	border-right: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	box-sizing: border-box;
+}
+
+.enrollDayOff ul li {
+	float:left; 
+	width: 180.8px;
+	padding: 0 0 10px 0;
+}
+
+.enrollDayOff ul li.etcDayOff {
+	width: 375px;
+}
+
+.enrollDayOff ul li.etcDayOff label {
+	float: left;
+}
+
+.enrollDayOff ul li.etcDayOff input[name=spaceEnrollDayOffETC] {
+	float: right;
+	width: 300px;
+	height: 42px;
+	line-height: 42px;
+	border: 1px solid #ccc;
+	box-sizing:border-box;
+	padding: 0 0 0 10px;
+	font-size:16px;
+}
+
+.enrollDayOff input[type="checkbox"] { 
+    position: absolute; 
+    width: 1px; 
+    height: 1px; 
+    padding: 0; 
+    margin: -1px; 
+    overflow: hidden; 
+    clip:rect(0,0,0,0); 
+    border: 0 
+} 
+
+.enrollDayOff input[type="checkbox"] + label { 
+    display: block; 
+    position: relative;
+    padding: 9px 0 9px 30px;
+    cursor: pointer; 
+    -webkit-user-select: none; 
+    -moz-user-select: none; 
+    -ms-user-select: none; 
+} 
+
+.enrollDayOff input[type="checkbox"] + label:before { 
+    content: '\2714'; 
+    position: absolute;
+    top: 10px;
+    left: 0; 
+    display: block; 
+    width: 21px; 
+    height: 21px; 
+    line-height: 21px; 
+    background: #fff;
+    text-align: center;
+    color: #ccc;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.enrollDayOff input[type="checkbox"] + label:active:before, 
+.enrollDayOff input[type="checkbox"]:checked + label:active:before { 
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1); 
+} 
+
+.enrollDayOff input[type="checkbox"]:checked + label:before { 
+    content: '\2714'; 
+    color: #ACC800; 
+    border: 1px solid #ACC800;
+}
+
+.spaceEnrollTit {
+	margin-bottom: 10px;
+	border-bottom: 5px solid #ACC800;
+	box-sizing: border-box;
+}
+
+.spaceEnroll {
+	color:#656565;
+}
+
+.spaceEnrollTit .req {
+	float: right;
+	padding-top: 10px;
+}
+
+.spaceEnrollTit .tit {
+	float: left;
+	padding-bottom:6px;
+}
+
+.spaceEnroll h4 {
+	font-size: 18px;
+	padding: 30px 0 0;
+	color:#000;
+}
+
+.spaceEnroll form > div > p,
+.spaceEnroll form > p,
+.spaceEnroll form h5 {
+	padding-bottom: 15px;
+	font-size: 15px;
+	color: #656565;
+}
+
+.inputStyle {
+	width:904px;
+	height:43px;
+	line-height: 43px;
+	font-size: 16px;
+	padding: 0 0 0 10px;
+	border:1px solid #ccc;
+	box-sizing:border-box;
+}
+
+.spaceEnrollEvent {
+	padding:10px 0 0;
+}
+
+.spaceEnroll textarea {
+	width:904px;
+	height:150px;
+	padding: 10px;
+	border:1px solid #ccc;
+	box-sizing:border-box;
+}
+
+.spaceEnroll input[type=number],
+.spaceEnrollEvent input[name=spaceEnrollAlwaysEventDate],
+.spaceEnrollEvent input[name=spaceEnrollNotAlwaysEventDate],
+.eventInput {
+	height:43px;
+	line-height: 43px;
+	padding: 0 0 0 10px;
+	border:1px solid #ccc;
+	box-sizing:border-box;
+	font-size: 16px;
+}
+
+.spaceEnrollEvent label,
+.spaceEnrollEvent input[name=spaceEnrollAlwaysEventDate],
+.spaceEnrollEvent input[name=spaceEnrollNotAlwaysEventDate],
+.spaceEnrollEvent > div {
+	float: left;
+}
+
+.spaceEnrollEvent .custom-select,
+.spaceEnrollEvent .select-items,
+.spaceEnrollEvent .select-items div, 
+.spaceEnrollEvent .select-selected {
+	width: 200px !important;
+}
+
+.spaceEnrollEvent .custom-select,
+.spaceEnrollEvent input[name=spaceEnrollAlwaysEventDate],
+.spaceEnrollEvent input[name=spaceEnrollNotAlwaysEventDate],
+.spaceEnrollEvent input[name=spaceEnrollNotAlwaysEventDateYear] {
+	margin-left: 30px;
+}
+
+.spaceEnrollEvent input[name=spaceEnrollAlwaysEventDate] {
+	width: 539px;
 }

@@ -16,6 +16,7 @@ $(document).ready(function(){
         autoplaySpeed: 3000,
         slidesToShow: 1,
         slidesToScroll: 1,
-        arrows: false
+        prevArrow: '#main-banner-container .prev',
+        nextArrow: '#main-banner-container .next',
     });
 });

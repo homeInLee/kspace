@@ -37,7 +37,8 @@ a:hover, a:focus, a:active {text-decoration: none;}
 a:visited {color: #333;} 
 *, html {box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; } 
 *, *:before, *:after {box-sizing: border-box;-webkit-box-sizing: border-box; -moz-box-sizing: border-box;}
-select:focus {outline: none;}
+*:focus {outline: none;}
+textarea {resize: none;}
 /*
 출처: https://webclub.tistory.com/370 [Web Club]
 */
@@ -68,7 +69,7 @@ select:focus {outline: none;}
 }
 
 .dp_ib {
-    display: inline-block;
+    display: inline-block !important;
 }
 
 .dp_inline {
@@ -391,4 +392,12 @@ select:focus {outline: none;}
 .srchFilter-wrap > div {
     width: 904px;
     margin: auto;
+}
+
+.req {
+	color: #F1685E;
+}
+
+.greenColor {
+	color: #ACC800;
 }
