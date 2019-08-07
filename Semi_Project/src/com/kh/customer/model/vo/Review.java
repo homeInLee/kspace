@@ -1,4 +1,4 @@
-package com.kh.customer.model.dao;
+package com.kh.customer.model.vo;
 
 import java.io.Serializable;
 import java.util.Date;

@@ -5,6 +5,26 @@
     background: #000;
 }
 
+#main-banner-container {
+	position:relative;
+}
+
+#main-banner-container .prev {
+	position:absolute;
+	top: 50%;
+	left: 20px;
+	transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
+}
+
+#main-banner-container .next {
+	position:absolute;
+	top: 50%;
+	right: 20px;
+	transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
+}
+
 #main-banner-wrap .main-banner {
     float: left;
 }
