@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+<%@ page import="java.util.*, com.kh.admin.banner.model.vo.*, com.kh.admin.banner.model.service.*" %>
+<%
+	List<Banner> list = new BannerService().selectAllBanner();
+%>
     <div id="main_container">
         <section id="main-sec1">
         	<div id="main-banner-container">
@@ -8,6 +12,12 @@
 	                <div class="main-banner"><img src="<%=request.getContextPath() %>/images/example2.jpeg" alt=""></div>
 	                <div class="main-banner"><img src="<%=request.getContextPath() %>/images/example2.jpeg" alt=""></div>
 	                <div class="main-banner"><img src="<%=request.getContextPath() %>/images/example2.jpeg" alt=""></div>
+	                <%if(!list.isEmpty()) { %>
+					<% for(Banner b : list) { %>
+					<div class="main-banner">
+						<img src="<%=request.getContextPath() %>/upload/banner/<%=b.getBannerRenamedFileName() %>" alt="" />
+					</div>
+					<% }} %>
 	            </div>
         		<div class="prev"><img src="<%=request.getContextPath() %>/images/prev-arrow.png" alt="이전" width="45" /></div>
             	<div class="next"><img src="<%=request.getContextPath() %>/images/next-arrow.png" alt="다음" width="45" /></div>

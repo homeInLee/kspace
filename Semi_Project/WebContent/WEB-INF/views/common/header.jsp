@@ -52,6 +52,7 @@
 	                <li><a href="<%=request.getContextPath() %>/customer/spaceList" class="dp_block">전체 공간보기</a></li>
 	                <li><a href="" class="dp_block">추천 공간</a></li>
 	                <li><a href="" class="dp_block">공지사항</a></li>
+	                <li><a href="<%=request.getContextPath()%>/banner/information" class="dp_block">배너 등록</a></li>
 	            </ul>
 	        </nav>
 	        <div id="nav-bottom" class="txt_center">

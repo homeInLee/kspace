@@ -1,4 +1,4 @@
-package com.kh.admin.model.vo;
+package com.kh.admin.banner.model.vo;
 
 import java.io.Serializable;
 
