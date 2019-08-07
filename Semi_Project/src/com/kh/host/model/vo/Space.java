@@ -1,4 +1,4 @@
-package com.kh.host.model.dao;
+package com.kh.host.model.vo;
 
 import java.io.Serializable;
 

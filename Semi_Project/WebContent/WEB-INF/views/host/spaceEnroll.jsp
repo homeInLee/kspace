@@ -82,6 +82,11 @@
             				최대 : <input type="number" name="maxBookingPeople" class="dp_block" required id="maxBookingPeople" />
             			</td>
             		</tr>
+            		<!-- 
+            		   booking_time varchar2(50),--예약가능시간 : 달력 api
+					   hashtag varchar2(200) default null, --해시태그
+					   space_facilities varchar2(150),--편의시설
+					-->
             		<tr>
             			<th></th>
             			<td></td>
