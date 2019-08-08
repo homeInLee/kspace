@@ -17,9 +17,9 @@ public class SpaceService {
 		close(conn);
 		return list;
 	}
-	public Space spaceSelectOne(int spaceNo) {
+	public Space spaceSelectOneBySpaceNo(int spaceNo) {
 		Connection conn = getConnection();
-		Space s = new SpaceDAO().spaceSelectOne(conn, spaceNo);
+		Space s = new SpaceDAO().spaceSelectOneBySpaceNo(conn, spaceNo);
 		close(conn);
 		return s;
 	}

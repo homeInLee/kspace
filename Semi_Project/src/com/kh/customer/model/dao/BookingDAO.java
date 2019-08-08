@@ -32,7 +32,7 @@ public class BookingDAO {
 			e.printStackTrace();
 		}
 	}
-	public List<Booking> myBookingList(Connection conn, String userId) {
+	public List<Booking> myBookingListById(Connection conn, String userId) {
 		List<Booking> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -65,11 +65,11 @@ public class BookingDAO {
 		return list;
 	}
 	
-	public Booking bookingSelectOne(Connection conn, int bookingNo) {
+	public Booking bookingSelectOneByNo(Connection conn, int bookingNo) {
 		Booking b = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String sql = prop.getProperty("bookingSelectOne");
+		String sql = prop.getProperty("bookingSelectOneByNo");
 		try {
 			//1.PrepareStatement준비(미완성쿼리 완성)
 			pstmt = conn.prepareStatement(sql);

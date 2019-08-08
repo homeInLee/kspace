@@ -61,11 +61,11 @@ public class SpaceDAO {
 		
 		return nameList;
 	}
-	public Space spaceSelectOne(Connection conn, int spaceNo) {
+	public Space spaceSelectOneBySpaceNo(Connection conn, int spaceNo) {
 		Space s = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String sql = prop.getProperty("spaceSelectOne");
+		String sql = prop.getProperty("spaceSelectOneBySpaceNo");
 		try {
 			//1.PrepareStatement준비(미완성쿼리 완성)
 			pstmt = conn.prepareStatement(sql);

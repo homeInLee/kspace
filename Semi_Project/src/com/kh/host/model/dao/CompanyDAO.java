@@ -9,17 +9,18 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
 import com.kh.customer.model.dao.BookingDAO;
-import com.kh.host.model.vo.SpacePrice;
+import com.kh.customer.model.vo.Booking;
+import com.kh.host.model.vo.Company;
 
-public class SpacePriceDAO {
+public class CompanyDAO {
+
 	private Properties prop = new Properties();
-	public SpacePriceDAO() {
-		String fileName = SpacePriceDAO.class.getResource("/sql/host/host-query.properties").getPath();
+	
+	public CompanyDAO() {
+		String fileName = BookingDAO.class.getResource("/sql/host/host-query.properties").getPath();
 		try {
 			prop.load(new FileReader(fileName));
 			System.out.println("[[prop loading 완료:"+fileName+"]]");
@@ -29,24 +30,28 @@ public class SpacePriceDAO {
 			e.printStackTrace();
 		}
 	}
-	public List<SpacePrice> priceListBySpaceNo(Connection conn, int spaceNo) {
-		List<SpacePrice> pricelist = new ArrayList<>();
+	public Company CompanySelectOneByCompanyNo(Connection conn, int companyNo) {
+		Company c = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String sql = prop.getProperty("priceListBySpaceNo");
+		String sql = prop.getProperty("CompanySelectOneByCompanyNo");
 		try {
 			//1.PrepareStatement준비(미완성쿼리 완성)
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, spaceNo);
+			pstmt.setInt(1, companyNo);
 			//2.실행 및 ResultSet 리턴받기
 			rset = pstmt.executeQuery();
 			//3.ResultSet -> result
-			while(rset.next()) {
-				SpacePrice s = new SpacePrice();
-				s.setSpaceNo(rset.getInt("space_no"));
-				s.setPriceEvent(rset.getString("price_event"));
-				s.setSpacePrice(rset.getInt("space_price"));
-				pricelist.add(s);
+			if(rset.next()) {
+				c = new Company();
+				c.setCompanyNo(rset.getInt("company_no"));
+				c.setCompanyName(rset.getString("company_name"));
+				c.setCompanyPlace(rset.getString("company_place"));
+				c.setCompanyPointGa(rset.getInt("company_point_ga"));
+				c.setCompanyPointHa(rset.getInt("company_point_ha"));
+				c.setUserId(rset.getString("user_id"));
+				c.setDelType(rset.getString("del_type"));
+				c.setDelDate(rset.getDate("del_date"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -55,6 +60,7 @@ public class SpacePriceDAO {
 			close(pstmt);
 		}
 		
-		return pricelist;
+		return c;
 	}
+
 }

@@ -10,9 +10,9 @@ import com.kh.host.model.dao.SpacePriceDAO;
 import com.kh.host.model.vo.SpacePrice;
 
 public class SpacePriceService {
-	public List<SpacePrice> priceList(int spaceNo) {
+	public List<SpacePrice> priceListBySpaceNo(int spaceNo) {
 		Connection conn = getConnection();
-		List<SpacePrice> pricelist = new SpacePriceDAO().pirceList(conn, spaceNo);
+		List<SpacePrice> pricelist = new SpacePriceDAO().priceListBySpaceNo(conn, spaceNo);
 		close(conn);
 		return pricelist;
 	}

@@ -11,17 +11,17 @@ import com.kh.host.model.vo.Space;
 import com.kh.host.model.vo.SpacePrice;
 public class BookingService {
 
-	public List<Booking> myBookingList(String userId) {
+	public List<Booking> myBookingListById(String userId) {
 		Connection conn = getConnection();
-		List<Booking> list = new BookingDAO().myBookingList(conn, userId);
+		List<Booking> list = new BookingDAO().myBookingListById(conn, userId);
 		close(conn);
 		return list;
 	}
 
 
-	public Booking bookingSelectOne(int bookingNo) {
+	public Booking bookingSelectOneByNo(int bookingNo) {
 		Connection conn = getConnection();
-		Booking b = new BookingDAO().bookingSelectOne(conn, bookingNo);
+		Booking b = new BookingDAO().bookingSelectOneByNo(conn, bookingNo);
 		close(conn);
 		return b;
 	}

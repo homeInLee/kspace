@@ -45,7 +45,7 @@ public class BookingListServlet extends HttpServlet {
 		System.out.println(userId);
 		
 		//예약리스트
-		List<Booking> list = new BookingService().myBookingList(userId);
+		List<Booking> list = new BookingService().myBookingListById(userId);
 		//각 공간의 가격 맵(공간번호, SpacePrice리스트)
 		Map<Integer, List<SpacePrice>> pricemap = new HashMap<>();
 		//공간리스트
@@ -92,10 +92,10 @@ public class BookingListServlet extends HttpServlet {
 		}
 			System.out.println(day);
 			//예약리스트로 뽑은 공간번호가 키값, 그 공간의 가격 테이블리스트가 벨류값(가격뽑기용)
-			pricemap.put(list.get(i).getSpaceNo(), new SpacePriceService().priceList(list.get(i).getSpaceNo()));
+			pricemap.put(list.get(i).getSpaceNo(), new SpacePriceService().priceListBySpaceNo(list.get(i).getSpaceNo()));
 			System.out.println("pricemap="+pricemap);
 			//예약리스트로 뽑은 공간번호로 예약한 사람의 공간리스트 생성(이름뽑기용)
-			spacelist.add(new SpaceService().spaceSelectOne(list.get(i).getSpaceNo()));
+			spacelist.add(new SpaceService().spaceSelectOneBySpaceNo(list.get(i).getSpaceNo()));
 			System.out.println("spacelist="+spacelist);
 			
 			for(int y=0; y<pricemap.get(list.get(i).getSpaceNo()).size(); y++) {
