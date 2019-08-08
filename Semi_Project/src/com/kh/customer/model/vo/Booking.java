@@ -1,4 +1,4 @@
-package com.kh.host.model.vo;
+package com.kh.customer.model.vo;
 
 import java.util.Date;
 

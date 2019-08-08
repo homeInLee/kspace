@@ -5,7 +5,7 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.util.List"%>
-<%@page import="com.kh.host.model.vo.Booking"%>
+<%@page import="com.kh.customer.model.vo.Booking"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -26,7 +26,7 @@
 			<!--예약 리스트-->
 			<ul class="recom-space clearfix">
 				<%for(int i=0; i<list.size(); i++){ %>
-					<li><a href="<%=request.getContextPath() %>/host/bookingSelect?userId=datbot&bookingNo=<%=list.get(i).getBookingNo() %>" class="dp_block">
+					<li><a href="<%=request.getContextPath() %>/customer/bookingSelect?userId=datbot&bookingNo=<%=list.get(i).getBookingNo() %>" class="dp_block">
 							<div class="recom-space-img">
 								<img src="<%=request.getContextPath()%>/images/example.jpeg"
 									alt="이미지영역" class="dp_block">

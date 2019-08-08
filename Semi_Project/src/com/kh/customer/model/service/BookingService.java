@@ -1,12 +1,12 @@
-package com.kh.host.model.service;
+package com.kh.customer.model.service;
 import static com.kh.common.JDBCTemplate.close;
 import static com.kh.common.JDBCTemplate.getConnection;
 
 import java.sql.Connection;
 import java.util.List;
 
-import com.kh.host.model.dao.BookingDAO;
-import com.kh.host.model.vo.Booking;
+import com.kh.customer.model.dao.BookingDAO;
+import com.kh.customer.model.vo.Booking;
 import com.kh.host.model.vo.Space;
 import com.kh.host.model.vo.SpacePrice;
 public class BookingService {

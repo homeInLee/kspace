@@ -1,4 +1,4 @@
-package com.kh.host.model.dao;
+package com.kh.customer.model.dao;
 
 import static com.kh.common.JDBCTemplate.close;
 
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import com.kh.host.model.vo.Booking;
+import com.kh.customer.model.vo.Booking;
 import com.kh.host.model.vo.Space;
 import com.kh.host.model.vo.SpacePrice;
 

@@ -1,4 +1,4 @@
-package com.kh.host.controller;
+package com.kh.customer.controller;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -16,22 +16,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.kh.host.model.service.BookingService;
-import com.kh.host.model.vo.Booking;
+import com.kh.customer.model.service.BookingService;
+import com.kh.customer.model.vo.Booking;
 import com.kh.host.model.vo.Space;
 import com.kh.host.model.vo.SpacePrice;
 
 /**
  * Servlet implementation class BookingList
  */
-@WebServlet("/host/bookingList")
-public class BookingList extends HttpServlet {
+@WebServlet("/customer/bookingList")
+public class BookingListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BookingList() {
+    public BookingListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -121,7 +121,7 @@ public class BookingList extends HttpServlet {
 		request.setAttribute("list", list);
 		request.setAttribute("realprice", realprice);
 		request.setAttribute("spacelist", spacelist);
-		request.getRequestDispatcher("/WEB-INF/views/host/bookingList.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/views/customer/bookingList.jsp").forward(request, response);
 	}
 
 	/**
