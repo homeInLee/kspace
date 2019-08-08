@@ -15,6 +15,114 @@
     <script type="text/javascript" src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath() %>/js/common.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath() %>/js/slick/slick.js"></script>
+<script>
+$(()=> {
+	$("#spaceSrch").keyup(e => {
+		
+		var $sel = $(".sel");
+		var $li = $("#autoComplete li");
+		
+		if(e.key == "ArrowDown"){
+			if($sel.length == 0){
+				$li.eq(0).addClass("sel");
+			}	
+			else if($sel.is($li.last())){
+				//처리코드 없음
+			}
+			else{
+				$sel.removeClass("sel")
+				    .next()
+				    .addClass("sel");
+			}
+		}
+		else if(e.key == "ArrowUp"){
+			if($sel.length == 0){
+				//처리코드 없음
+			}	
+			else if($sel.is($li.first())){
+				$sel.removeClass("sel");
+			}
+			else{
+				$sel.removeClass("sel")
+				    .prev()
+				    .addClass("sel");
+			}
+		}
+		else if(e.key == "Enter"){
+			//값입력
+			$(e.target).val($sel.text());
+			//#autoComplete 감춤
+			$("#autoComplete").hide()
+							  .children()
+							  .remove();
+		}
+		else{
+			
+			var spaceSrch = $(e.target).val();
+			
+			//사용자입력값이 없는 경우, 조기 리턴처리함.
+			if(spaceSrch.trim().length == 0)
+				return;
+			
+			$.ajax({
+				url:"<%=request.getContextPath()%>/search/autoComplete.do",
+				type:"post",
+				data:"spaceSrch="+spaceSrch,
+				success: function(data){
+					console.log(data);
+					
+					if(data.trim().length == 0){
+						$("#autoComplete").hide();
+					}
+					else{
+						var nameArr = data.split(',');
+						var html = "";
+						$.each(nameArr, (i, name)=>{
+							name = name.replace(spaceSrch,
+												"<span class='srchVal'>"+spaceSrch+"</span>");
+							html += "<li>"+name+"</li>";
+						});
+						
+						$("#autoComplete").html(html)
+										  .fadeIn(200);
+					
+					}
+					
+					//마우스 이벤트 핸들러 추가
+					$("#autoComplete li")
+						.click(e=>{
+							//값입력
+							$("#spaceSrch").val($(e.target).text());
+							//#autoComplete 감춤
+							$("#autoComplete").hide()
+											  .children()
+											  .remove();
+						})
+						.hover(e=>{
+							$(e.target).addClass("sel")
+									   .siblings()
+									   .removeClass("sel");
+							
+						}, e=>{
+							$(e.target).removeClass("sel");
+						});
+					
+					
+					
+					
+					
+				},
+				error: function(jqxhr, textStatus, errorThrown){
+					console.log("ajax처리실패!");
+					console.log(jqxhr, textStatus, errorThrown);
+				}
+			});
+			
+			
+		}
+	});
+});
+</script>
 </head>
 <body>
     <header id="header">
@@ -26,6 +134,7 @@
                 <input type="text" name="spaceSrch" id="spaceSrch" placeholder="지역 또는 공간유형을 검색해보세요!">
                 <input type="submit" id="srchBtn" value="검색">
             </form>
+                <ul id="autoComplete"></ul>
         </div>
         <a href="<%=request.getContextPath() %>/host/spaceEnroll" class="go-space dp_block">공간 등록하기</a>
         <div class="menu-btn clearfix">
@@ -47,7 +156,7 @@
 	            <ul class="menu1">
 	                <li><a href="<%=request.getContextPath() %>" class="dp_block">KH Space Home</a></li>
 	                <li><a href="" class="dp_block">내 정보 보기</a></li>
-	                <li><a href="<%=request.getContextPath() %>/host/bookingList?userId=datbot" class="dp_block">예약 리스트</a></li>
+	                <li><a href="<%=request.getContextPath() %>/booking/bookingList?userId=datbot" class="dp_block">예약 리스트</a></li>
 	                <li><a href="" class="dp_block">찜한 공간</a></li>
 	                <li><a href="<%=request.getContextPath() %>/customer/spaceList" class="dp_block">전체 공간보기</a></li>
 	                <li><a href="" class="dp_block">추천 공간</a></li>
