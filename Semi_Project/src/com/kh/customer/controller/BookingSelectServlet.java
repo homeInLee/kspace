@@ -1,6 +1,7 @@
 package com.kh.customer.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,8 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.kh.customer.model.service.BookingService;
 import com.kh.customer.model.vo.Booking;
+import com.kh.host.model.service.SpacePriceService;
 import com.kh.host.model.service.SpaceService;
 import com.kh.host.model.vo.Space;
+import com.kh.host.model.vo.SpacePrice;
 
 /**
  * Servlet implementation class BookingSelectServlet
@@ -35,7 +38,6 @@ public class BookingSelectServlet extends HttpServlet {
 		String userId = request.getParameter("userId");
 		int bookingNo = Integer.parseInt(request.getParameter("bookingNo"));
 		
-		
 		//예약공간 = bookingNo로 spaceNo가져와서 space_tbl로 가서 각 값을 채워넣기*/
 		Booking b = new BookingService().bookingSelectOne(bookingNo);
 		Space s = new SpaceService().spaceSelectOne(b.getSpaceNo());
@@ -45,6 +47,7 @@ public class BookingSelectServlet extends HttpServlet {
 		//공간유형 = space(thema) = s.getSpaceThema()
 		//예약인원 = space = s.getMaxBookingPeople(),s.getMinBookingPeople()
 		//추가인원 = 1명초과시 방값원(price) 추가
+		List<SpacePrice> sp = new SpacePriceService().priceList(b.getSpaceNo());
 		//편의시설 = space = s.getSpaceFacilities()
 		
 		//예약자정보 = userId로 user_tbl가서  각값을 가져오고, bookingNo로 booking_tbl로 가서 요청사항 채워넣기
