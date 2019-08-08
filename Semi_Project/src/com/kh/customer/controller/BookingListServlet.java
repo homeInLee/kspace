@@ -5,7 +5,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.kh.customer.model.service.BookingService;
 import com.kh.customer.model.vo.Booking;
+import com.kh.host.model.service.SpacePriceService;
+import com.kh.host.model.service.SpaceService;
 import com.kh.host.model.vo.Space;
 import com.kh.host.model.vo.SpacePrice;
 
@@ -91,10 +92,10 @@ public class BookingListServlet extends HttpServlet {
 		}
 			System.out.println(day);
 			//예약리스트로 뽑은 공간번호가 키값, 그 공간의 가격 테이블리스트가 벨류값(가격뽑기용)
-			pricemap.put(list.get(i).getSpaceNo(), new BookingService().pirceList(list.get(i).getSpaceNo()));
+			pricemap.put(list.get(i).getSpaceNo(), new SpacePriceService().pirceList(list.get(i).getSpaceNo()));
 			System.out.println("pricemap="+pricemap);
 			//예약리스트로 뽑은 공간번호로 예약한 사람의 공간리스트 생성(이름뽑기용)
-			spacelist.add(new BookingService().spaceSelectOne(list.get(i).getSpaceNo()));
+			spacelist.add(new SpaceService().spaceSelectOne(list.get(i).getSpaceNo()));
 			System.out.println("spacelist="+spacelist);
 			
 			for(int y=0; y<pricemap.get(list.get(i).getSpaceNo()).size(); y++) {

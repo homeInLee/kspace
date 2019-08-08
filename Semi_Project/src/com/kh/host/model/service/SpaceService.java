@@ -3,7 +3,9 @@ package com.kh.host.model.service;
 import java.sql.Connection;
 import java.util.List;
 
+import com.kh.customer.model.dao.BookingDAO;
 import com.kh.host.model.dao.SpaceDAO;
+import com.kh.host.model.vo.Space;
 
 import static com.kh.common.JDBCTemplate.*;
 
@@ -15,5 +17,10 @@ public class SpaceService {
 		close(conn);
 		return list;
 	}
-
+	public Space spaceSelectOne(int spaceNo) {
+		Connection conn = getConnection();
+		Space s = new SpaceDAO().spaceSelectOne(conn, spaceNo);
+		close(conn);
+		return s;
+	}
 }

@@ -18,18 +18,12 @@ public class BookingService {
 		return list;
 	}
 
-	public List<SpacePrice> pirceList(int spaceNo) {
-		Connection conn = getConnection();
-		List<SpacePrice> pricelist = new BookingDAO().pirceList(conn, spaceNo);
-		close(conn);
-		return pricelist;
-	}
 
-	public Space spaceSelectOne(int spaceNo) {
+	public Booking bookingSelectOne(int bookingNo) {
 		Connection conn = getConnection();
-		Space s = new BookingDAO().spaceSelectOne(conn, spaceNo);
+		Booking b = new BookingDAO().bookingSelectOne(conn, bookingNo);
 		close(conn);
-		return s;
+		return b;
 	}
 
 

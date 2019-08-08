@@ -8,9 +8,12 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+
+import com.kh.host.model.vo.Space;
 
 public class SpaceDAO {
 	
@@ -57,6 +60,42 @@ public class SpaceDAO {
 		}
 		
 		return nameList;
+	}
+	public Space spaceSelectOne(Connection conn, int spaceNo) {
+		Space s = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("spaceSelectOne");
+		try {
+			//1.PrepareStatement준비(미완성쿼리 완성)
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, spaceNo);
+			//2.실행 및 ResultSet 리턴받기
+			rset = pstmt.executeQuery();
+			//3.ResultSet -> result
+			if(rset.next()) {
+				s = new Space();
+				s.setSpaceNo(rset.getInt("space_no"));
+				s.setCompanyNo(rset.getInt("company_no"));
+				s.setSpaceIntro(rset.getString("space_intro"));
+				s.setBookingTime(rset.getString("booking_time"));
+				s.setMaxBookingPeople(rset.getInt("max_booking_people"));
+				s.setMinBookingPeople(rset.getInt("min_booking_people"));
+				s.setSpaceThema(rset.getString("space_thema"));
+				s.setSpaceCheck(rset.getString("space_check"));
+				s.setHashtag(rset.getString("hashtag"));
+				s.setSpaceName(rset.getString("space_name"));
+				s.setSpaceFacilities(rset.getString("space_facilities"));
+				s.setSpaceSlogan(rset.getString("space_slogan"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return s;
 	}
 
 }
