@@ -1,4 +1,4 @@
-package com.kh.booking.model.vo;
+package com.kh.host.model.vo;
 
 import java.util.Date;
 
