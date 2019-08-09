@@ -13,9 +13,9 @@ import org.apache.catalina.tribes.util.Arrays;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.kh.common.util.MvcRenamePolicy;
+import com.kh.host.model.service.SpaceService;
 import com.kh.host.model.vo.Space;
 import com.kh.host.model.vo.SpaceDayOff;
-import com.kh.host.model.vo.SpacePrice;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.FileRenamePolicy;
 
@@ -58,32 +58,48 @@ public class SpaceEnrollEndServlet extends HttpServlet {
 		MultipartRequest mReq = new MultipartRequest(request, saveDirectory, maxPostSize, encoding, mvcRenamePolicy);
 		
 		//1.파라미터 핸들링
+		String userId = mReq.getParameter("hostId"); //공간을 등록하는 호스트 아이디
+		//호스트 아이디로 회사번호 가져오기(공간테이블에 필요함)
+		int companyNo = new SpaceService().selectCompanyNo(userId);
+		System.out.println("회사번호 : "+companyNo);
 		
 		/*********공간 테이블 데이터************/
-		//=>객체 생성 완료
+		//=>객체 생성 완료, 데이터 추가 성공
 		String spaceIntro = mReq.getParameter("spaceIntro"); //공간 소개
 		System.out.println("소개 : "+spaceIntro);
+		
 		String enrollTime1 = mReq.getParameter("spaceEnrollTime1"); //예약가능시간1
 		String enrollTime2 = mReq.getParameter("spaceEnrollTime2"); //예약가능시간2
 		String bookingTime = enrollTime1+"~"+enrollTime2;
 		System.out.println("예약가능시간 : "+bookingTime);
+		
 		int minBookingPeople = Integer.parseInt(mReq.getParameter("minBookingPeople")); //예약 최소인원
 		int maxBookingPeople = Integer.parseInt(mReq.getParameter("maxBookingPeople")); //예약 최대인원
 		System.out.println("예약인원 : "+minBookingPeople+"~"+maxBookingPeople);
+		
 		String[] spaceTypeArr = mReq.getParameterValues("spaceType"); //공간유형
 		String spaceThema = String.join(",", spaceTypeArr);
 		System.out.println("공간유형 : "+spaceThema);
-		String hashTag = mReq.getParameter("hashTag"); //해시태그
+		
+		String hashTag = null; //해시태그
+		if(mReq.getParameter("hashTag")!=null) {
+			hashTag = mReq.getParameter("hashTag");
+		}
 		System.out.println("해시태그 : "+hashTag);
+		
 		String spaceName = mReq.getParameter("spaceName"); //공간명
 		System.out.println("공간명 : "+spaceName);
 		String spaceSlogan = mReq.getParameter("spaceSlogan"); //공간 슬로건
 		System.out.println("슬로건 : "+spaceSlogan);
 		String[] facilityArr = mReq.getParameterValues("facility"); //편의 시설
-		String facility = String.join(",", facilityArr);
+		String facility = null;
+		if(facilityArr!=null) {
+			facility = String.join(",", facilityArr);
+		}
 		System.out.println("편의 시설 : "+facility);
 		
 		Space space = new Space();
+		space.setCompanyNo(companyNo);
 		space.setSpaceIntro(spaceIntro);
 		space.setBookingTime(bookingTime);
 		space.setMaxBookingPeople(maxBookingPeople);
@@ -94,25 +110,34 @@ public class SpaceEnrollEndServlet extends HttpServlet {
 		space.setSpaceFacilities(facility);
 		space.setSpaceSlogan(spaceSlogan);
 		
-		
 		/*********가격 테이블 데이터************/
 		//공간테이블에 데이터 넣고 해당 공간의 번호를 가져와야함.
-		int enrollPrice = Integer.parseInt(mReq.getParameter("spaceEnrollPrice")); //공간 가격
+		int enrollPrice = Integer.parseInt(mReq.getParameter("spaceEnrollPrice")); //공간 원래 가격
 		System.out.println("공간 가격 : "+enrollPrice);
-		String enrollEvent = mReq.getParameter("spaceEnrollEvent"); //이벤트 여부
+		
+		String enrollEvent = mReq.getParameter("spaceEnrollEvent"); //이벤트 여부 --> 사용 끝
 		System.out.println("이벤트 여부 : "+enrollEvent);
+		
 		String[] enrollEventTypeArr = mReq.getParameterValues("spaceEnrollEventType"); //정기/비정기 이벤트
 		System.out.println("정기/비정기 : "+Arrays.toString(enrollEventTypeArr));
+		
 		String enrollAlwaysEventType = mReq.getParameter("spaceEnrollAlwaysEventType"); //정기 이벤트 주기
 		String enrollAlwaysEventDate = mReq.getParameter("spaceEnrollAlwaysEventDate"); //정기 이벤트 날짜
-		System.out.println("정기 주기/날짜 : "+enrollAlwaysEventType+", "+enrollAlwaysEventDate);
+		int enrollAlwaysEventPrice = 0; //정기 이벤트 가격
+		System.out.println("정기 주기/날짜/가격 : "+enrollAlwaysEventType+", "+enrollAlwaysEventDate+", "+enrollAlwaysEventPrice);
+		
 		String enrollNotAlwaysEventDateYear = mReq.getParameter("spaceEnrollNotAlwaysEventDateYear"); //비정기이벤트 년도
 		String enrollNotAlwaysEventDateMonth = mReq.getParameter("spaceEnrollNotAlwaysEventDateMonth"); //비정기이벤트 년도
 		String enrollNotAlwaysEventDateDay = mReq.getParameter("spaceEnrollNotAlwaysEventDateDay"); //비정기이벤트 년도
+		int spaceEnrollNotAlwaysEventPrice = 0; //비정기 이벤트 가격
+		try {
+			enrollAlwaysEventPrice = Integer.parseInt(mReq.getParameter("spaceEnrollAlwaysEventPrice")); //정기 이벤트 가격
+			spaceEnrollNotAlwaysEventPrice = Integer.parseInt(mReq.getParameter("spaceEnrollNotAlwaysEventPrice")); 
+		} catch(NumberFormatException e) {
+			
+		}
 		String enrollNotAlwaysEventDate = enrollNotAlwaysEventDateYear+"-"+enrollNotAlwaysEventDateMonth+"-"+enrollNotAlwaysEventDateDay;
-		System.out.println("비정기 날짜 : "+enrollNotAlwaysEventDate);
-		//int enrollEventPrice = Integer.parseInt(mReq.getParameter("spaceEnrollEventPrice")); //이벤트 가격
-		//System.out.println("이벤트 가격 : "+enrollEventPrice);
+		System.out.println("비정기 날짜/가격 : "+enrollNotAlwaysEventDate+", "+spaceEnrollNotAlwaysEventPrice);
 		
 		//이벤트 여부 체크
 		if(enrollEvent!=null) { //이벤트가 있는 경우
@@ -122,24 +147,30 @@ public class SpaceEnrollEndServlet extends HttpServlet {
 		}
 		
 		/*********휴무 테이블 데이터************/
-		//=>객체 생성 완료
+		//=>객체 생성 완료, 데이터 추가 성공
 		String[] enrollDayOffArr = mReq.getParameterValues("spaceEnrollDayOff"); //휴무일
 		System.out.println("휴무일 : "+Arrays.toString(enrollDayOffArr));
+		
 		String spaceEnrollDayOffETC = mReq.getParameter("spaceEnrollDayOffETC"); //휴무일에 기타가 있을 경우
 		System.out.println("기타 휴무일 : "+spaceEnrollDayOffETC);
-
-		String maxSpaceDayOff = "";
-		for(int i=0; i<enrollDayOffArr.length; i++) {
-			if(enrollDayOffArr[i].equals("기타")) {
-				maxSpaceDayOff += spaceEnrollDayOffETC;
-			} else {
-				maxSpaceDayOff += enrollDayOffArr[i]+",";
+		
+		String maxSpaceDayOff = null;
+		if(enrollDayOffArr!=null) {
+			for(int i=0; i<enrollDayOffArr.length; i++) {
+				if(enrollDayOffArr[i].equals("기타")) {
+					maxSpaceDayOff += spaceEnrollDayOffETC;
+				} else {
+					maxSpaceDayOff += enrollDayOffArr[i]+",";
+				}
 			}
 		}
 		
 		System.out.println("가공한 휴무일 : "+maxSpaceDayOff);
 		
-		String enrollDayOffEvent = mReq.getParameter("spaceEnrollDayOffEvent"); //휴무사유
+		String enrollDayOffEvent = null; //휴무사유
+		if(mReq.getParameter("spaceEnrollDayOffEvent")!=null) {
+			enrollDayOffEvent = mReq.getParameter("spaceEnrollDayOffEvent");
+		}
 		System.out.println("휴무사유 : "+enrollDayOffEvent);
 		
 		SpaceDayOff dayoff = new SpaceDayOff();
@@ -158,7 +189,17 @@ public class SpaceEnrollEndServlet extends HttpServlet {
 		System.out.println("다중이미지 original : "+originalFileNameMultiple);
 		
 		//2.업무로직
-		
+		int spaceNo = new SpaceService().insertSpace(space);
+		System.out.println(spaceNo);
+		if(spaceNo>0) { //공간등록에 성공해서 spaceNo를 가져온다면 0보다 클 것.
+			//휴무 테이블 추가
+			int dayOffResult = new SpaceService().insertDayOff(spaceNo, dayoff);
+			if(dayOffResult > 0) {
+				System.out.println("휴무테이블 추가 성공");
+			}
+		} else {
+			
+		}
 		
 		//3.view단 처리
 //		String msg = "공간 등록 검수가 요청되었습니다.";

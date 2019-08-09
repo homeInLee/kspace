@@ -23,33 +23,35 @@ function enrollValidate(){
             <p class="req">신중하게 공간 유형을 선택해주세요!</p>
             <form action="<%=request.getContextPath() %>/host/spaceEnrollEnd" name="spaceEnrollEndFrm" 
             		method="post" encType="multipart/form-data" onsubmit="return enrollValidate();">
+            	<!-- 호스트 아이디 value값 바꾸기 -->
+            	<input type="hidden" name="hostId" value="JeonGaNe" />
             	<div class="clearfix">
             		<h4>공간유형<span class="req">*</span></h4>
             		<p>최대 5개 선택 가능</p>
             	</div>
             	<ul class="facility-list space-list clearfix">
 	                <li>
-	                    <input type="checkbox" name="spaceType" id="spaceType0" value="studyroom">
+	                    <input type="checkbox" name="spaceType" id="spaceType0" value="스터디룸">
 	                    <label for="spaceType0">스터디룸</label>
 	                </li>
 	                <li>
-	                    <input type="checkbox" name="spaceType" id="spaceType1" value="concertHall">
+	                    <input type="checkbox" name="spaceType" id="spaceType1" value="공연장">
 	                    <label for="spaceType1">공연장</label>
 	                </li>
 	                <li>
-	                    <input type="checkbox" name="spaceType" id="spaceType2" value="seminar">
+	                    <input type="checkbox" name="spaceType" id="spaceType2" value="세미나실">
 	                    <label for="spaceType2">세미나실</label>
 	                </li>
 	                <li>
-	                    <input type="checkbox" name="spaceType" id="spaceType3" value="partyroom">
+	                    <input type="checkbox" name="spaceType" id="spaceType3" value="파티룸">
 	                    <label for="spaceType3">파티룸</label>
 	                </li>
 	                <li>
-	                    <input type="checkbox" name="spaceType" id="spaceType4" value="cafe">
+	                    <input type="checkbox" name="spaceType" id="spaceType4" value="카페">
 	                    <label for="spaceType4">카페</label>
 	                </li>
 	                <li>
-	                    <input type="checkbox" name="spaceType" id="spaceType5" value="etc">
+	                    <input type="checkbox" name="spaceType" id="spaceType5" value="기타">
 	                    <label for="spaceType5">기타</label>
 	                </li>
 	            </ul>
@@ -102,35 +104,35 @@ function enrollValidate(){
             			<h5>편의시설</h5>
            				<ul class="facility-list clearfix">
                             <li>
-                                <input type="checkbox" name="facility" id="facility0" value="parking">
+                                <input type="checkbox" name="facility" id="facility0" value="주차">
                                 <label for="facility0">주차</label>
                             </li>
                             <li>
-                                <input type="checkbox" name="facility" id="facility1" value="smoking">
+                                <input type="checkbox" name="facility" id="facility1" value="흡연">
                                 <label for="facility1">흡연</label>
                             </li>
                             <li>
-                                <input type="checkbox" name="facility" id="facility2" value="wifi">
+                                <input type="checkbox" name="facility" id="facility2" value="와이파이">
                                 <label for="facility2">와이파이</label>
                             </li>
                             <li>
-                                <input type="checkbox" name="facility" id="facility3" value="computer">
+                                <input type="checkbox" name="facility" id="facility3" value="컴퓨터">
                                 <label for="facility3">컴퓨터</label>
                             </li>
                             <li>
-                                <input type="checkbox" name="facility" id="facility4" value="noFood">
+                                <input type="checkbox" name="facility" id="facility4" value="음식물 반입금지">
                                 <label for="facility4">음식물 반입금지</label>
                             </li>
                             <li>
-                                <input type="checkbox" name="facility" id="facility5" value="electric">
+                                <input type="checkbox" name="facility" id="facility5" value="콘센트">
                                 <label for="facility5">콘센트</label>
                             </li>
                             <li>
-                                <input type="checkbox" name="facility" id="facility6" value="chair">
+                                <input type="checkbox" name="facility" id="facility6" value="의자/테이블">
                                 <label for="facility6">의자/테이블</label>
                             </li>
                             <li>
-                                <input type="checkbox" name="facility" id="facility7" value="pet">
+                                <input type="checkbox" name="facility" id="facility7" value="반려동물 동반 가능">
                                 <label for="facility7">반려동물 동반 가능</label>
                             </li>
                         </ul>
