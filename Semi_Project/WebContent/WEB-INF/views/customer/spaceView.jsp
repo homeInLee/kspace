@@ -237,7 +237,11 @@ $(document).ready(function(){
 	border-radius:20px;
 }
 </style>
-
+<script>
+function insertBooking(){
+	location.href = "<%=request.getContextPath()%>/customer/insertBooking?userId=datbot&spaceNo=1";
+}
+</script>
 <div class="sub_container">
 	<section id="spaceViewTitleImg">
 		<img src="<%=request.getContextPath() %>/images/example2.jpeg" alt="대표이미지" class="dp_block" />
@@ -247,6 +251,7 @@ $(document).ready(function(){
 	</section>
     <section class="spaceView-container subPage">
         <article>
+        	<button onclick="insertBooking();">예약하기</button>
         	<div class="spaceInfo-container">
         		<h3 class="tit">공간명</h3>
 	            <p class="fw300">공간 슬로건</p>

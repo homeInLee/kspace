@@ -31,6 +31,19 @@ public class BookingService {
 			commit(conn);
 		else
 			rollback(conn);
+		close(conn);
+		return result;
+	}
+
+
+	public int insertBooking(String userId, int spaceNo) {
+		Connection conn = getConnection();
+		int result = new BookingDAO().insertBooking(conn, userId, spaceNo);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
 		return result;
 	}
 
