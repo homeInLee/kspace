@@ -1,4 +1,4 @@
-package com.kh.host.controller;
+package com.kh.search.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.kh.host.model.dao.SpaceDAO;
-import com.kh.host.model.service.SpaceService;
+import com.kh.search.model.dao.SearchDAO;
+import com.kh.search.model.service.SearchService;
 
 /**
  * Servlet implementation class AutoCompleteServlet
@@ -36,7 +36,8 @@ public class AutoCompleteServlet extends HttpServlet {
 		
 		String spaceSrch = request.getParameter("spaceSrch");
 		
-		List<String> nameList = new SpaceService().selectByName(spaceSrch);
+		List<String> nameList = new SearchService().selectByName(spaceSrch);
+		List<String> hashList = new SearchService().selectByHash(spaceSrch);
 		
 		String csv = "";
 		for(int i=0; i<nameList.size(); i++) {
@@ -44,6 +45,13 @@ public class AutoCompleteServlet extends HttpServlet {
 				csv += ",";
 			
 			csv += nameList.get(i);
+		}
+		
+		for(int i=0; i<hashList.size(); i++) {
+			if(csv!=null)
+				csv += ",";
+			
+			csv += hashList.get(i);
 		}
 		
 		response.getWriter().append(csv);
