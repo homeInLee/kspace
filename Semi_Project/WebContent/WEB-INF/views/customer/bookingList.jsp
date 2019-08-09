@@ -24,6 +24,15 @@
 		<article>
 			<h3 class="tit txt_center">예약 내역 리스트</h3>
 			<!--예약 리스트-->
+			<select name="bookingListSearch" id="">
+				<option value="">전체</option>
+				<option value="">승인대기</option>
+				<option value="">결제대기</option>
+				<option value="">예약확정</option>
+				<option value="">이용완료</option>
+				<option value="">취소환불</option>
+				<option value="">변경요청</option>
+			</select>
 			<ul class="recom-space clearfix">
 				<%for(int i=0; i<list.size(); i++){ %>
 					<li><a href="<%=request.getContextPath() %>/customer/bookingSelect?userId=datbot&bookingNo=<%=list.get(i).getBookingNo() %>" class="dp_block">

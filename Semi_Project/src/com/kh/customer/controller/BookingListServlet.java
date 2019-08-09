@@ -54,6 +54,7 @@ public class BookingListServlet extends HttpServlet {
 		Map<Integer, Integer> realprice = new HashMap<>();
 		System.out.println("list="+list);
 		SimpleDateFormat format2 = new SimpleDateFormat ("yyyy-MM-dd");
+		SimpleDateFormat format1 = new SimpleDateFormat ("dd");
 		
 		Calendar cal = Calendar.getInstance(); 
 		int dayNum = 0;
@@ -68,28 +69,28 @@ public class BookingListServlet extends HttpServlet {
 			}
 			dayNum = cal.get(Calendar.DAY_OF_WEEK);
 			switch(dayNum){
-		    case 1:
-		        day = "일";
-		        break ;
-		    case 2:
-		        day = "월";
-		        break ;
-		    case 3:
-		        day = "화";
-		        break ;
-		    case 4:
-		        day = "수";
-		        break ;
-		    case 5:
-		        day = "목";
-		        break ;    
-		    case 6:
-		        day = "금";
-		        break ;
-		    case 7:
-		        day = "토";
-		        break ;
-		}
+			case 1:
+				day = "일";
+				break ;
+			case 2:
+				day = "월";
+				break ;
+			case 3:
+				day = "화";
+				break ;
+			case 4:
+				day = "수";
+				break ;
+			case 5:
+				day = "목";
+				break ;    
+			case 6:
+				day = "금";
+				break ;
+			case 7:
+				day = "토";
+				break ;
+			}
 			System.out.println(day);
 			//예약리스트로 뽑은 공간번호가 키값, 그 공간의 가격 테이블리스트가 벨류값(가격뽑기용)
 			pricemap.put(list.get(i).getSpaceNo(), new SpacePriceService().priceListBySpaceNo(list.get(i).getSpaceNo()));
@@ -110,6 +111,10 @@ public class BookingListServlet extends HttpServlet {
 				else if(pricemap.get(list.get(i).getSpaceNo()).get(y).getPriceEvent().contains(day)) {
 					realprice.put(list.get(i).getSpaceNo(), pricemap.get(list.get(i).getSpaceNo()).get(y).getSpacePrice());
 					System.out.println(realprice);
+				}
+				
+				else if(format1.format(list.get(i).getMaxTime()).equals(pricemap.get(list.get(i).getSpaceNo()).get(y).getPriceEvent())) {
+					realprice.put(list.get(i).getSpaceNo(), pricemap.get(list.get(i).getSpaceNo()).get(y).getSpacePrice());
 				}
 				
 				//키값이 공간번호(i)인 방의 y번째 가격이유가 빌린날짜의 년월일과 같다면 이벤트 가격

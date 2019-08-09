@@ -1,6 +1,6 @@
 package com.kh.customer.model.dao;
 
-import static com.kh.common.JDBCTemplate.close;
+import static com.kh.common.JDBCTemplate.*;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -14,13 +14,11 @@ import java.util.List;
 import java.util.Properties;
 
 import com.kh.customer.model.vo.Booking;
-import com.kh.host.model.vo.Space;
-import com.kh.host.model.vo.SpacePrice;
 
 public class BookingDAO {
-	
+
 	private Properties prop = new Properties();
-	
+
 	public BookingDAO() {
 		String fileName = BookingDAO.class.getResource("/sql/customer/customer-query.properties").getPath();
 		try {
@@ -36,7 +34,7 @@ public class BookingDAO {
 		List<Booking> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String sql = prop.getProperty("myBookingList");
+		String sql = prop.getProperty("myBookingListById");
 		try {
 			//1.PrepareStatement준비(미완성쿼리 완성)
 			pstmt = conn.prepareStatement(sql);
@@ -61,10 +59,10 @@ public class BookingDAO {
 			close(rset);
 			close(pstmt);
 		}
-		
+
 		return list;
 	}
-	
+
 	public Booking bookingSelectOneByNo(Connection conn, int bookingNo) {
 		Booking b = null;
 		PreparedStatement pstmt = null;
@@ -93,9 +91,26 @@ public class BookingDAO {
 			close(rset);
 			close(pstmt);
 		}
-		
+
 		return b;
 	}
-	
+	public int bookingCancle(Connection conn, int bookingNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("bookingCancle");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, bookingNo);
+			result = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+
+		return result;
+	}
+
 
 }

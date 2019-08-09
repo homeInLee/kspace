@@ -10,12 +10,14 @@ public class Booking {
 	private int bookingPeople; //예약인원
 	private String userId; //고객아이디
 	private String request; //요구사항
+	private String delType; //환불여부
+	private Date delDate; //환불일
 	public Booking() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public Booking(int bookingNo, Date maxTime, Date minTime, int spaceNo, int bookingPeople, String userId,
-			String request) {
+			String request, String delType, Date delDate) {
 		super();
 		this.bookingNo = bookingNo;
 		this.maxTime = maxTime;
@@ -24,6 +26,8 @@ public class Booking {
 		this.bookingPeople = bookingPeople;
 		this.userId = userId;
 		this.request = request;
+		this.delType = delType;
+		this.delDate = delDate;
 	}
 	public int getBookingNo() {
 		return bookingNo;
@@ -67,11 +71,25 @@ public class Booking {
 	public void setRequest(String request) {
 		this.request = request;
 	}
+	public String getDelType() {
+		return delType;
+	}
+	public void setDelType(String delType) {
+		this.delType = delType;
+	}
+	public Date getDelDate() {
+		return delDate;
+	}
+	public void setDelDate(Date delDate) {
+		this.delDate = delDate;
+	}
 	@Override
 	public String toString() {
 		return "Booking [bookingNo=" + bookingNo + ", maxTime=" + maxTime + ", minTime=" + minTime + ", spaceNo="
-				+ spaceNo + ", bookingPeople=" + bookingPeople + ", userId=" + userId + ", request=" + request + "]";
+				+ spaceNo + ", bookingPeople=" + bookingPeople + ", userId=" + userId + ", request=" + request
+				+ ", delType=" + delType + ", delDate=" + delDate + "]";
 	}
+	
 	
 	
 }
