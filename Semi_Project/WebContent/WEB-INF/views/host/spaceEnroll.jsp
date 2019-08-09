@@ -159,7 +159,7 @@ function enrollValidate(){
             				</div>
             				<div class="clearfix" style="float:none; width:100%; padding-top:15px;">
             					<input type="text" name="spaceEnrollAlwaysEventDate" id="spaceEnrollAlwaysEventDate" placeholder="이벤트 주기가 1주일이면 요일을, 1개월이면 몇일인지 입력해주세요." class="dp_ib"/>
-            					<p id="spaceEnrollAlwaysEventPrice" class="srchPrice dp_ib">
+            					<p id="spaceEnrollAlwaysEventPrice" class="srchPrice dp_ib" style="margin-bottom:0;">
             						<input type="number" name="spaceEnrollAlwaysEventPrice" class="dp_ib"/>
             					</p>
             				</div>
@@ -171,9 +171,11 @@ function enrollValidate(){
             				</div>
 	            			
 	            			<div style="float:none; width:100%;">
-	            				<input type="text" name="spaceEnrollNotAlwaysEventDateYear" id="spaceEnrollNotAlwaysEventDate1" placeholder="년 ex) 2019" class="eventInput dp_ib"/>
-	            				<input type="text" name="spaceEnrollNotAlwaysEventDateMonth" id="spaceEnrollNotAlwaysEventDate2" placeholder="월 ex) 08" class="eventInput dp_ib"/>
-	            				<input type="text" name="spaceEnrollNotAlwaysEventDateDay" id="spaceEnrollNotAlwaysEventDate3" placeholder="일 ex) 07" class="eventInput dp_ib"/>
+	            				<div class="dp_ib spaceEnrollNotAlwaysEventDate">
+	            					<input type="text" name="spaceEnrollNotAlwaysEventStartDate" id="spaceEnrollNotAlwaysEventStartDate" placeholder="ex) 2019-08-09" class="eventInput dp_ib"/>
+	            					~
+	            					<input type="text" name="spaceEnrollNotAlwaysEventEndDate" id="spaceEnrollNotAlwaysEventEndDate" placeholder="ex) 2019-08-12" class="eventInput dp_ib"/>
+	            				</div>
             					<p id="spaceEnrollNotAlwaysEventPrice" class="srchPrice dp_ib" style="width:255px; margin-left:0;"><input type="number" name="spaceEnrollNotAlwaysEventPrice" class="dp_block" style="width:253px;" /></p>
 	            			</div>
             			</div>

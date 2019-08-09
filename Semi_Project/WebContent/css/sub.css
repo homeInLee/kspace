@@ -651,9 +651,7 @@
 
 .spaceEnrollEvent .custom-select,
 #spaceEnrollAlwaysEventDate,
-#spaceEnrollNotAlwaysEventDate1, 
-#spaceEnrollNotAlwaysEventDate2, 
-#spaceEnrollNotAlwaysEventDate3,
+.spaceEnrollNotAlwaysEventDate,
 #spaceEnrollAlwaysEventPrice,
 #spaceEnrollNotAlwaysEventPrice {
 	display: none;

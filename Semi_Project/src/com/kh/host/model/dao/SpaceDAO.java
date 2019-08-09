@@ -15,6 +15,7 @@ import java.util.Properties;
 
 import com.kh.host.model.vo.Space;
 import com.kh.host.model.vo.SpaceDayOff;
+import com.kh.host.model.vo.SpacePrice;
 
 public class SpaceDAO {
 	
@@ -181,6 +182,26 @@ public class SpaceDAO {
 			pstmt.setInt(1, spaceNo);
 			pstmt.setString(2, dayoff.getDayOffEvent());
 			pstmt.setString(3, dayoff.getMaxSpaceDayOff());
+			result = pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int insertPrice(Connection conn, int spaceNo, SpacePrice eventPrice) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertPrice");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, spaceNo);
+			pstmt.setString(2, eventPrice.getPriceEvent());
+			pstmt.setInt(3, eventPrice.getSpacePrice());
 			result = pstmt.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();

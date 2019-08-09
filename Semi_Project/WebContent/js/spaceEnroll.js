@@ -88,11 +88,9 @@ $(document).ready(function(){
     });
     $("#spaceEnrollNotAlwaysEvent").on('change', function(){
         if($(this).prop("checked")){
-            $("#spaceEnrollNotAlwaysEventDate1, #spaceEnrollNotAlwaysEventDate2, #spaceEnrollNotAlwaysEventDate3").show();
-            $("#spaceEnrollNotAlwaysEventPrice").css("display", "inline-block");
+            $(".spaceEnrollNotAlwaysEventDate, #spaceEnrollNotAlwaysEventPrice").css("display", "inline-block");
         } else {
-            $("#spaceEnrollNotAlwaysEventDate1, #spaceEnrollNotAlwaysEventDate2, #spaceEnrollNotAlwaysEventDate3").hide();
-            $("#spaceEnrollNotAlwaysEventPrice").css("display", "none");
+            $(".spaceEnrollNotAlwaysEventDate, #spaceEnrollNotAlwaysEventPrice").css("display", "none");
         }
     });
     

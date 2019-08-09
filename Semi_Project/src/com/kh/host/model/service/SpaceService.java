@@ -9,6 +9,7 @@ import com.kh.customer.model.dao.BookingDAO;
 import com.kh.host.model.dao.SpaceDAO;
 import com.kh.host.model.vo.Space;
 import com.kh.host.model.vo.SpaceDayOff;
+import com.kh.host.model.vo.SpacePrice;
 
 import static com.kh.common.JDBCTemplate.*;
 
@@ -50,6 +51,15 @@ public class SpaceService {
 	public int insertDayOff(int spaceNo, SpaceDayOff dayoff) {
 		Connection conn = getConnection();
 		int result = new SpaceDAO().insertDayOff(conn, spaceNo, dayoff);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		return result; 
+	}
+	public int insertPrice(int spaceNo, SpacePrice eventPrice) {
+		Connection conn = getConnection();
+		int result = new SpaceDAO().insertPrice(conn, spaceNo, eventPrice);
 		if(result > 0)
 			commit(conn);
 		else
