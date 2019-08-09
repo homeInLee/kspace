@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Properties;
 
 import com.kh.host.model.vo.Space;
+import com.kh.host.model.vo.SpaceDayOff;
 
 public class SpaceDAO {
 	
@@ -96,6 +97,98 @@ public class SpaceDAO {
 		}
 		
 		return s;
+	}
+
+	public int insertSpace(Connection conn, Space space) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertSpace");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, space.getCompanyNo());
+			pstmt.setString(2, space.getSpaceIntro());
+			pstmt.setString(3, space.getBookingTime());
+			pstmt.setInt(4, space.getMaxBookingPeople());
+			pstmt.setInt(5, space.getMinBookingPeople());
+			pstmt.setString(6, space.getSpaceThema());
+			pstmt.setString(7, space.getHashtag());
+			pstmt.setString(8, space.getSpaceName());
+			pstmt.setString(9, space.getSpaceFacilities());
+			pstmt.setString(10, space.getSpaceSlogan());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int selectCompanyNo(Connection conn, String userId) {
+		int companyNo = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectCompanyNo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				companyNo = rset.getInt("A");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return companyNo;
+	}
+
+	public int selectSpaceLastSeq(Connection conn) {
+		int spaceNo = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectSpaceLastSeq");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				spaceNo = rset.getInt("A");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return spaceNo;
+	}
+
+	public int insertDayOff(Connection conn, int spaceNo, SpaceDayOff dayoff) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertDayOff");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, spaceNo);
+			pstmt.setString(2, dayoff.getDayOffEvent());
+			pstmt.setString(3, dayoff.getMaxSpaceDayOff());
+			result = pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 
 }
