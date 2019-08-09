@@ -3,6 +3,15 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/sub.css" />
 <script src="<%=request.getContextPath()%>/js/spaceEnroll.js"></script>
+<script>
+function enrollValidate(){
+	if($("input[name=spaceType]:checked").length>5){
+		alert("공간 유형은 최대 5개까지 선택 가능합니다.");
+		return false;
+	}
+	return true;
+}
+</script>
 
 <div class="sub_container">
     <section class="subPage spaceEnroll">
@@ -13,9 +22,9 @@
         	</div>
             <p class="req">신중하게 공간 유형을 선택해주세요!</p>
             <form action="<%=request.getContextPath() %>/host/spaceEnrollEnd" name="spaceEnrollEndFrm" 
-            		method="post" encType="multipart/form-data">
+            		method="post" encType="multipart/form-data" onsubmit="return enrollValidate();">
             	<div class="clearfix">
-            		<h4>공간유형</h4>
+            		<h4>공간유형<span class="req">*</span></h4>
             		<p>최대 5개 선택 가능</p>
             	</div>
             	<ul class="facility-list space-list clearfix">
@@ -47,19 +56,19 @@
             	<h4>대표이미지<span class="req">*</span></h4>
             	<p>이미지 사이즈 : 1024*450, 크기 : 10MB 권장</p>
             	<div class="clearfix">
-            		<div class="spaceEnroll-img"></div>
+            		<div id="enrollImg1" class="spaceEnroll-img"></div>
             		<div class="filebox"> 
 	            		<label for="spaceEnrollFile">파일 첨부</label> 
-	            		<input type="file" id="spaceEnrollFile" class="upload-hidden">
+	            		<input type="file" name="spaceEnrollFile" id="spaceEnrollFile" class="upload-hidden">
             		</div>
             	</div>
             	<h4>이미지</h4>
-            	<p>이미지 사이즈 : 1024*450, 크기 : 10MB 권장(1장당), <span>최대 5장 업로드 가능</span></p>
-            	<div class="clearfix">
-            		<div class="spaceEnroll-img"></div>
+            	<p>이미지 사이즈 : 1024*450, 크기 : 10MB 권장(1장당), <span>최대 3장 업로드 가능</span></p>
+            	<div class="multipleFile clearfix">
+            		<div id="enrollImg2" class="spaceEnroll-img"></div>
             		<div class="filebox"> 
-	            		<label for="spaceEnrollFile">파일 첨부</label> 
-	            		<input type="file" id="spaceEnrollFile" class="upload-hidden">
+	            		<label for="spaceEnrollFileMultiple">파일 첨부</label> 
+	            		<input type="file" multiple name="spaceEnrollFileMultiple" id="spaceEnrollFileMultiple" class="upload-hidden" maxlength="3">
             		</div>
             	</div>
             	<h4>공간 정보</h4>
@@ -73,21 +82,21 @@
             			<p><input type="text" name="spaceSlogan" id="spaceSlogan" class="inputStyle dp_block" placeholder="ex) 하루 종일 / 인원 무관" /></p>
             		</div>
             		<div class="spaceEnroll">
-            			<h5>공간 소개</h5>
-            			<p><textarea name="spaceIntro" id="spaceIntro" class="dp_block" cols="30" rows="10"></textarea></p>
+            			<h5>공간 소개<span class="req">*</span></h5>
+            			<p><textarea name="spaceIntro" id="spaceIntro" required class="dp_block" cols="30" rows="10"></textarea></p>
             		</div>
             		<div class="spaceEnroll">
             			<h5>수용인원<span class="req">*</span></h5>
             			<p>
             				최소 :&nbsp;
-            				<span class="bookingsrchPrice srchPrice dp_ib"><input type="text" name="minBookingPeople" required id="minBookingPeople" class="dp_block" /></span>
+            				<span class="bookingsrchPrice srchPrice dp_ib"><input type="number" name="minBookingPeople" required id="minBookingPeople" class="dp_block" /></span>
             				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;최대 :&nbsp;
-            				<span class="bookingsrchPrice srchPrice dp_ib"><input type="text" name="maxBookingPeople" required id="maxBookingPeople" class="dp_block" /></span>
+            				<span class="bookingsrchPrice srchPrice dp_ib"><input type="number" name="maxBookingPeople" required id="maxBookingPeople" class="dp_block" /></span>
             			</p>
             		</div>
             		<div class="spaceEnroll">
             			<h5>해시태그&nbsp;&nbsp;<span class="req">쉼표(,)로 구분</span></h5>
-            			<p><input type="text" name="hashTag" id="hashTag" class="inputStyle dp_block" placeholder="ex)홍대, 카페, 홍대카페" /></p>
+            			<p><input type="text" name="hashTag" id="hashTag" class="inputStyle dp_block" placeholder="ex) 홍대, 카페, 홍대카페" /></p>
             		</div>
             		<div class="spaceEnroll">
             			<h5>편의시설</h5>
@@ -128,41 +137,50 @@
             		</div>
             		<div class="spaceEnroll">
             			<h5>가격<span class="req">*</span></h5>
-            			<p class="srchPrice"><input type="text" name="spaceEnrollPrice" required id="spaceEnrollPrice" class="dp_block" /></p>
+            			<p class="srchPrice"><input type="number" name="spaceEnrollPrice" required id="spaceEnrollPrice" class="dp_block" /></p>
             		</div>
             		<div class="spaceEnroll enrollDayOff">
             			<h5>이벤트</h5>
             			<p>이벤트 여부</p>
-            			<input type="checkbox" name="spaceEnrollEvent" id="spaceEnrollEvent" value="eventOk" />
+            			<input type="checkbox" name="spaceEnrollEvent" id="spaceEnrollEvent" />
             			<label for="spaceEnrollEvent">적용</label>
             			<p>정기/비정기</p>
             			<div class="spaceEnrollEvent">
-            				<input type="checkbox" name="spaceEnrollEventType" disabled="disabled" id="spaceEnrollAlwaysEvent" value="alwaysEvent" />
+            				<input type="checkbox" name="spaceEnrollEventType" disabled="disabled" id="spaceEnrollAlwaysEvent" value="정기 이벤트" />
             				<label for="spaceEnrollAlwaysEvent" class="dp_ib">정기 이벤트</label>
             				<div class="custom-select">
             					<select name="spaceEnrollAlwaysEventType" id="spaceEnrollAlwaysEventType" class="dp_block">
             						<option value="">선택</option>
-            						<option value="weekEvent">1주일에 한번</option>
-            						<option value="monthEvent">1개월에 한번</option>
+            						<option value="1주일">1주일</option>
+            						<option value="1개월">1개월</option>
             					</select>
             				</div>
-            				<input type="text" name="spaceEnrollAlwaysEventDate" id="spaceEnrollAlwaysEventDate" placeholder="1주일에 한번이면 요일을, 1개월에 한번이면 몇일인지 입력해주세요." class="dp_block"/>
+            				<div class="clearfix" style="float:none; width:100%; padding-top:15px;">
+            					<input type="text" name="spaceEnrollAlwaysEventDate" id="spaceEnrollAlwaysEventDate" placeholder="이벤트 주기가 1주일이면 요일을, 1개월이면 몇일인지 입력해주세요." class="dp_ib"/>
+            					<p id="spaceEnrollAlwaysEventPrice" class="srchPrice dp_ib">
+            						<input type="number" name="spaceEnrollAlwaysEventPrice" class="dp_ib"/>
+            					</p>
+            				</div>
             			</div>
             			<div class="spaceEnrollEvent">
-	            			<input type="checkbox" name="spaceEnrollEventType" disabled="disabled" id="spaceEnrollNotAlwaysEvent" value="notAlwaysEvent" />
-	            			<label for="spaceEnrollNotAlwaysEvent" class="dp_ib">비정기 이벤트</label>
-	            			<input type="text" name="spaceEnrollNotAlwaysEventDateYear" id="spaceEnrollNotAlwaysEventDate1" placeholder="년 ex)2019" class="eventInput dp_ib"/>
-	            			<input type="text" name="spaceEnrollNotAlwaysEventDateMonth" id="spaceEnrollNotAlwaysEventDate2" placeholder="월 ex)08" class="eventInput dp_ib"/>
-	            			<input type="text" name="spaceEnrollNotAlwaysEventDateDay" id="spaceEnrollNotAlwaysEventDate3" placeholder="일 ex)07" class="eventInput dp_ib"/>
+            				<div class="clearfix" style="width:100%; float:none;">
+            					<input type="checkbox" name="spaceEnrollEventType" disabled="disabled" id="spaceEnrollNotAlwaysEvent" value="비정기 이벤트" />
+	            				<label for="spaceEnrollNotAlwaysEvent" class="dp_ib">비정기 이벤트</label>
+            				</div>
+	            			
+	            			<div style="float:none; width:100%;">
+	            				<input type="text" name="spaceEnrollNotAlwaysEventDateYear" id="spaceEnrollNotAlwaysEventDate1" placeholder="년 ex) 2019" class="eventInput dp_ib"/>
+	            				<input type="text" name="spaceEnrollNotAlwaysEventDateMonth" id="spaceEnrollNotAlwaysEventDate2" placeholder="월 ex) 08" class="eventInput dp_ib"/>
+	            				<input type="text" name="spaceEnrollNotAlwaysEventDateDay" id="spaceEnrollNotAlwaysEventDate3" placeholder="일 ex) 07" class="eventInput dp_ib"/>
+            					<p id="spaceEnrollNotAlwaysEventPrice" class="srchPrice dp_ib" style="width:255px; margin-left:0;"><input type="number" name="spaceEnrollNotAlwaysEventPrice" class="dp_block" style="width:253px;" /></p>
+	            			</div>
             			</div>
-            			<p>이벤트 가격</p>
-            			<p class="srchPrice"><input type="text" name="spaceEnrollEventPrice" disabled="disabled" id="spaceEnrollEventPrice" class="dp_block" /></p>
             		</div>
             		<div class="spaceEnroll">
-            			<h5>예약 가능 시간</h5>
+            			<h5>예약 가능 시간<span class="req">*</span></h5>
             			<div>
             				<div class="custom-select">
-            					<select name="spaceEnrollTime1" id="spaceEnrollTime1" class="dp_block">
+            					<select name="spaceEnrollTime1" required id="spaceEnrollTime1" class="dp_block">
 	                            	<option value="00:00">00:00</option>
 	                            	<option value="01:00">01:00</option>
 	                            	<option value="02:00">02:00</option>
@@ -191,7 +209,7 @@
 	                            </select>
             				</div>
             				<div class="custom-select">
-            					<select name="spaceEnrollTime2" id="spaceEnrollTime2" class="dp_block">
+            					<select name="spaceEnrollTime2" required id="spaceEnrollTime2" class="dp_block">
 	                            	<option value="00:00">00:00</option>
 	                            	<option value="01:00">01:00</option>
 	                            	<option value="02:00">02:00</option>
@@ -255,7 +273,7 @@
             				<li class="clearfix etcDayOff">
             					<input type="checkbox" name="spaceEnrollDayOff" id="dayOff7" value="기타" />
             					<label for="dayOff7">기타</label>
-            					<input type="text" name="spaceEnrollDayOffETC" disabled="disabled" id="spaceEnrollDayOffETC" placeholder="ex)2019-08-07 ~ 2019-08-10" />
+            					<input type="text" name="spaceEnrollDayOffETC" disabled="disabled" id="spaceEnrollDayOffETC" placeholder="ex) 2019-08-07 ~ 2019-08-10" />
             				</li>
             			</ul>
             		</div>
@@ -263,6 +281,10 @@
             			<h5>휴무 사유</h5>
             			<p><input type="text" name="spaceEnrollDayOffEvent" id="spaceEnrollDayOffEvent" class="inputStyle dp_block" /></p>
             		</div>
+            	</div>
+            	<div class="spaceEnroll-btn txt_center clearfix">
+            		<input type="submit" value="검수 신청" class="dp_ib fw600"/>
+            		<a href="<%=request.getContextPath() %>" class="dp_ib fw600">취소</a>
             	</div>
             </form>
         </article>

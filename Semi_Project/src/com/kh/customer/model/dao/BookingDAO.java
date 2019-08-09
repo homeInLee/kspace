@@ -36,7 +36,7 @@ public class BookingDAO {
 		List<Booking> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String sql = prop.getProperty("myBookingList");
+		String sql = prop.getProperty("myBookingListById");
 		try {
 			//1.PrepareStatement준비(미완성쿼리 완성)
 			pstmt = conn.prepareStatement(sql);
