@@ -207,13 +207,16 @@ public class SpaceEnrollEndServlet extends HttpServlet {
 		System.out.println(Arrays.toString(originalFileImgArr));
 		
 		//2.업무로직
+		int result = 0; //view단 처리용
 		int spaceNo = new SpaceService().insertSpace(space);
 		System.out.println(spaceNo);
 		if(spaceNo>0) { //공간등록에 성공해서 spaceNo를 가져온다면 0보다 클 것.
 			//휴무 테이블 추가
 			int dayOffResult = new SpaceService().insertDayOff(spaceNo, dayoff);
 			if(dayOffResult > 0) {
+				result+=dayOffResult;
 				System.out.println("휴무테이블 추가 성공");
+				System.out.println(dayOffResult);
 			}
 			
 			//이미지 테이블 추가
@@ -232,7 +235,9 @@ public class SpaceEnrollEndServlet extends HttpServlet {
 				}
 			}
 			if(spaceImgResult>0) {
+				result+=spaceImgResult;
 				System.out.println("이미지 등록 성공!");
+				System.out.println(spaceImgResult);
 			}
 			
 			//가격 - 이벤트 테이블 추가
@@ -317,16 +322,25 @@ public class SpaceEnrollEndServlet extends HttpServlet {
 			}
 			
 			if(eventResult > 0) {
+				result+=eventResult;
 				System.out.println("이벤트 등록 성공!");
+				System.out.println(eventResult);
 			}
 			
-		} else { //로직 실패.
-			
 		}
+		
+		System.out.println("result="+result);
 		//3.view단 처리
-//		String msg = "공간 등록 검수가 요청되었습니다.";
-//		String loc = "/";
-		//request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp").forward(request, response);
+		String msg = "";
+		String loc = "/";
+		if(result>2) {
+			msg = "공간 등록 검수가 요청되었습니다.";
+		} else {
+			msg = "공간 등록 검수가 요청에 실패했습니다. 관리자에게 문의하세요.";
+		}
+		request.setAttribute("msg", msg);
+		request.setAttribute("loc", loc);
+		request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp").forward(request, response);
 	}
 
 	/**
