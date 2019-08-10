@@ -21,6 +21,7 @@ import com.kh.common.util.MvcRenamePolicy;
 import com.kh.host.model.service.SpaceService;
 import com.kh.host.model.vo.Space;
 import com.kh.host.model.vo.SpaceDayOff;
+import com.kh.host.model.vo.SpaceImageFile;
 import com.kh.host.model.vo.SpacePrice;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.FileRenamePolicy;
@@ -183,14 +184,22 @@ public class SpaceEnrollEndServlet extends HttpServlet {
 		
 		
 		/*********이미지 테이블 데이터************/
-		String renamedFileNameTit = mReq.getFilesystemName("spaceEnrollFile"); //대표이미지 rename
-		System.out.println("대표이미지 rename : "+renamedFileNameTit);
-		String originalFileNameTit = mReq.getOriginalFileName("spaceEnrollFile"); //대표이미지 original
-		System.out.println("대표이미지 original : "+originalFileNameTit);
-		String renamedFileNameMultiple = mReq.getFilesystemName("spaceEnrollFileMultiple"); //다중이미지 rename
-		System.out.println("다중이미지 rename : "+renamedFileNameMultiple);
-		String originalFileNameMultiple = mReq.getOriginalFileName("spaceEnrollFileMultiple"); //다중이미지 rename
-		System.out.println("다중이미지 original : "+originalFileNameMultiple);
+		//=>데이터 추가 성공
+		String[] renamedFileImgArr = new String[4];
+		String[] originalFileImgArr = new String[4];
+		
+		for(int i=0; i<4; i++) {
+			if(i==0) { //대표이미지
+				renamedFileImgArr[i]=mReq.getFilesystemName("spaceEnrollFile");
+				originalFileImgArr[i]=mReq.getOriginalFileName("spaceEnrollFile");
+			} else { //다중이미지
+				renamedFileImgArr[i]=mReq.getFilesystemName("spaceEnrollFileImg"+i);
+				originalFileImgArr[i]=mReq.getOriginalFileName("spaceEnrollFileImg"+i);
+			}
+		}
+		
+		System.out.println(Arrays.toString(renamedFileImgArr));
+		System.out.println(Arrays.toString(originalFileImgArr));
 		
 		//2.업무로직
 		int spaceNo = new SpaceService().insertSpace(space);
@@ -202,12 +211,33 @@ public class SpaceEnrollEndServlet extends HttpServlet {
 				System.out.println("휴무테이블 추가 성공");
 			}
 			
-			//이벤트 테이블 추가
+			//이미지 테이블 추가
+			int spaceImgResult = 0;
+			for(int i=0; i<renamedFileImgArr.length; i++) {
+				if(renamedFileImgArr[i]!=null && originalFileImgArr[i]!=null) {
+					SpaceImageFile spaceImg = new SpaceImageFile();
+					spaceImg.setSpaceNo(spaceNo);
+					spaceImg.setImageOriginalFileName(originalFileImgArr[i]);
+					spaceImg.setImageRenamedFileName(renamedFileImgArr[i]);
+					if(i!=0) {
+						spaceImg.setFlag("N");
+					}
+					System.out.println(spaceImg);
+					spaceImgResult = new SpaceService().insertSpaceImg(spaceImg);
+				}
+			}
+			if(spaceImgResult>0) {
+				System.out.println("이미지 등록 성공!");
+			}
+			
+			//가격 - 이벤트 테이블 추가
 			//이벤트 여부 체크
 			SpacePrice eventPrice = new SpacePrice();
 			int eventResult = 0;
 			if(enrollEvent!=null) { //이벤트가 있는 경우
 				if(enrollEventType.equals("비정기 이벤트") && enrollEventType.equals("정기 이벤트")) { //정기, 비정기이벤트
+					
+					
 					
 				} else if(enrollEventType.equals("정기 이벤트")) { //정기 이벤트
 					
@@ -215,7 +245,7 @@ public class SpaceEnrollEndServlet extends HttpServlet {
 					eventPrice.setPriceEvent(enrollAlwaysEventDate); //1주일에 한번이면 토, 1개월에 한번이면 20일
 					eventPrice.setSpacePrice(enrollAlwaysEventPrice);
 					System.out.println("eventPrice객체 : "+eventPrice);
-					eventResult = new SpaceService().insertPrice(spaceNo, eventPrice);
+					eventResult = new SpaceService().insertPrice(eventPrice);
 					
 				} else if(enrollEventType.equals("비정기 이벤트")) { //비정기 이벤트
 					
@@ -234,9 +264,9 @@ public class SpaceEnrollEndServlet extends HttpServlet {
 							String strDate = df.format(startDay.getTime());
 							eventPrice.setSpaceNo(spaceNo);
 							eventPrice.setPriceEvent(strDate);
-							eventPrice.setSpacePrice(spaceEnrollNotAlwaysEventPrice);
-							eventResult = new SpaceService().insertPrice(spaceNo, eventPrice);
-							
+							eventPrice.setSpacePrice(enrollNotAlwaysEventPrice);
+							eventResult = new SpaceService().insertPrice(eventPrice);
+							System.out.println(eventPrice);
 							//시작날짜 + 1 일
 							startDay.add(Calendar.DATE, 1);
 						}
@@ -249,7 +279,7 @@ public class SpaceEnrollEndServlet extends HttpServlet {
 				eventPrice.setSpaceNo(spaceNo);
 				eventPrice.setPriceEvent(enrollEvent);
 				eventPrice.setSpacePrice(enrollPrice);
-				eventResult = new SpaceService().insertPrice(spaceNo, eventPrice);
+				eventResult = new SpaceService().insertPrice(eventPrice);
 			}
 			
 			if(eventResult > 0) {
@@ -259,7 +289,6 @@ public class SpaceEnrollEndServlet extends HttpServlet {
 		} else { //로직 실패.
 			
 		}
-		
 		//3.view단 처리
 //		String msg = "공간 등록 검수가 요청되었습니다.";
 //		String loc = "/";

@@ -65,8 +65,6 @@ $(document).ready(function(){
 
     document.addEventListener("click", closeAllSelect);
     
-    //$(".spaceEnrollEvent .custom-select, #spaceEnrollAlwaysEventDate").hide();
-    //$("#spaceEnrollNotAlwaysEventDate1, #spaceEnrollNotAlwaysEventDate2, #spaceEnrollNotAlwaysEventDate3").hide();
     $("#spaceEnrollEvent").on('change', function(){
         if($(this).prop("checked")){
             $("input[name=spaceEnrollEventType]").prop("disabled", false);
@@ -106,6 +104,7 @@ $(document).ready(function(){
     /*이미지 업로드 미리보기*/
     var selFiles;
     $("#spaceEnrollFile").on('change', handleImgFileSelect);
+    
     function handleImgFileSelect(e){
     	var files = e.target.files;
     	var filesArr = Array.prototype.slice.call(files);
@@ -131,20 +130,23 @@ $(document).ready(function(){
     			} else {
     				$("#enrollImg1").append("<img src='"+e.target.result+"' height='110'>");
     			}
-    		}
+    		};
     		reader.readAsDataURL(f);
     	});
-    	
     }
     
-    /*다중 이미지 업로드 미리보기*/
-    var selFiles2 = [];
-    $("#spaceEnrollFileMultiple").on('change', handleImgFileSelect2);
+    $("#spaceEnrollFileImg1").on('change', handleImgFileSelect2);
+    $("#spaceEnrollFileImg2").on('change', handleImgFileSelect2);
+    $("#spaceEnrollFileImg3").on('change', handleImgFileSelect2);
+    
+    var selFiles2;
     function handleImgFileSelect2(e){
-    	
     	var files = e.target.files;
     	var filesArr = Array.prototype.slice.call(files);
     	console.log(filesArr);
+    	
+    	var enrollFileId = e.target.id;
+    	
     	filesArr.forEach(function(f){
     		if(!f.type.match("image.*")){
     			alert("이미지 확장자만 가능합니다.");
@@ -157,41 +159,18 @@ $(document).ready(function(){
                 return false;
             }
     		
-    		selFiles2.push(f);
-    	});	
-    	
-    	console.log(selFiles2.length);
-    	
-    	if(selFiles2.length>3){
-			alert('파일 업로드는 최대 3장만 가능합니다.');
-			selFiles2=[];
-			return false;
-		}
-    	
-    	if($("#enrollImg2 img").length){
-			console.log("이미지가 이미 존재.");
-			if(selFiles2.length>3){
-				alert('파일 업로드는 최대 3장만 가능합니다.');
-				selFiles2=[];
-				return false;
-			}
-		}
-    	$("#enrollImg2").html("");
-    	selFiles2.forEach(function(f){
+    		selFiles2=f;
     		var reader = new FileReader();
+    		
     		reader.onload=function(e){
-    			$("#enrollImg2").append("<img src='"+e.target.result+"' height='110'>");
-    		}
+    			if($("#enrollImg2 img").length>2){
+    				$("#enrollImg2 ."+enrollFileId).attr("src", e.target.result);
+    			} else {
+    				$("#enrollImg2").append("<img src='"+e.target.result+"' height='110' class='"+enrollFileId+"'>");
+    			}
+    		};
     		reader.readAsDataURL(f);
     	});
     }
     
-//    var cntFile=0;
-//    $(".multipleFile label").click(function(){
-//    	cntFile++;
-//    	if(cntFile>1){
-//    		$(".multipleFile .filebox").append("<input type='file' name='spaceEnrollFileMultiple' id='spaceEnrollFileMultiple"+cntFile+"' class='upload-hidden'>");
-//    		$(this).attr("for", "spaceEnrollFileMultiple"+cntFile);
-//    	}
-//    });
 });

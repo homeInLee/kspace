@@ -15,6 +15,7 @@ import java.util.Properties;
 
 import com.kh.host.model.vo.Space;
 import com.kh.host.model.vo.SpaceDayOff;
+import com.kh.host.model.vo.SpaceImageFile;
 import com.kh.host.model.vo.SpacePrice;
 
 public class SpaceDAO {
@@ -192,16 +193,41 @@ public class SpaceDAO {
 		return result;
 	}
 
-	public int insertPrice(Connection conn, int spaceNo, SpacePrice eventPrice) {
+	public int insertPrice(Connection conn, SpacePrice eventPrice) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty("insertPrice");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, spaceNo);
+			pstmt.setInt(1, eventPrice.getSpaceNo());
 			pstmt.setString(2, eventPrice.getPriceEvent());
 			pstmt.setInt(3, eventPrice.getSpacePrice());
+			result = pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int insertSpaceImg(Connection conn, SpaceImageFile spaceImg) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertSpaceImg");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, spaceImg.getSpaceNo());
+			pstmt.setString(2, spaceImg.getImageOriginalFileName());
+			pstmt.setString(3, spaceImg.getImageRenamedFileName());
+			if(spaceImg.getFlag()!=null) {
+				pstmt.setString(4, spaceImg.getFlag());
+			} else {
+				pstmt.setString(4, "Y");
+			}
 			result = pstmt.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();

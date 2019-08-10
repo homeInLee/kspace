@@ -9,6 +9,7 @@ import com.kh.customer.model.dao.BookingDAO;
 import com.kh.host.model.dao.SpaceDAO;
 import com.kh.host.model.vo.Space;
 import com.kh.host.model.vo.SpaceDayOff;
+import com.kh.host.model.vo.SpaceImageFile;
 import com.kh.host.model.vo.SpacePrice;
 
 import static com.kh.common.JDBCTemplate.*;
@@ -57,14 +58,24 @@ public class SpaceService {
 			rollback(conn);
 		return result; 
 	}
-	public int insertPrice(int spaceNo, SpacePrice eventPrice) {
+	public int insertPrice(SpacePrice eventPrice) {
 		Connection conn = getConnection();
-		int result = new SpaceDAO().insertPrice(conn, spaceNo, eventPrice);
+		int result = new SpaceDAO().insertPrice(conn, eventPrice);
 		if(result > 0)
 			commit(conn);
 		else
 			rollback(conn);
 		return result; 
+	}
+	
+	public int insertSpaceImg(SpaceImageFile spaceImg) {
+		Connection conn = getConnection();
+		int result = new SpaceDAO().insertSpaceImg(conn, spaceImg);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		return result;
 	}
 	
 }

@@ -9,6 +9,18 @@ function enrollValidate(){
 		alert("공간 유형은 최대 5개까지 선택 가능합니다.");
 		return false;
 	}
+	
+	//textarea 엔터 : 글 입력 후 DB 저장시 적용
+	var str = $('#spaceIntro').val();
+	str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+	$('#spaceIntro').val(str);
+	
+	//DB에서 불러와 textarea로 수정 시 <br>이 그대로 노출되는 것을 방지
+	//상세보기 view단에서 처리하면 될듯.
+	/* var str = $('#spaceIntro').val();
+	str = str.split('<br/>').join("\r\n");
+	$('#spaceIntro').val(str); */
+	
 	return true;
 }
 </script>
@@ -69,8 +81,12 @@ function enrollValidate(){
             	<div class="multipleFile clearfix">
             		<div id="enrollImg2" class="spaceEnroll-img"></div>
             		<div class="filebox"> 
-	            		<label for="spaceEnrollFileMultiple">파일 첨부</label> 
-	            		<input type="file" multiple name="spaceEnrollFileMultiple" id="spaceEnrollFileMultiple" class="upload-hidden" maxlength="3">
+	            		<label for="spaceEnrollFileImg1">파일 첨부1</label> 
+	            		<input type="file" name="spaceEnrollFileImg1" id="spaceEnrollFileImg1" class="upload-hidden">
+	            		<label for="spaceEnrollFileImg2" style="margin: 14px 0;">파일 첨부2</label> 
+	            		<input type="file" name="spaceEnrollFileImg2" id="spaceEnrollFileImg2" class="upload-hidden">
+	            		<label for="spaceEnrollFileImg3">파일 첨부3</label> 
+	            		<input type="file" name="spaceEnrollFileImg3" id="spaceEnrollFileImg3" class="upload-hidden">
             		</div>
             	</div>
             	<h4>공간 정보</h4>
