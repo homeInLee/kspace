@@ -119,6 +119,7 @@ public class SpaceEnrollEndServlet extends HttpServlet {
 		
 		/*********가격 테이블 데이터************/
 		//공간테이블에 데이터 넣고 해당 공간의 번호를 가져와야함.
+		//=>데이터 추가 성공
 		int enrollPrice = Integer.parseInt(mReq.getParameter("spaceEnrollPrice")); //공간 원래 가격
 		System.out.println("공간 가격 : "+enrollPrice);
 		
@@ -135,6 +136,11 @@ public class SpaceEnrollEndServlet extends HttpServlet {
 		String enrollAlwaysEventType = mReq.getParameter("spaceEnrollAlwaysEventType"); //정기 이벤트 주기
 		String enrollAlwaysEventDate = mReq.getParameter("spaceEnrollAlwaysEventDate"); //정기 이벤트 날짜
 		int enrollAlwaysEventPrice = 0; //정기 이벤트 가격
+		try {
+				enrollAlwaysEventPrice = Integer.parseInt(mReq.getParameter("spaceEnrollAlwaysEventPrice")); //정기 이벤트 가격
+		} catch(NumberFormatException e) {
+			e.printStackTrace();
+		}
 		System.out.println("정기 주기/날짜/가격 : "+enrollAlwaysEventType+", "+enrollAlwaysEventDate+", "+enrollAlwaysEventPrice);
 		
 		String enrollNotAlwaysEventStartDate = mReq.getParameter("spaceEnrollNotAlwaysEventStartDate"); //비정기이벤트 시작일
@@ -142,10 +148,9 @@ public class SpaceEnrollEndServlet extends HttpServlet {
 		int enrollNotAlwaysEventPrice = 0; //비정기 이벤트 가격
 		
 		try {
-			enrollAlwaysEventPrice = Integer.parseInt(mReq.getParameter("spaceEnrollAlwaysEventPrice")); //정기 이벤트 가격
-			enrollNotAlwaysEventPrice = Integer.parseInt(mReq.getParameter("spaceEnrollNotAlwaysEventPrice")); //비정기 이벤트 가격
+				enrollNotAlwaysEventPrice = Integer.parseInt(mReq.getParameter("spaceEnrollNotAlwaysEventPrice")); //비정기 이벤트 가격
 		} catch(NumberFormatException e) {
-			
+			e.printStackTrace();
 		}
 		
 		System.out.println("비정기 날짜/가격 : "+enrollNotAlwaysEventStartDate+"~"+enrollNotAlwaysEventEndDate+", "+enrollNotAlwaysEventPrice);
@@ -235,9 +240,38 @@ public class SpaceEnrollEndServlet extends HttpServlet {
 			SpacePrice eventPrice = new SpacePrice();
 			int eventResult = 0;
 			if(enrollEvent!=null) { //이벤트가 있는 경우
-				if(enrollEventType.equals("비정기 이벤트") && enrollEventType.equals("정기 이벤트")) { //정기, 비정기이벤트
+				if(enrollEventType.contains("비정기 이벤트") && enrollEventType.contains("정기 이벤트")) { //정기, 비정기이벤트
+					System.out.println("이벤트 둘 다 있음");
+					eventPrice.setSpaceNo(spaceNo);
+					eventPrice.setPriceEvent(enrollAlwaysEventDate); //1주일에 한번이면 토, 1개월에 한번이면 20일
+					eventPrice.setSpacePrice(enrollAlwaysEventPrice);
+					eventResult = new SpaceService().insertPrice(eventPrice);
 					
-					
+					DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+					try {
+						Date startEvent = df.parse(enrollNotAlwaysEventStartDate);
+						Date endEvent = df.parse(enrollNotAlwaysEventEndDate);
+						Calendar startDay = Calendar.getInstance();
+						Calendar endDay = Calendar.getInstance();
+						startDay.setTime(startEvent);
+						endDay.setTime(endEvent);
+						//시작날짜와 끝 날짜를 비교해, 시작날짜가 작거나 같은 경우 출력
+						while(startDay.compareTo(endDay) !=1 ){
+							System.out.printf("%tF\n", startDay.getTime());
+							
+							String strDate = df.format(startDay.getTime());
+							eventPrice.setSpaceNo(spaceNo);
+							eventPrice.setPriceEvent(strDate);
+							eventPrice.setSpacePrice(enrollNotAlwaysEventPrice);
+							eventResult = new SpaceService().insertPrice(eventPrice);
+							System.out.println(eventPrice);
+							//시작날짜 + 1 일
+							startDay.add(Calendar.DATE, 1);
+						}
+						
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
 					
 				} else if(enrollEventType.equals("정기 이벤트")) { //정기 이벤트
 					

@@ -4,6 +4,29 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/sub.css" />
 <script src="<%=request.getContextPath()%>/js/spaceEnroll.js"></script>
 <script>
+$(()=>{
+	$("#spaceEnrollFile").on('change', fileCheck);
+});
+
+function fileCheck(){
+	if($(this).val()!=""){
+		//파일 용량 체크
+		var fileSize = this.files[0].size;
+		var maxSize = 1024*1024*10;
+		if(fileSize > maxSize){
+			alert('파일 용량을 초과했습니다.');
+			$(this).val("");
+		}
+		
+		//확장자 체크
+		var ext = $(this).val().split(".").pop().toLowerCase();
+		if($.inArray(ext, ["gif", "jpg", "jpeg", "png"]) == -1){
+			alert('이미지 확장자만 첨부해주세요.');
+			$(this).val("");
+		}
+	}
+}
+
 function enrollValidate(){
 	if($("input[name=spaceType]:checked").length>5){
 		alert("공간 유형은 최대 5개까지 선택 가능합니다.");

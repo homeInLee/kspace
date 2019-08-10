@@ -110,16 +110,10 @@ $(document).ready(function(){
     	var filesArr = Array.prototype.slice.call(files);
     	console.log(filesArr);
     	filesArr.forEach(function(f){
-    		if(!f.type.match("image.*")){
-    			alert("이미지 확장자만 가능합니다.");
-    			return false;
-    		}
-    		
-    		if (files && files[0].size > (10*1024*1024)) {
-                alert("파일 사이즈가 10mb 를 넘습니다.");
-                input.value = null;
-                return false;
-            }
+//    		if(!f.type.match("image.*")){
+//    			alert("이미지 확장자만 가능합니다.");
+//    			return false;
+//    		}
     		
     		selFiles=f;
     		var reader = new FileReader();
@@ -148,17 +142,6 @@ $(document).ready(function(){
     	var enrollFileId = e.target.id;
     	
     	filesArr.forEach(function(f){
-    		if(!f.type.match("image.*")){
-    			alert("이미지 확장자만 가능합니다.");
-    			return false;
-    		}
-    		
-    		if (files && files[0].size > (10*1024*1024)) {
-                alert("파일 사이즈가 10mb 를 넘습니다.");
-                input.value = null;
-                return false;
-            }
-    		
     		selFiles2=f;
     		var reader = new FileReader();
     		
