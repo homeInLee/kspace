@@ -1,6 +1,12 @@
+<%@page import="com.kh.host.model.vo.Space"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+<%@page import="com.kh.admin.banner.model.vo.SpaceAll"%>
+<%@page import="java.util.List"%>
+<%
+	Space s = (Space)request.getAttribute("space");
+%>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/sub.css" />
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/slick/slick.js"></script>
 <script>
@@ -16,227 +22,6 @@ $(document).ready(function(){
     });
 });
 </script>
-<style>
-.spaceInfo-container {
-	width: 624px;
-}
-
-#spaceViewTitleImg {
-	position:relative;
-	height: 450px;
-}
-
-#spaceViewTitleImg > img {
-	width:1024px;
-	height:450px;
-}
-
-.dibs-area {
-	position: absolute;
-	right: 60px;
-	bottom: 30px;
-}
-
-.spaceViewImg-wrap .spaceViewImg {
-	float:left;
-}
-
-.spaceViewImg-wrap .spaceViewImg img {
-	width: 624px;
-}
-
-.spaceInfo-container {
-	color:#656565;
-}
-
-.spaceInfo-container .tit {
-	font-size: 36px;
-    padding-bottom: 7px;
-    color:#000;
-}
-
-.spaceInfo-container > p {
-	font-size:26px;
-}
-
-.hashTags {
-	padding: 15px 0 40px;
-}
-
-.hashTags span {
-	padding: 5px 10px;
-	background: #fff;
-	border-radius:20px;
-	color:#656565;
-	font-size:14px;
-	border: 1px solid #ccc;
-	box-sizing: border-box;
-}
-
-.spaceInfo-container > h4 {
-	padding: 40px 0;
-	color:#656565;
-	font-size:40px;
-}
-
-.spaceInfo-tit {
-	position:relative;
-	font-size:19px;
-	margin-bottom: 20px;
-	padding-bottom: 8px;
-	box-sizing:border-box;
-	color:#000;
-}
-
-.spaceInfo-tit:after {
-	content:'';
-	width: 25px;
-	height: 4px;
-	display:block;
-	background: #ACC800;
-	position: absolute;
-	left: 0;
-	bottom: 0;
-}
-
-.spaceInfo-tit span {
-	color:#ACC800;
-}
-
-.spaceInfo-container > div > p {
-	color:#656565;
-	padding-bottom:30px;
-}
-
-.spaceInfo-tb {
-	width: 624px;
-}
-
-.spaceInfo-tb tr {
-	border-top: 1px solid #ebebeb;
-	box-sizing:border-box;
-}
-
-.spaceInfo-tb tr:first-child {
-	border-top:0;
-}
-
-.spaceInfo-tb th {
-	color:#000;
-	width: 25px;
-	padding: 8px 0;
-	text-align:left;
-}
-
-.refund-desk {
-	margin:30px 0;
-}
-
-.refund-desk td {
-	width: 25px;
-	padding: 8px 0;
-	text-align:left;
-}
-
-.refund-desk td:first-child {
-	width: 110px;
-}
-
-.refund-desk td:last-child {
-	width: 514px;
-	color:#000;
-}
-
-.mt50 {
-	margin-top:50px;
-}
-
-.spaceInfo-container > p.refund-info {
-	font-size:16px;
-}
-
-.spaceCompanyInfo-wrap {
-	border:1px solid #ccc;
-	box-sizing:border-box;
-}
-
-.spaceCompanyInfo {
-	padding:23px;
-	background:#fff;
-	border-bottom:1px solid #ccc;
-	box-sizing:border-box;
-}
-
-.spaceCompanyInfo h3 {
-	font-size:24px;
-	color:#000;
-}
-
-.spaceCompanyInfo p {
-	padding-top:8px;
-	font-size:17px;
-}
-
-.review-list {
-	margin-top:20px;
-}
-
-.review-list li {
-	position:relative;
-	padding:15px 0 15px 110px;
-	border-top:1px solid #ebebeb;
-	box-sizing:border-box;
-}
-
-.review-list li:first-child {
-	border-top:0;
-}
-
-.review-list li strong {
-	font-size:18px;
-}
-
-.review-conts strong {
-	color:#000;
-}
-
-.review-con {
-	padding:10px 0;
-	font-size:18px;
-}
-
-.review-time {
-	font-size:14px;
-}
-
-.review-reply {
-	padding-top:20px;
-}
-
-.review-reply strong {
-	color: #ACC800;
-}
-
-.review-star {
-	position:absolute;
-	right:0;
-	top:15px;
-	color: #ACC800;
-	font-size:18px;
-}
-
-.review-tit .spaceInfo-tit {
-	float:left;
-}
-
-.review-tit a {
-	float:right;
-	background:#ACC800;
-	color:#fff;
-	padding:5px 10px 5px 30px;
-	border-radius:20px;
-}
-</style>
 <script>
 function insertBooking(){
 	location.href = "<%=request.getContextPath()%>/customer/insertBooking?userId=datbot&spaceNo=1";
@@ -253,7 +38,7 @@ function insertBooking(){
         <article>
         	<button onclick="insertBooking();">예약하기</button>
         	<div class="spaceInfo-container">
-        		<h3 class="tit">공간명</h3>
+        		<h3 class="tit"></h3>
 	            <p class="fw300">공간 슬로건</p>
 	            <div class="hashTags">
 	            	<span class="dp_ib">#해시태그1</span>
