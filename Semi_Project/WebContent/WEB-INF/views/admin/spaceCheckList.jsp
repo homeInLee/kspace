@@ -24,7 +24,7 @@
             			continue;
             %>
             	<li>
-	                <a href="<%=request.getContextPath() %>/customer/spaceView?spaceNo=<%=s.getSpaceNo() %>" class="dp_block">
+	                <a href="<%=request.getContextPath() %>/admin/spaceCheckView?spaceNo=<%=s.getSpaceNo() %>" class="dp_block">
 	                    <div class="recom-space-img">
 	                    	<%if("Y".equals(s.getFlag()) && s.getFlag()!=null && s.getImageRenamedFileName()!=null) %>
 	                    	<img src="<%=request.getContextPath()%>/upload/host/<%=s.getImageRenamedFileName() %>" alt="이미지영역" class="dp_block">

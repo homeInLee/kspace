@@ -1,11 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+<%@page import="com.kh.host.model.vo.SpaceImageFile"%>
+<%@page import="java.util.List"%>
+<%@page import="com.kh.host.model.vo.Space"%>
+<%@page import="com.kh.host.model.vo.SpacePrice"%>
+<%
+	Space s = (Space)request.getAttribute("space");
+	List<SpaceImageFile> sImg = (List<SpaceImageFile>)request.getAttribute("spaceImg");
+	List<SpacePrice> sPrice = (List<SpacePrice>)request.getAttribute("sPrice");
+%>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/sub.css" />
 <script src="<%=request.getContextPath()%>/js/spaceEnroll.js"></script>
 <script>
-$(()=>{
+$(document).ready(function(){
 	$("#spaceEnrollFile").on('change', fileCheck);
+	var str = "<%=s.getSpaceIntro()!=null?s.getSpaceIntro():""%>";
+	str = str.split('<br/>').join("\r\n");
+	$('#spaceIntro').val(str); 
 });
 
 function fileCheck(){
@@ -38,12 +50,6 @@ function enrollValidate(){
 	str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
 	$('#spaceIntro').val(str);
 	
-	//DB에서 불러와 textarea로 수정 시 <br>이 그대로 노출되는 것을 방지
-	//상세보기 view단에서 처리하면 될듯.
-	/* var str = $('#spaceIntro').val();
-	str = str.split('<br/>').join("\r\n");
-	$('#spaceIntro').val(str); */
-	
 	return true;
 }
 </script>
@@ -66,34 +72,42 @@ function enrollValidate(){
             	</div>
             	<ul class="facility-list space-list clearfix">
 	                <li>
-	                    <input type="checkbox" name="spaceType" id="spaceType0" value="스터디룸">
+	                    <input type="checkbox" name="spaceType" id="spaceType0" value="스터디룸" <%=s.getSpaceThema().contains("스터디룸")?"checked":""%> >
 	                    <label for="spaceType0">스터디룸</label>
 	                </li>
 	                <li>
-	                    <input type="checkbox" name="spaceType" id="spaceType1" value="공연장">
+	                    <input type="checkbox" name="spaceType" id="spaceType1" value="공연장" <%=s.getSpaceThema().contains("공연장")?"checked":""%>>
 	                    <label for="spaceType1">공연장</label>
 	                </li>
 	                <li>
-	                    <input type="checkbox" name="spaceType" id="spaceType2" value="세미나실">
+	                    <input type="checkbox" name="spaceType" id="spaceType2" value="세미나실" <%=s.getSpaceThema().contains("세미나실")?"checked":""%>>
 	                    <label for="spaceType2">세미나실</label>
 	                </li>
 	                <li>
-	                    <input type="checkbox" name="spaceType" id="spaceType3" value="파티룸">
+	                    <input type="checkbox" name="spaceType" id="spaceType3" value="파티룸" <%=s.getSpaceThema().contains("파티룸")?"checked":""%>>
 	                    <label for="spaceType3">파티룸</label>
 	                </li>
 	                <li>
-	                    <input type="checkbox" name="spaceType" id="spaceType4" value="카페">
+	                    <input type="checkbox" name="spaceType" id="spaceType4" value="카페" <%=s.getSpaceThema().contains("카페")?"checked":""%>>
 	                    <label for="spaceType4">카페</label>
 	                </li>
 	                <li>
-	                    <input type="checkbox" name="spaceType" id="spaceType5" value="기타">
+	                    <input type="checkbox" name="spaceType" id="spaceType5" value="기타" <%=s.getSpaceThema().contains("기타")?"checked":""%>>
 	                    <label for="spaceType5">기타</label>
 	                </li>
 	            </ul>
             	<h4>대표이미지<span class="req">*</span></h4>
             	<p>이미지 사이즈 : 1024*450, 크기 : 10MB 권장</p>
             	<div class="clearfix">
-            		<div id="enrollImg1" class="spaceEnroll-img"></div>
+            		<div id="enrollImg1" class="spaceEnroll-img">
+            		<% for(SpaceImageFile s1 : sImg){
+            			if(s1.getImageRenamedFileName()!=null && s1.getFlag().equals("Y")){
+            		%>
+            			<img src="<%=request.getContextPath() %>/upload/host/<%=s1.getImageRenamedFileName() %>" alt="" height="110" />
+            		<%		
+            			}
+            		} %>
+            		</div>
             		<div class="filebox"> 
 	            		<label for="spaceEnrollFile">파일 첨부</label> 
 	            		<input type="file" name="spaceEnrollFile" id="spaceEnrollFile" class="upload-hidden">
@@ -102,7 +116,15 @@ function enrollValidate(){
             	<h4>이미지</h4>
             	<p>이미지 사이즈 : 1024*450, 크기 : 10MB 권장(1장당), <span>최대 3장 업로드 가능</span></p>
             	<div class="multipleFile clearfix">
-            		<div id="enrollImg2" class="spaceEnroll-img"></div>
+            		<div id="enrollImg2" class="spaceEnroll-img">
+            		<% for(SpaceImageFile s2 : sImg){
+            			if(s2.getImageRenamedFileName()!=null && s2.getFlag().equals("N")){
+            		%>
+            			<img src="<%=request.getContextPath() %>/upload/host/<%=s2.getImageRenamedFileName() %>" alt="" height="110"/>
+            		<%		
+            			}
+            		} %>
+            		</div>
             		<div class="filebox"> 
 	            		<label for="spaceEnrollFileImg1">파일 첨부1</label> 
 	            		<input type="file" name="spaceEnrollFileImg1" id="spaceEnrollFileImg1" class="upload-hidden">
@@ -116,11 +138,11 @@ function enrollValidate(){
             	<div id="spaceEnroll-wrap">
             		<div class="spaceEnroll">
             			<h5>공간명<span class="req">*</span></h5>
-            			<p><input type="text" name="spaceName" id="spaceName" class="inputStyle dp_block" required  placeholder="공간명을 입력해주세요" /></p>
+            			<p><input type="text" name="spaceName" id="spaceName" class="inputStyle dp_block" value="<%=s.getSpaceName()!=null?s.getSpaceName():""%>" /></p>
             		</div>
             		<div class="spaceEnroll">
             			<h5>공간 슬로건</h5>
-            			<p><input type="text" name="spaceSlogan" id="spaceSlogan" class="inputStyle dp_block" placeholder="ex) 하루 종일 / 인원 무관" /></p>
+            			<p><input type="text" name="spaceSlogan" id="spaceSlogan" class="inputStyle dp_block" value="<%=s.getSpaceSlogan()!=null?s.getSpaceSlogan():""%>" /></p>
             		</div>
             		<div class="spaceEnroll">
             			<h5>공간 소개<span class="req">*</span></h5>
@@ -130,64 +152,65 @@ function enrollValidate(){
             			<h5>수용인원<span class="req">*</span></h5>
             			<p>
             				최소 :&nbsp;
-            				<span class="bookingsrchPrice srchPrice dp_ib"><input type="number" name="minBookingPeople" required id="minBookingPeople" class="dp_block" /></span>
+            				<span class="bookingsrchPrice srchPrice dp_ib"><input type="number" name="minBookingPeople" required id="minBookingPeople" value="<%=s.getMinBookingPeople()%>" class="dp_block" /></span>
             				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;최대 :&nbsp;
-            				<span class="bookingsrchPrice srchPrice dp_ib"><input type="number" name="maxBookingPeople" required id="maxBookingPeople" class="dp_block" /></span>
+            				<span class="bookingsrchPrice srchPrice dp_ib"><input type="number" name="maxBookingPeople" required id="maxBookingPeople" value="<%=s.getMaxBookingPeople()%>" class="dp_block" /></span>
             			</p>
             		</div>
             		<div class="spaceEnroll">
             			<h5>해시태그&nbsp;&nbsp;<span class="req">쉼표(,)로 구분</span></h5>
-            			<p><input type="text" name="hashTag" id="hashTag" class="inputStyle dp_block" placeholder="ex) 홍대, 카페, 홍대카페" /></p>
+            			<p><input type="text" name="hashTag" id="hashTag" class="inputStyle dp_block" value="<%=s.getHashtag()!=null?s.getHashtag():""%>" /></p>
             		</div>
             		<div class="spaceEnroll">
             			<h5>편의시설</h5>
            				<ul class="facility-list clearfix">
                             <li>
-                                <input type="checkbox" name="facility" id="facility0" value="주차">
+                                <input type="checkbox" name="facility" id="facility0" value="주차" <%=s.getSpaceFacilities()!=null&&s.getSpaceFacilities().contains("주차")?"checked":""%>>
                                 <label for="facility0">주차</label>
                             </li>
                             <li>
-                                <input type="checkbox" name="facility" id="facility1" value="흡연">
+                                <input type="checkbox" name="facility" id="facility1" value="흡연" <%=s.getSpaceFacilities()!=null&&s.getSpaceFacilities().contains("흡연")?"checked":""%>>
                                 <label for="facility1">흡연</label>
                             </li>
                             <li>
-                                <input type="checkbox" name="facility" id="facility2" value="와이파이">
+                                <input type="checkbox" name="facility" id="facility2" value="와이파이" <%=s.getSpaceFacilities()!=null&&s.getSpaceFacilities().contains("와이파이")?"checked":""%>>
                                 <label for="facility2">와이파이</label>
                             </li>
                             <li>
-                                <input type="checkbox" name="facility" id="facility3" value="컴퓨터">
+                                <input type="checkbox" name="facility" id="facility3" value="컴퓨터" <%=s.getSpaceFacilities()!=null&&s.getSpaceFacilities().contains("컴퓨터")?"checked":""%>>
                                 <label for="facility3">컴퓨터</label>
                             </li>
                             <li>
-                                <input type="checkbox" name="facility" id="facility4" value="음식물 반입금지">
+                                <input type="checkbox" name="facility" id="facility4" value="음식물 반입금지" <%=s.getSpaceFacilities()!=null&&s.getSpaceFacilities().contains("음식물 반입금지")?"checked":""%>>
                                 <label for="facility4">음식물 반입금지</label>
                             </li>
                             <li>
-                                <input type="checkbox" name="facility" id="facility5" value="콘센트">
+                                <input type="checkbox" name="facility" id="facility5" value="콘센트" <%=s.getSpaceFacilities()!=null&&s.getSpaceFacilities().contains("콘센트")?"checked":""%>>
                                 <label for="facility5">콘센트</label>
                             </li>
                             <li>
-                                <input type="checkbox" name="facility" id="facility6" value="의자/테이블">
+                                <input type="checkbox" name="facility" id="facility6" value="의자/테이블" <%=s.getSpaceFacilities()!=null&&s.getSpaceFacilities().contains("의자/테이블")?"checked":""%>>
                                 <label for="facility6">의자/테이블</label>
                             </li>
                             <li>
-                                <input type="checkbox" name="facility" id="facility7" value="반려동물 동반 가능">
+                                <input type="checkbox" name="facility" id="facility7" value="반려동물 동반 가능" <%=s.getSpaceFacilities()!=null&&s.getSpaceFacilities().contains("반려동물 동반 가능")?"checked":""%>>
                                 <label for="facility7">반려동물 동반 가능</label>
                             </li>
                         </ul>
             		</div>
             		<div class="spaceEnroll">
             			<h5>가격<span class="req">*</span></h5>
-            			<p class="srchPrice"><input type="number" name="spaceEnrollPrice" required id="spaceEnrollPrice" class="dp_block" /></p>
+            			<p class="srchPrice">
+            			<input type="number" name="spaceEnrollPrice" required id="spaceEnrollPrice" class="dp_block" /></p>
             		</div>
             		<div class="spaceEnroll enrollDayOff">
             			<h5>이벤트</h5>
             			<p>이벤트 여부</p>
-            			<input type="checkbox" name="spaceEnrollEvent" id="spaceEnrollEvent" />
+            			<input type="checkbox" name="spaceEnrollEvent" id="spaceEnrollEvent"/>
             			<label for="spaceEnrollEvent">적용</label>
             			<p>정기/비정기</p>
             			<div class="spaceEnrollEvent">
-            				<input type="checkbox" name="spaceEnrollEventType" disabled="disabled" id="spaceEnrollAlwaysEvent" value="정기 이벤트" />
+            				<input type="checkbox" name="spaceEnrollEventType" id="spaceEnrollAlwaysEvent" value="정기 이벤트" />
             				<label for="spaceEnrollAlwaysEvent" class="dp_ib">정기 이벤트</label>
             				<div class="custom-select">
             					<select name="spaceEnrollAlwaysEventType" id="spaceEnrollAlwaysEventType" class="dp_block">
@@ -221,63 +244,68 @@ function enrollValidate(){
             		</div>
             		<div class="spaceEnroll">
             			<h5>예약 가능 시간<span class="req">*</span></h5>
+            			<%
+            				String[] bookingTime = s.getBookingTime().split("~");
+            			%>
             			<div>
             				<div class="custom-select">
             					<select name="spaceEnrollTime1" required id="spaceEnrollTime1" class="dp_block">
-	                            	<option value="00:00">00:00</option>
-	                            	<option value="01:00">01:00</option>
-	                            	<option value="02:00">02:00</option>
-	                            	<option value="03:00">03:00</option>
-	                            	<option value="04:00">04:00</option>
-	                            	<option value="05:00">05:00</option>
-	                            	<option value="06:00">06:00</option>
-	                            	<option value="07:00">07:00</option>
-	                            	<option value="08:00">08:00</option>
-	                            	<option value="09:00">09:00</option>
-	                            	<option value="10:00">10:00</option>
-	                            	<option value="11:00">11:00</option>
-	                            	<option value="12:00">12:00</option>
-	                            	<option value="13:00">13:00</option>
-	                            	<option value="14:00">14:00</option>
-	                            	<option value="15:00">15:00</option>
-	                            	<option value="16:00">16:00</option>
-	                            	<option value="17:00">17:00</option>
-	                            	<option value="18:00">18:00</option>
-	                            	<option value="19:00">19:00</option>
-	                            	<option value="20:00">20:00</option>
-	                            	<option value="21:00">21:00</option>
-	                            	<option value="22:00">22:00</option>
-	                            	<option value="23:00">23:00</option>
-	                            	<option value="24:00">24:00</option>
+            						<option value="">선택</option>
+	                            	<option value="00:00" <%=bookingTime[0].contains("00:00")?"selected":"" %>>00:00</option>
+	                            	<option value="01:00" <%=bookingTime[0].contains("01:00")?"selected":"" %>>01:00</option>
+	                            	<option value="02:00" <%=bookingTime[0].contains("02:00")?"selected":"" %>>02:00</option>
+	                            	<option value="03:00" <%=bookingTime[0].contains("03:00")?"selected":"" %>>03:00</option>
+	                            	<option value="04:00" <%=bookingTime[0].contains("04:00")?"selected":"" %>>04:00</option>
+	                            	<option value="05:00" <%=bookingTime[0].contains("05:00")?"selected":"" %>>05:00</option>
+	                            	<option value="06:00" <%=bookingTime[0].contains("06:00")?"selected":"" %>>06:00</option>
+	                            	<option value="07:00" <%=bookingTime[0].contains("07:00")?"selected":"" %>>07:00</option>
+	                            	<option value="08:00" <%=bookingTime[0].contains("08:00")?"selected":"" %>>08:00</option>
+	                            	<option value="09:00" <%=bookingTime[0].contains("09:00")?"selected":"" %>>09:00</option>
+	                            	<option value="10:00" <%=bookingTime[0].contains("10:00")?"selected":"" %>>10:00</option>
+	                            	<option value="11:00" <%=bookingTime[0].contains("11:00")?"selected":"" %>>11:00</option>
+	                            	<option value="12:00" <%=bookingTime[0].contains("12:00")?"selected":"" %>>12:00</option>
+	                            	<option value="13:00" <%=bookingTime[0].contains("13:00")?"selected":"" %>>13:00</option>
+	                            	<option value="14:00" <%=bookingTime[0].contains("14:00")?"selected":"" %>>14:00</option>
+	                            	<option value="15:00" <%=bookingTime[0].contains("15:00")?"selected":"" %>>15:00</option>
+	                            	<option value="16:00" <%=bookingTime[0].contains("16:00")?"selected":"" %>>16:00</option>
+	                            	<option value="17:00" <%=bookingTime[0].contains("17:00")?"selected":"" %>>17:00</option>
+	                            	<option value="18:00" <%=bookingTime[0].contains("18:00")?"selected":"" %>>18:00</option>
+	                            	<option value="19:00" <%=bookingTime[0].contains("19:00")?"selected":"" %>>19:00</option>
+	                            	<option value="20:00" <%=bookingTime[0].contains("20:00")?"selected":"" %>>20:00</option>
+	                            	<option value="21:00" <%=bookingTime[0].contains("21:00")?"selected":"" %>>21:00</option>
+	                            	<option value="22:00" <%=bookingTime[0].contains("22:00")?"selected":"" %>>22:00</option>
+	                            	<option value="23:00" <%=bookingTime[0].contains("23:00")?"selected":"" %>>23:00</option>
+	                            	<option value="24:00" <%=bookingTime[0].contains("24:00")?"selected":"" %>>24:00</option>
 	                            </select>
             				</div>
             				<div class="custom-select">
             					<select name="spaceEnrollTime2" required id="spaceEnrollTime2" class="dp_block">
-	                            	<option value="00:00">00:00</option>
-	                            	<option value="01:00">01:00</option>
-	                            	<option value="02:00">02:00</option>
-	                            	<option value="03:00">03:00</option>
-	                            	<option value="04:00">04:00</option>
-	                            	<option value="05:00">05:00</option>
-	                            	<option value="06:00">06:00</option>
-	                            	<option value="07:00">07:00</option>
-	                            	<option value="08:00">08:00</option>
-	                            	<option value="09:00">09:00</option>
-	                            	<option value="10:00">10:00</option>
-	                            	<option value="11:00">11:00</option>
-	                            	<option value="12:00">12:00</option>
-	                            	<option value="13:00">13:00</option>
-	                            	<option value="14:00">14:00</option>
-	                            	<option value="15:00">15:00</option>
-	                            	<option value="16:00">16:00</option>
-	                            	<option value="17:00">17:00</option>
-	                            	<option value="18:00">18:00</option>
-	                            	<option value="19:00">19:00</option>
-	                            	<option value="20:00">20:00</option>
-	                            	<option value="21:00">21:00</option>
-	                            	<option value="22:00">22:00</option>
-	                            	<option value="23:00">23:00</option>
-	                            	<option value="24:00">24:00</option>
+	                            	<option value="">선택</option>
+	                            	<option value="00:00" <%=bookingTime[1].contains("00:00")?"selected":"" %>>00:00</option>
+	                            	<option value="01:00" <%=bookingTime[1].contains("01:00")?"selected":"" %>>01:00</option>
+	                            	<option value="02:00" <%=bookingTime[1].contains("02:00")?"selected":"" %>>02:00</option>
+	                            	<option value="03:00" <%=bookingTime[1].contains("03:00")?"selected":"" %>>03:00</option>
+	                            	<option value="04:00" <%=bookingTime[1].contains("04:00")?"selected":"" %>>04:00</option>
+	                            	<option value="05:00" <%=bookingTime[1].contains("05:00")?"selected":"" %>>05:00</option>
+	                            	<option value="06:00" <%=bookingTime[1].contains("06:00")?"selected":"" %>>06:00</option>
+	                            	<option value="07:00" <%=bookingTime[1].contains("07:00")?"selected":"" %>>07:00</option>
+	                            	<option value="08:00" <%=bookingTime[1].contains("08:00")?"selected":"" %>>08:00</option>
+	                            	<option value="09:00" <%=bookingTime[1].contains("09:00")?"selected":"" %>>09:00</option>
+	                            	<option value="10:00" <%=bookingTime[1].contains("10:00")?"selected":"" %>>10:00</option>
+	                            	<option value="11:00" <%=bookingTime[1].contains("11:00")?"selected":"" %>>11:00</option>
+	                            	<option value="12:00" <%=bookingTime[1].contains("12:00")?"selected":"" %>>12:00</option>
+	                            	<option value="13:00" <%=bookingTime[1].contains("13:00")?"selected":"" %>>13:00</option>
+	                            	<option value="14:00" <%=bookingTime[1].contains("14:00")?"selected":"" %>>14:00</option>
+	                            	<option value="15:00" <%=bookingTime[1].contains("15:00")?"selected":"" %>>15:00</option>
+	                            	<option value="16:00" <%=bookingTime[1].contains("16:00")?"selected":"" %>>16:00</option>
+	                            	<option value="17:00" <%=bookingTime[1].contains("17:00")?"selected":"" %>>17:00</option>
+	                            	<option value="18:00" <%=bookingTime[1].contains("18:00")?"selected":"" %>>18:00</option>
+	                            	<option value="19:00" <%=bookingTime[1].contains("19:00")?"selected":"" %>>19:00</option>
+	                            	<option value="20:00" <%=bookingTime[1].contains("20:00")?"selected":"" %>>20:00</option>
+	                            	<option value="21:00" <%=bookingTime[1].contains("21:00")?"selected":"" %>>21:00</option>
+	                            	<option value="22:00" <%=bookingTime[1].contains("22:00")?"selected":"" %>>22:00</option>
+	                            	<option value="23:00" <%=bookingTime[1].contains("23:00")?"selected":"" %>>23:00</option>
+	                            	<option value="24:00" <%=bookingTime[1].contains("24:00")?"selected":"" %>>24:00</option>
 	                            </select>
             				</div>
             			</div>

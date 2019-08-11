@@ -224,6 +224,7 @@ function enrollValidate(){
             			<div>
             				<div class="custom-select">
             					<select name="spaceEnrollTime1" required id="spaceEnrollTime1" class="dp_block">
+	                            	<option value="">선택</option>
 	                            	<option value="00:00">00:00</option>
 	                            	<option value="01:00">01:00</option>
 	                            	<option value="02:00">02:00</option>
@@ -253,6 +254,7 @@ function enrollValidate(){
             				</div>
             				<div class="custom-select">
             					<select name="spaceEnrollTime2" required id="spaceEnrollTime2" class="dp_block">
+	                            	<option value="">선택</option>
 	                            	<option value="00:00">00:00</option>
 	                            	<option value="01:00">01:00</option>
 	                            	<option value="02:00">02:00</option>

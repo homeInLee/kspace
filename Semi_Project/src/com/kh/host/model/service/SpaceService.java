@@ -1,18 +1,18 @@
 package com.kh.host.model.service;
 
+import static com.kh.common.JDBCTemplate.close;
+import static com.kh.common.JDBCTemplate.commit;
+import static com.kh.common.JDBCTemplate.getConnection;
+import static com.kh.common.JDBCTemplate.rollback;
+
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.List;
 
-import com.kh.customer.model.dao.BookingDAO;
 import com.kh.host.model.dao.SpaceDAO;
 import com.kh.host.model.vo.Space;
 import com.kh.host.model.vo.SpaceDayOff;
 import com.kh.host.model.vo.SpaceImageFile;
 import com.kh.host.model.vo.SpacePrice;
-
-import static com.kh.common.JDBCTemplate.*;
 
 public class SpaceService {
 
@@ -77,5 +77,18 @@ public class SpaceService {
 			rollback(conn);
 		return result;
 	}
+	public List<SpaceImageFile> selectSpaceImgBySpaceNo(int spaceNo) {
+		Connection conn = getConnection();
+		List<SpaceImageFile> spaceImg = new SpaceDAO().selectSpaceImgBySpaceNo(conn, spaceNo);
+		close(conn);
+		return spaceImg;
+	}
+	public List<SpacePrice> selectSpacePriceBySpaceNo(int spaceNo) {
+		Connection conn = getConnection();
+		List<SpacePrice> spacePrice = new SpaceDAO().selectSpacePriceBySpaceNo(conn, spaceNo);
+		close(conn);
+		return spacePrice;
+	}
+	
 	
 }

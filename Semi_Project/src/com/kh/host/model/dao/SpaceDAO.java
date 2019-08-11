@@ -238,4 +238,59 @@ public class SpaceDAO {
 		return result;
 	}
 
+	public List<SpaceImageFile> selectSpaceImgBySpaceNo(Connection conn, int spaceNo) {
+		List<SpaceImageFile> spaceImg = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectSpaceImgBySpaceNo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, spaceNo);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				SpaceImageFile s = new SpaceImageFile();
+				s.setSpaceNo(rset.getInt("space_no"));
+				s.setImageOriginalFileName(rset.getString("image_original_filename"));
+				s.setImageRenamedFileName(rset.getString("image_renamed_filename"));
+				s.setFlag(rset.getString("flag"));
+				spaceImg.add(s);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return spaceImg;
+	}
+
+	public List<SpacePrice> selectSpacePriceBySpaceNo(Connection conn, int spaceNo) {
+		List<SpacePrice> spacePrice = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectSpacePriceBySpaceNo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, spaceNo);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				SpacePrice s = new SpacePrice();
+				s.setSpaceNo(rset.getInt("space_no"));
+				s.setPriceEvent(rset.getString("price_event"));
+				s.setSpacePrice(rset.getInt("space_price"));
+				spacePrice.add(s);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return spacePrice;
+	}
+
 }
