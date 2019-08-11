@@ -162,6 +162,7 @@ $(()=> {
 	                <li><a href="" class="dp_block">추천 공간</a></li>
 	                <li><a href="" class="dp_block">공지사항</a></li>
 	                <li><a href="<%=request.getContextPath()%>/banner/information" class="dp_block">배너 등록</a></li>
+	                <li><a href="<%=request.getContextPath()%>/admin/spaceChkList" class="dp_block">관리자 공간 검수 리스트</a></li>
 	            </ul>
 	        </nav>
 	        <div id="nav-bottom" class="txt_center">

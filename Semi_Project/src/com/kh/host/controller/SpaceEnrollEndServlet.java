@@ -244,6 +244,13 @@ public class SpaceEnrollEndServlet extends HttpServlet {
 			//이벤트 여부 체크
 			SpacePrice eventPrice = new SpacePrice();
 			int eventResult = 0;
+			
+			//이벤트가 있어도 원래 가격은 들어가야 함.
+			eventPrice.setSpaceNo(spaceNo);
+			//eventPrice.setPriceEvent(enrollEvent);
+			eventPrice.setSpacePrice(enrollPrice);
+			eventResult = new SpaceService().insertPrice(eventPrice);
+			
 			if(enrollEvent!=null) { //이벤트가 있는 경우
 				if(enrollEventType.contains("비정기 이벤트") && enrollEventType.contains("정기 이벤트")) { //정기, 비정기이벤트
 					System.out.println("이벤트 둘 다 있음");
@@ -314,11 +321,6 @@ public class SpaceEnrollEndServlet extends HttpServlet {
 						e.printStackTrace();
 					}
 				}
-			} else { //이벤트 없는 경우
-				eventPrice.setSpaceNo(spaceNo);
-				eventPrice.setPriceEvent(enrollEvent);
-				eventPrice.setSpacePrice(enrollPrice);
-				eventResult = new SpaceService().insertPrice(eventPrice);
 			}
 			
 			if(eventResult > 0) {
