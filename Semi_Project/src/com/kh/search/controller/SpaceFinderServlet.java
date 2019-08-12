@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.kh.host.model.vo.Space;
+import com.kh.host.model.vo.SpaceJoin;
 import com.kh.search.model.service.SearchService;
 
 /**
@@ -34,7 +34,14 @@ public class SpaceFinderServlet extends HttpServlet {
 		
 		String spaceSrch = request.getParameter("spaceSrch");
 		
-		List<Space> list = new SearchService().selectSpacelist(spaceSrch);
+		if(spaceSrch.equals("")) {
+			request.setAttribute("msg", "검색어를 입력해주세요.");
+			request.setAttribute("loc", "/");
+			request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp").forward(request, response);
+			return;
+		}
+		
+		List<SpaceJoin> list = new SearchService().selectSpacelist(spaceSrch);
 		
 		
 		request.setAttribute("list", list);

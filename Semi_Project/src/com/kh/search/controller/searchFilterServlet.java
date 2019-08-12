@@ -9,20 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.kh.search.model.dao.SearchDAO;
+import com.google.gson.Gson;
+import com.kh.host.model.vo.SpaceJoin;
 import com.kh.search.model.service.SearchService;
 
 /**
- * Servlet implementation class AutoCompleteServlet
+ * Servlet implementation class searchFilterServlet
  */
-@WebServlet("/search/autoComplete.do")
-public class AutoCompleteServlet extends HttpServlet {
+@WebServlet("/search/searchFilter")
+public class searchFilterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AutoCompleteServlet() {
+    public searchFilterServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,38 +32,28 @@ public class AutoCompleteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		response.setContentType("text/csv; charset=utf-8");
+		int srchPrice1 = 0;
+		int srchPrice2 = 0;
 		
+		try {
+		
+		srchPrice1 = Integer.parseInt(request.getParameter("srchPrice1"));
+		srchPrice2 = Integer.parseInt(request.getParameter("srchPrice2"));
+		
+		} catch(NumberFormatException e) {
+			e.printStackTrace();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		String[] facility = request.getParameterValues("facility");
+		List<SpaceJoin> spaceList = (List<SpaceJoin>)request.getAttribute("spaceList");
 		String spaceSrch = request.getParameter("spaceSrch");
 		
-		List<String> nameList = new SearchService().selectByName(spaceSrch);
-		List<String> hashList = new SearchService().selectByHash(spaceSrch);
-		List<String> placeList = new SearchService().selectByPlace(spaceSrch);
-		
-		String csv = "";
-		for(int i=0; i<nameList.size(); i++) {
-			if(i!=0)
-				csv += ",";
-			
-			csv += nameList.get(i);
-		}
-		
-		for(int i=0; i<hashList.size(); i++) {
-			if(csv!=null)
-				csv += ",";
-			
-			csv += hashList.get(i);
-		}
-		
-		for(int i=0; i<placeList.size(); i++) {
-			if(csv!=null)
-				csv += ",";
-			
-			csv += placeList.get(i);
-		}
-		
-		response.getWriter().append(csv);
+		List<SpaceJoin> list = new SearchService().selectFilterList(srchPrice1, srchPrice2, facility, spaceList);
+
+		request.setAttribute("list", list);
+		request.setAttribute("spaceSrch", spaceSrch);
+		request.getRequestDispatcher("/WEB-INF/views/search/spaceFilter.jsp").forward(request, response);
 	}
 
 	/**

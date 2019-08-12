@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Properties;
 
 import com.kh.host.model.vo.Space;
+import com.kh.host.model.vo.SpaceJoin;
 
 public class SearchDAO {
 	
@@ -103,8 +104,8 @@ public class SearchDAO {
 		return hashList;
 	}
 
-	public List<Space> selectSpacelist(Connection conn, String spaceSrch) {
-		List<Space> spaceList = new ArrayList<>();
+	public List<SpaceJoin> selectSpacelist(Connection conn, String spaceSrch) {
+		List<SpaceJoin> placeList = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String sql = prop.getProperty("selectSpacelist");
@@ -113,11 +114,12 @@ public class SearchDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, "%"+spaceSrch+"%");
 			pstmt.setString(2, "%"+spaceSrch+"%");
+			pstmt.setString(3, "%"+spaceSrch+"%");
 			
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				Space s = new Space();
+				SpaceJoin s = new SpaceJoin();
 				s.setSpaceNo(rset.getInt("space_no"));
 				s.setCompanyNo(rset.getInt("company_no"));
 				s.setSpaceIntro(rset.getString("space_intro"));
@@ -130,8 +132,10 @@ public class SearchDAO {
 				s.setSpaceName(rset.getString("space_name"));
 				s.setSpaceFacilities(rset.getString("space_facilities"));
 				s.setSpaceSlogan(rset.getString("space_slogan"));
+				s.setCompanyPlace(rset.getString("company_place"));
+				s.setSpacePrice(rset.getInt("space_price"));
 				
-				spaceList.add(s);
+				placeList.add(s);
 			}
 			
 		} catch(Exception e) {
@@ -141,7 +145,91 @@ public class SearchDAO {
 			close(pstmt);
 		}
 		
-		return spaceList;
+		return placeList;
+	}
+
+	public List<String> selectByPlace(Connection conn, String spaceSrch) {
+		List<String> placeList = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		HashSet<String> distinctData = null;
+		String sql = prop.getProperty("selectByPlace");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+spaceSrch+"%");
+			
+			rset = pstmt.executeQuery();
+			placeList = new ArrayList<>();
+			
+			while(rset.next()) {
+				placeList.add(rset.getString("company_place"));
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		distinctData = new HashSet<String>(placeList);
+		placeList = new ArrayList<String>(distinctData);
+		
+		return placeList;
+	}
+
+	public List<SpaceJoin> selectFilterList(Connection conn, int srchPrice1, int srchPrice2, String[] facility,
+			List<SpaceJoin> spaceList) {
+		List<SpaceJoin> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectFilterList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			if(srchPrice1 != 0 && srchPrice2 != 0) {
+			pstmt.setInt(1, srchPrice1);
+			pstmt.setInt(2, srchPrice2);
+			for(int i=0; i<facility.length; i++) {
+				pstmt.setString(i+3, "%"+facility[i]+"%");				
+			}
+			}
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				SpaceJoin s = new SpaceJoin();
+				s.setSpaceNo(rset.getInt("space_no"));
+				s.setCompanyNo(rset.getInt("company_no"));
+				s.setSpaceIntro(rset.getString("space_intro"));
+				s.setBookingTime(rset.getString("booking_time"));
+				s.setMaxBookingPeople(rset.getInt("max_booking_people"));
+				s.setMinBookingPeople(rset.getInt("min_booking_people"));
+				s.setSpaceThema(rset.getString("space_thema"));
+				s.setSpaceCheck(rset.getString("space_check"));
+				s.setHashtag(rset.getString("hashtag"));
+				s.setSpaceName(rset.getString("space_name"));
+				s.setSpaceFacilities(rset.getString("space_facilities"));
+				s.setSpaceSlogan(rset.getString("space_slogan"));
+				s.setCompanyPlace(rset.getString("company_place"));
+				s.setSpacePrice(rset.getInt("space_price"));
+				
+				for(int i=0; i<spaceList.size(); i++) {
+					if(spaceList.get(i).getSpaceNo() == s.getSpaceNo()) {
+						list.add(s);
+					}
+				}
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
 	}
 
 }

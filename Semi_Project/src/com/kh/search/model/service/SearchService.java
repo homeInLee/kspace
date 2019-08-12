@@ -1,12 +1,13 @@
 package com.kh.search.model.service;
 
+import static com.kh.common.JDBCTemplate.close;
+import static com.kh.common.JDBCTemplate.getConnection;
+
 import java.sql.Connection;
 import java.util.List;
 
-import com.kh.host.model.vo.Space;
+import com.kh.host.model.vo.SpaceJoin;
 import com.kh.search.model.dao.SearchDAO;
-
-import static com.kh.common.JDBCTemplate.*;
 
 public class SearchService {
 
@@ -24,9 +25,23 @@ public class SearchService {
 		return list;
 	}
 
-	public List<Space> selectSpacelist(String spaceSrch) {
+	public List<SpaceJoin> selectSpacelist(String spaceSrch) {
 		Connection conn = getConnection();
-		List<Space> list = new SearchDAO().selectSpacelist(conn, spaceSrch);
+		List<SpaceJoin> list = new SearchDAO().selectSpacelist(conn, spaceSrch);
+		close(conn);
+		return list;
+	}
+
+	public List<String> selectByPlace(String spaceSrch) {
+		Connection conn = getConnection();
+		List<String> list = new SearchDAO().selectByPlace(conn, spaceSrch);
+		close(conn);
+		return list;
+	}
+
+	public List<SpaceJoin> selectFilterList(int srchPrice1, int srchPrice2, String[] facility, List<SpaceJoin> spaceList) {
+		Connection conn = getConnection();
+		List<SpaceJoin> list = new SearchDAO().selectFilterList(conn, srchPrice1, srchPrice2, facility, spaceList);
 		close(conn);
 		return list;
 	}
