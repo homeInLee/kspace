@@ -24,44 +24,50 @@
 	String minnotAlwaysEventDate = "";
 	String maxnotAlwaysEventDate = "";
 	
-	for(SpacePrice sp : sPrice){
-		if(sp.getPriceEvent()!=null){
-			bool = true;
-			if(sp.getPriceEvent().contains("일")) {
-				alwaysEvent = true;
-				alwaysEventType = "1개월";
-				if(sp.getPriceEvent().contains("요일")){
-					alwaysEventType = "1주일";
+	if(!sPrice.isEmpty()){
+		for(SpacePrice sp : sPrice){
+			if(sp.getPriceEvent()!=null){
+				bool = true;
+				if(sp.getPriceEvent().contains("일")) {
+					alwaysEvent = true;
+					alwaysEventType = "1개월";
+					if(sp.getPriceEvent().contains("요일")){
+						alwaysEventType = "1주일";
+					}
+					alwaysEventPrice = sp.getSpacePrice();
+					alwaysEventDate = sp.getPriceEvent();
+				} else if(sp.getPriceEvent().contains("-")) {
+					notAlwaysEvent = true;
+					notAlwaysEventDate.add(sp.getPriceEvent());
 				}
-				alwaysEventPrice = sp.getSpacePrice();
-				alwaysEventDate = sp.getPriceEvent();
-			} else if(sp.getPriceEvent().contains("-")) {
-				notAlwaysEvent = true;
-				notAlwaysEventDate.add(sp.getPriceEvent());
+			} else if(sp.getPriceEvent()==null) {
+				spacePrice = sp.getSpacePrice();
 			}
-		} else if(sp.getPriceEvent()==null) {
-			spacePrice = sp.getSpacePrice();
 		}
 	}
 	
-	for(int i=0; i<notAlwaysEventDate.size(); i++){
-		minnotAlwaysEventDate = notAlwaysEventDate.get(0);
-		maxnotAlwaysEventDate = notAlwaysEventDate.get(notAlwaysEventDate.size()-1);
+	if(!notAlwaysEventDate.isEmpty()){
+		for(int i=0; i<notAlwaysEventDate.size(); i++){
+			minnotAlwaysEventDate = notAlwaysEventDate.get(0);
+			maxnotAlwaysEventDate = notAlwaysEventDate.get(notAlwaysEventDate.size()-1);
+		}
 	}
 	
 	String sDayOffDate = "";
 	String sDayOffEvent = "";
-	for(SpaceDayOff sdo :sDayOff){
-		if(sdo.getMaxSpaceDayOff()!=null){
-			sDayOffDate = sdo.getMaxSpaceDayOff();
-		}
-		if(sdo.getDayOffEvent()!=null){
-			sDayOffEvent = sdo.getDayOffEvent();
+	if(!sDayOff.isEmpty()){
+		for(SpaceDayOff sdo :sDayOff){
+			if(sdo.getMaxSpaceDayOff()!=null){
+				sDayOffDate = sdo.getMaxSpaceDayOff();
+			}
+			if(sdo.getDayOffEvent()!=null){
+				sDayOffEvent = sdo.getDayOffEvent();
+			}
 		}
 	}
 	
 	String[] sDayOffDateArr = null;
-	if(!sDayOffDate.equals("")){
+	if(!sDayOffDate.equals("") && sDayOffDateArr!=null){
 		sDayOffDateArr = sDayOffDate.split(",");
 	}
 %>
@@ -107,9 +113,16 @@ function enrollValidate(){
 	
 	return true;
 }
+
+function goDelMySpace(){
+	
+}
 </script>
 
 <div class="sub_container">
+	<form action="<%=request.getContextPath() %>/host/delMySpace" name="delMySpaceFrm" method="post">
+		<input type="hidden" name="" value="" />
+	</form>
     <section class="subPage spaceEnroll">
         <article>
         	<div class="spaceEnrollTit clearfix">
@@ -117,7 +130,7 @@ function enrollValidate(){
         		<p class="req">필수 선택</p>
         	</div>
             <p class="req">신중하게 공간 유형을 선택해주세요!</p>
-            <form action="<%=request.getContextPath() %>/host/spaceEnrollEnd" name="spaceEnrollEndFrm" 
+            <form action="<%=request.getContextPath() %>/host/spaceUpdate" name="spaceUpdateFrm" 
             		method="post" encType="multipart/form-data" onsubmit="return enrollValidate();">
             	<!-- 호스트 아이디 value값 바꾸기 -->
             	<input type="hidden" name="hostId" value="JeonGaNe" />
@@ -373,38 +386,38 @@ function enrollValidate(){
             			<h5>휴무일</h5>
             			<ul class="clearfix">
             				<li>
-            					<input type="checkbox" name="spaceEnrollDayOff" id="dayOff0" value="일요일" <%=sDayOffDate.contains("일요일")?"checked":"" %> />
+            					<input type="checkbox" name="spaceEnrollDayOff" id="dayOff0" value="일요일" <%=!sDayOffDate.equals("") && sDayOffDate.contains("일요일")?"checked":"" %> />
             					<label for="dayOff0">일요일</label>
             				</li>
             				<li>
-            					<input type="checkbox" name="spaceEnrollDayOff" id="dayOff1" value="월요일" <%=sDayOffDate.contains("월요일")?"checked":"" %> />
+            					<input type="checkbox" name="spaceEnrollDayOff" id="dayOff1" value="월요일" <%=!sDayOffDate.equals("") && sDayOffDate.contains("월요일")?"checked":"" %> />
             					<label for="dayOff1">월요일</label>
             				</li>
             				<li>
-            					<input type="checkbox" name="spaceEnrollDayOff" id="dayOff2" value="화요일" <%=sDayOffDate.contains("화요일")?"checked":"" %> />
+            					<input type="checkbox" name="spaceEnrollDayOff" id="dayOff2" value="화요일" <%=!sDayOffDate.equals("") && sDayOffDate.contains("화요일")?"checked":"" %> />
             					<label for="dayOff2">화요일</label>
             				</li>
             				<li>
-            					<input type="checkbox" name="spaceEnrollDayOff" id="dayOff3" value="수요일" <%=sDayOffDate.contains("수요일")?"checked":"" %> />
+            					<input type="checkbox" name="spaceEnrollDayOff" id="dayOff3" value="수요일" <%=!sDayOffDate.equals("") && sDayOffDate.contains("수요일")?"checked":"" %> />
             					<label for="dayOff3">수요일</label>
             				</li>
             				<li>
-            					<input type="checkbox" name="spaceEnrollDayOff" id="dayOff4" value="목요일" <%=sDayOffDate.contains("목요일")?"checked":"" %> />
+            					<input type="checkbox" name="spaceEnrollDayOff" id="dayOff4" value="목요일" <%=!sDayOffDate.equals("") && sDayOffDate.contains("목요일")?"checked":"" %> />
             					<label for="dayOff4">목요일</label>
             				</li>
             				<li>
-            					<input type="checkbox" name="spaceEnrollDayOff" id="dayOff5" value="금요일" <%=sDayOffDate.contains("금요일")?"checked":"" %> />
+            					<input type="checkbox" name="spaceEnrollDayOff" id="dayOff5" value="금요일" <%=!sDayOffDate.equals("") && sDayOffDate.contains("금요일")?"checked":"" %> />
             					<label for="dayOff5">금요일</label>
             				</li>
             				<li>
-            					<input type="checkbox" name="spaceEnrollDayOff" id="dayOff6" value="토요일" <%=sDayOffDate.contains("토요일")?"checked":"" %> />
+            					<input type="checkbox" name="spaceEnrollDayOff" id="dayOff6" value="토요일" <%=!sDayOffDate.equals("") && sDayOffDate.contains("토요일")?"checked":"" %> />
             					<label for="dayOff6">토요일</label>
             				</li>
             				<li class="clearfix etcDayOff">
-            					<input type="checkbox" name="spaceEnrollDayOff" id="dayOff7" value="기타" <%=sDayOffDate.contains("-")?"checked":"" %> />
+            					<input type="checkbox" name="spaceEnrollDayOff" id="dayOff7" value="기타" <%=!sDayOffDate.equals("") && sDayOffDate.contains("-")?"checked":"" %> />
             					<label for="dayOff7">기타</label>
             					<input type="text" name="spaceEnrollDayOffETC" disabled="disabled" id="spaceEnrollDayOffETC" 
-            					value="<%=sDayOffDateArr[sDayOffDateArr.length-1] %>" placeholder="ex) 2019-08-07 ~ 2019-08-10" />
+            					value="<%=sDayOffDateArr!=null?sDayOffDateArr[sDayOffDateArr.length-1]:"" %>" placeholder="ex) 2019-08-07 ~ 2019-08-10" />
             				</li>
             			</ul>
             		</div>
@@ -414,8 +427,8 @@ function enrollValidate(){
             		</div>
             	</div>
             	<div class="spaceEnroll-btn txt_center clearfix">
-            		<input type="submit" value="검수 신청" class="dp_ib fw600"/>
-            		<a href="<%=request.getContextPath() %>" class="dp_ib fw600">취소</a>
+            		<input type="submit" value="검수 수정" class="dp_ib fw600"/>
+            		<a href="javascript:goDelMySpace();" class="dp_ib fw600">삭제</a>
             	</div>
             </form>
         </article>
