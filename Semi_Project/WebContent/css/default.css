@@ -69,7 +69,7 @@ textarea {resize: none;}
 }
 
 .dp_ib {
-    display: inline-block !important;
+    display: inline-block;
 }
 
 .dp_inline {

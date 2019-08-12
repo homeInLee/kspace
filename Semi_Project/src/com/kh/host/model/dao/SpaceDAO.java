@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Properties;
 
 import com.kh.host.model.vo.Space;
+import com.kh.host.model.vo.SpaceDayOff;
+import com.kh.host.model.vo.SpaceImageFile;
+import com.kh.host.model.vo.SpacePrice;
 
 public class SpaceDAO {
 	
@@ -96,6 +99,198 @@ public class SpaceDAO {
 		}
 		
 		return s;
+	}
+
+	public int insertSpace(Connection conn, Space space) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertSpace");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, space.getCompanyNo());
+			pstmt.setString(2, space.getSpaceIntro());
+			pstmt.setString(3, space.getBookingTime());
+			pstmt.setInt(4, space.getMaxBookingPeople());
+			pstmt.setInt(5, space.getMinBookingPeople());
+			pstmt.setString(6, space.getSpaceThema());
+			pstmt.setString(7, space.getHashtag());
+			pstmt.setString(8, space.getSpaceName());
+			pstmt.setString(9, space.getSpaceFacilities());
+			pstmt.setString(10, space.getSpaceSlogan());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int selectCompanyNo(Connection conn, String userId) {
+		int companyNo = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectCompanyNo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				companyNo = rset.getInt("A");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return companyNo;
+	}
+
+	public int selectSpaceLastSeq(Connection conn) {
+		int spaceNo = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectSpaceLastSeq");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				spaceNo = rset.getInt("A");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return spaceNo;
+	}
+
+	public int insertDayOff(Connection conn, int spaceNo, SpaceDayOff dayoff) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertDayOff");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, spaceNo);
+			pstmt.setString(2, dayoff.getDayOffEvent());
+			pstmt.setString(3, dayoff.getMaxSpaceDayOff());
+			result = pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int insertPrice(Connection conn, SpacePrice eventPrice) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertPrice");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, eventPrice.getSpaceNo());
+			pstmt.setString(2, eventPrice.getPriceEvent());
+			pstmt.setInt(3, eventPrice.getSpacePrice());
+			result = pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int insertSpaceImg(Connection conn, SpaceImageFile spaceImg) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertSpaceImg");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, spaceImg.getSpaceNo());
+			pstmt.setString(2, spaceImg.getImageOriginalFileName());
+			pstmt.setString(3, spaceImg.getImageRenamedFileName());
+			if(spaceImg.getFlag()!=null) {
+				pstmt.setString(4, spaceImg.getFlag());
+			} else {
+				pstmt.setString(4, "Y");
+			}
+			result = pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public List<SpaceImageFile> selectSpaceImgBySpaceNo(Connection conn, int spaceNo) {
+		List<SpaceImageFile> spaceImg = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectSpaceImgBySpaceNo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, spaceNo);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				SpaceImageFile s = new SpaceImageFile();
+				s.setSpaceNo(rset.getInt("space_no"));
+				s.setImageOriginalFileName(rset.getString("image_original_filename"));
+				s.setImageRenamedFileName(rset.getString("image_renamed_filename"));
+				s.setFlag(rset.getString("flag"));
+				spaceImg.add(s);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return spaceImg;
+	}
+
+	public List<SpacePrice> selectSpacePriceBySpaceNo(Connection conn, int spaceNo) {
+		List<SpacePrice> spacePrice = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectSpacePriceBySpaceNo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, spaceNo);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				SpacePrice s = new SpacePrice();
+				s.setSpaceNo(rset.getInt("space_no"));
+				s.setPriceEvent(rset.getString("price_event"));
+				s.setSpacePrice(rset.getInt("space_price"));
+				spacePrice.add(s);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return spacePrice;
 	}
 
 }

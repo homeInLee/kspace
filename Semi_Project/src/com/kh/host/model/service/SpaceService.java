@@ -1,13 +1,18 @@
 package com.kh.host.model.service;
 
+import static com.kh.common.JDBCTemplate.close;
+import static com.kh.common.JDBCTemplate.commit;
+import static com.kh.common.JDBCTemplate.getConnection;
+import static com.kh.common.JDBCTemplate.rollback;
+
 import java.sql.Connection;
 import java.util.List;
 
-import com.kh.customer.model.dao.BookingDAO;
 import com.kh.host.model.dao.SpaceDAO;
 import com.kh.host.model.vo.Space;
-
-import static com.kh.common.JDBCTemplate.*;
+import com.kh.host.model.vo.SpaceDayOff;
+import com.kh.host.model.vo.SpaceImageFile;
+import com.kh.host.model.vo.SpacePrice;
 
 public class SpaceService {
 
@@ -23,4 +28,67 @@ public class SpaceService {
 		close(conn);
 		return s;
 	}
+	
+	public int selectCompanyNo(String userId) {
+		Connection conn = getConnection();
+		int companyNo = new SpaceDAO().selectCompanyNo(conn, userId);
+		close(conn);
+		return companyNo;
+	}
+	
+	public int insertSpace(Space space) {
+		Connection conn = getConnection();
+		int result = new SpaceDAO().insertSpace(conn, space);
+		if(result > 0) { 
+			//공간등록에 성공하면 공간 번호 가져오기
+			result = new SpaceDAO().selectSpaceLastSeq(conn);
+			commit(conn);
+		} else {
+			rollback(conn);
+		}
+		close(conn);
+		return result; //공간번호 리턴.
+	}
+	public int insertDayOff(int spaceNo, SpaceDayOff dayoff) {
+		Connection conn = getConnection();
+		int result = new SpaceDAO().insertDayOff(conn, spaceNo, dayoff);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		return result; 
+	}
+	public int insertPrice(SpacePrice eventPrice) {
+		Connection conn = getConnection();
+		int result = new SpaceDAO().insertPrice(conn, eventPrice);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		return result; 
+	}
+	
+	public int insertSpaceImg(SpaceImageFile spaceImg) {
+		Connection conn = getConnection();
+		int result = new SpaceDAO().insertSpaceImg(conn, spaceImg);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		return result;
+	}
+	public List<SpaceImageFile> selectSpaceImgBySpaceNo(int spaceNo) {
+		Connection conn = getConnection();
+		List<SpaceImageFile> spaceImg = new SpaceDAO().selectSpaceImgBySpaceNo(conn, spaceNo);
+		close(conn);
+		return spaceImg;
+	}
+	public List<SpacePrice> selectSpacePriceBySpaceNo(int spaceNo) {
+		Connection conn = getConnection();
+		List<SpacePrice> spacePrice = new SpaceDAO().selectSpacePriceBySpaceNo(conn, spaceNo);
+		close(conn);
+		return spacePrice;
+	}
+	
+	
 }

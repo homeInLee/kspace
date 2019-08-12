@@ -64,4 +64,96 @@ $(document).ready(function(){
     }
 
     document.addEventListener("click", closeAllSelect);
+    
+    $("#spaceEnrollEvent").on('change', function(){
+        if($(this).prop("checked")){
+            $("input[name=spaceEnrollEventType]").prop("disabled", false);
+            $("#spaceEnrollEventPrice").prop("disabled", false);
+        } else {
+            $("input[name=spaceEnrollEventType]").prop("checked", false);
+            $("input[name=spaceEnrollEventType]").prop("disabled", true);
+            $("#spaceEnrollEventPrice").prop("disabled", true);
+        }
+    });
+    $("#spaceEnrollAlwaysEvent").on('change', function(){
+        if($(this).prop("checked")){
+            $(".spaceEnrollEvent .custom-select, #spaceEnrollAlwaysEventDate").show();
+            $("#spaceEnrollAlwaysEventPrice").css("display", "inline-block");
+        } else {
+            $(".spaceEnrollEvent .custom-select, #spaceEnrollAlwaysEventDate").hide();
+            $("#spaceEnrollAlwaysEventPrice").css("display", "none");
+        }
+    });
+    $("#spaceEnrollNotAlwaysEvent").on('change', function(){
+        if($(this).prop("checked")){
+            $(".spaceEnrollNotAlwaysEventDate, #spaceEnrollNotAlwaysEventPrice").css("display", "inline-block");
+        } else {
+            $(".spaceEnrollNotAlwaysEventDate, #spaceEnrollNotAlwaysEventPrice").css("display", "none");
+        }
+    });
+    
+    $("#dayOff7").on('change', function(){
+        if($(this).prop("checked")){
+            $("#spaceEnrollDayOffETC").prop("disabled", false);
+        } else {
+            $("#spaceEnrollDayOffETC").val('');
+            $("#spaceEnrollDayOffETC").prop("disabled", true);
+        }
+    });
+    
+    /*이미지 업로드 미리보기*/
+    var selFiles;
+    $("#spaceEnrollFile").on('change', handleImgFileSelect);
+    
+    function handleImgFileSelect(e){
+    	var files = e.target.files;
+    	var filesArr = Array.prototype.slice.call(files);
+    	console.log(filesArr);
+    	filesArr.forEach(function(f){
+//    		if(!f.type.match("image.*")){
+//    			alert("이미지 확장자만 가능합니다.");
+//    			return false;
+//    		}
+    		
+    		selFiles=f;
+    		var reader = new FileReader();
+    		reader.onload=function(e){
+    			if($("#enrollImg1 img").length){
+    				console.log("이미지가 이미 존재.");
+    				$("#enrollImg1 img").attr("src", e.target.result);
+    			} else {
+    				$("#enrollImg1").append("<img src='"+e.target.result+"' height='110'>");
+    			}
+    		};
+    		reader.readAsDataURL(f);
+    	});
+    }
+    
+    $("#spaceEnrollFileImg1").on('change', handleImgFileSelect2);
+    $("#spaceEnrollFileImg2").on('change', handleImgFileSelect2);
+    $("#spaceEnrollFileImg3").on('change', handleImgFileSelect2);
+    
+    var selFiles2;
+    function handleImgFileSelect2(e){
+    	var files = e.target.files;
+    	var filesArr = Array.prototype.slice.call(files);
+    	console.log(filesArr);
+    	
+    	var enrollFileId = e.target.id;
+    	
+    	filesArr.forEach(function(f){
+    		selFiles2=f;
+    		var reader = new FileReader();
+    		
+    		reader.onload=function(e){
+    			if($("#enrollImg2 img").length>2){
+    				$("#enrollImg2 ."+enrollFileId).attr("src", e.target.result);
+    			} else {
+    				$("#enrollImg2").append("<img src='"+e.target.result+"' height='110' class='"+enrollFileId+"'>");
+    			}
+    		};
+    		reader.readAsDataURL(f);
+    	});
+    }
+    
 });

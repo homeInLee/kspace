@@ -130,7 +130,7 @@ $(()=> {
             <a href="<%=request.getContextPath() %>" class="dp_block fw700"><span>KH</span> Space</a>
         </h1>
         <div id="search-area">
-            <form action="" method="get" name="spaceSearchFrm"  class="dp_block clearfix">
+            <form action="<%=request.getContextPath() %>/search/spaceFinder" method="get" name="spaceSearchFrm"  class="dp_block clearfix">
                 <input type="text" name="spaceSrch" id="spaceSrch" placeholder="지역 또는 공간유형을 검색해보세요!">
                 <input type="submit" id="srchBtn" value="검색">
             </form>
@@ -156,12 +156,13 @@ $(()=> {
 	            <ul class="menu1">
 	                <li><a href="<%=request.getContextPath() %>" class="dp_block">KH Space Home</a></li>
 	                <li><a href="" class="dp_block">내 정보 보기</a></li>
-	                <li><a href="<%=request.getContextPath() %>/customer/bookingList?userId=datbot" class="dp_block">예약 리스트</a></li>
+	                <li><a href="<%=request.getContextPath() %>/booking/bookingList?userId=datbot" class="dp_block">예약 리스트</a></li>
 	                <li><a href="" class="dp_block">찜한 공간</a></li>
 	                <li><a href="<%=request.getContextPath() %>/customer/spaceList" class="dp_block">전체 공간보기</a></li>
 	                <li><a href="" class="dp_block">추천 공간</a></li>
 	                <li><a href="<%=request.getContextPath() %>/board/adminNote" class="dp_block">공지사항</a></li>
 	                <li><a href="<%=request.getContextPath()%>/banner/information" class="dp_block">배너 등록</a></li>
+	                <li><a href="<%=request.getContextPath()%>/admin/spaceChkList" class="dp_block">관리자 공간 검수 리스트</a></li>
 	            </ul>
 	        </nav>
 	        <div id="nav-bottom" class="txt_center">
