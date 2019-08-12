@@ -9,6 +9,39 @@
 	Space s = (Space)request.getAttribute("space");
 	List<SpaceImageFile> sImg = (List<SpaceImageFile>)request.getAttribute("spaceImg");
 	List<SpacePrice> sPrice = (List<SpacePrice>)request.getAttribute("sPrice");
+	
+	boolean bool = false; //이벤트 여부 체크
+	int spacePrice = 0; //공간 원래 가격
+	boolean alwaysEvent = false; //정기 이벤트 여부
+	boolean notAlwaysEvent = false; //비정기 이벤트 여부
+	String alwaysEventType = "";
+	int alwaysEventPrice = 0;
+	String alwaysEventDate = "";
+	String notAlwaysEventDate = "";
+	
+	for(SpacePrice sp : sPrice){
+		if(sp.getPriceEvent()!=null){
+			bool = true;
+			if(sp.getPriceEvent().contains("일")) {
+				alwaysEvent = true;
+				alwaysEventType = "1개월";
+				if(sp.getPriceEvent().contains("요일")){
+					alwaysEventType = "1주일";
+				}
+				alwaysEventPrice = sp.getSpacePrice();
+				alwaysEventDate = sp.getPriceEvent();
+				notAlwaysEventDate += sp.getPriceEvent();
+			} else if(sp.getPriceEvent().contains("-")) {
+				notAlwaysEvent = true;
+				notAlwaysEventDate += sp.getPriceEvent();
+			}
+		} else if(sp.getPriceEvent()==null) {
+			spacePrice = sp.getSpacePrice();
+		}
+	}
+	
+	System.out.println();
+	
 %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/sub.css" />
 <script src="<%=request.getContextPath()%>/js/spaceEnroll.js"></script>
@@ -201,39 +234,41 @@ function enrollValidate(){
             		<div class="spaceEnroll">
             			<h5>가격<span class="req">*</span></h5>
             			<p class="srchPrice">
-            			<input type="number" name="spaceEnrollPrice" required id="spaceEnrollPrice" class="dp_block" /></p>
+            			<input type="number" name="spaceEnrollPrice" required id="spaceEnrollPrice" class="dp_block" value="<%=spacePrice%>" /></p>
             		</div>
             		<div class="spaceEnroll enrollDayOff">
             			<h5>이벤트</h5>
             			<p>이벤트 여부</p>
-            			<input type="checkbox" name="spaceEnrollEvent" id="spaceEnrollEvent"/>
+            			<input type="checkbox" name="spaceEnrollEvent" id="spaceEnrollEvent" <%=bool?"checked":"" %>/>
             			<label for="spaceEnrollEvent">적용</label>
             			<p>정기/비정기</p>
             			<div class="spaceEnrollEvent">
-            				<input type="checkbox" name="spaceEnrollEventType" id="spaceEnrollAlwaysEvent" value="정기 이벤트" />
+            				<input type="checkbox" name="spaceEnrollEventType" id="spaceEnrollAlwaysEvent" value="정기 이벤트" <%=alwaysEvent?"checked":"" %> />
             				<label for="spaceEnrollAlwaysEvent" class="dp_ib">정기 이벤트</label>
-            				<div class="custom-select">
-            					<select name="spaceEnrollAlwaysEventType" id="spaceEnrollAlwaysEventType" class="dp_block">
+            				<div class="custom-select" style="display:block;">
+            					<select name="spaceEnrollAlwaysEventType" id="spaceEnrollAlwaysEventType" class="dp_block" >
             						<option value="">선택</option>
-            						<option value="1주일">1주일</option>
-            						<option value="1개월">1개월</option>
+            						<option value="1주일" <%=alwaysEventType.equals("1주일")?"selected":"" %>>1주일</option>
+            						<option value="1개월" <%=alwaysEventType.equals("1개월")?"selected":"" %>>1개월</option>
             					</select>
             				</div>
             				<div class="clearfix" style="float:none; width:100%; padding-top:15px;">
-            					<input type="text" name="spaceEnrollAlwaysEventDate" id="spaceEnrollAlwaysEventDate" placeholder="이벤트 주기가 1주일이면 요일을, 1개월이면 몇일인지 입력해주세요." class="dp_ib"/>
-            					<p id="spaceEnrollAlwaysEventPrice" class="srchPrice dp_ib" style="margin-bottom:0;">
-            						<input type="number" name="spaceEnrollAlwaysEventPrice" class="dp_ib"/>
+            					<input type="text" name="spaceEnrollAlwaysEventDate" id="spaceEnrollAlwaysEventDate"
+            					value="<%=alwaysEventDate %>" 
+            					placeholder="이벤트 주기가 1주일이면 요일을, 1개월이면 몇일인지 입력해주세요." class="dp_ib" style="display:inline-block;"/>
+            					<p id="spaceEnrollAlwaysEventPrice" class="srchPrice dp_ib" style="margin-bottom:0; display:inline-block;">
+            						<input type="number" name="spaceEnrollAlwaysEventPrice" value="<%=alwaysEventPrice %>" class="dp_ib"/>
             					</p>
             				</div>
             			</div>
             			<div class="spaceEnrollEvent">
             				<div class="clearfix" style="width:100%; float:none;">
-            					<input type="checkbox" name="spaceEnrollEventType" disabled="disabled" id="spaceEnrollNotAlwaysEvent" value="비정기 이벤트" />
+            					<input type="checkbox" name="spaceEnrollEventType" disabled="disabled" id="spaceEnrollNotAlwaysEvent" value="비정기 이벤트" <%=notAlwaysEvent?"checked":"" %> />
 	            				<label for="spaceEnrollNotAlwaysEvent" class="dp_ib">비정기 이벤트</label>
             				</div>
 	            			
 	            			<div style="float:none; width:100%;">
-	            				<div class="dp_ib spaceEnrollNotAlwaysEventDate">
+	            				<div class="dp_ib spaceEnrollNotAlwaysEventDate" style="display:inline-block;">
 	            					<input type="text" name="spaceEnrollNotAlwaysEventStartDate" id="spaceEnrollNotAlwaysEventStartDate" placeholder="ex) 2019-08-09" class="eventInput dp_ib"/>
 	            					~
 	            					<input type="text" name="spaceEnrollNotAlwaysEventEndDate" id="spaceEnrollNotAlwaysEventEndDate" placeholder="ex) 2019-08-12" class="eventInput dp_ib"/>
