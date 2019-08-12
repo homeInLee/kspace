@@ -38,7 +38,7 @@ public class searchFilterServlet extends HttpServlet {
 		int srchPrice2 = 0;
 		List<SpaceJoin> list = null;
 
-		if (request.getParameter("srchPrice1") != "") {
+		if (request.getParameter("srchPrice1") != null && !request.getParameter("srchPrice1").equals("")) {
 			try {
 
 				srchPrice1 = Integer.parseInt(request.getParameter("srchPrice1"));
@@ -50,7 +50,7 @@ public class searchFilterServlet extends HttpServlet {
 			}
 		}
 
-		if (request.getParameter("srchPrice2") != "") {
+		if (request.getParameter("srchPrice2") != null && !request.getParameter("srchPrice2").equals("")) {
 			try {
 				srchPrice2 = Integer.parseInt(request.getParameter("srchPrice2"));
 
@@ -63,20 +63,19 @@ public class searchFilterServlet extends HttpServlet {
 
 		String[] facility = request.getParameterValues("facility");
 		
-		if(request.getParameter("spaceSrchValue") != null) {
-			
-		}
-		
 		String spaceSrch = request.getParameter("spaceSrch");
+		String spaceType = "";
+		
+		List<SpaceJoin> spaceList = new SearchService().selectSpaceList(spaceSrch, spaceType);
 
 		if(srchPrice2 != 0 && facility != null) {
-			list = new SearchService().selectFilterList(srchPrice1, srchPrice2, facility, spaceSrch);			
+			list = new SearchService().selectFilterList(srchPrice1, srchPrice2, facility, spaceList);			
 		} else if(srchPrice2 == 0 && facility != null) {
-			list = new SearchService().selectFilterPriceZeroList(srchPrice1, facility, spaceSrch);
+			list = new SearchService().selectFilterPriceZeroList(srchPrice1, facility, spaceList);
 		} else if(srchPrice2 != 0 && facility == null) {
-			list = new SearchService().selectFilterFacilityNullList(srchPrice1, srchPrice2, spaceSrch);
+			list = new SearchService().selectFilterFacilityNullList(srchPrice1, srchPrice2, spaceList);
 		} else {
-			list = new SearchService().selectFilterNullList(srchPrice1, spaceSrch);
+			list = new SearchService().selectFilterNullList(srchPrice1, spaceList);
 		}
 
 		request.setAttribute("list", list);

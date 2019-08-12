@@ -104,17 +104,23 @@ public class SearchDAO {
 		return hashList;
 	}
 
-	public List<SpaceJoin> selectSpacelist(Connection conn, String spaceSrch) {
+	public List<SpaceJoin> selectSpaceList(Connection conn, String spaceSrch, String spaceType) {
 		List<SpaceJoin> placeList = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String sql = prop.getProperty("selectSpacelist");
+		String sql = prop.getProperty("selectSpaceList");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, "%"+spaceSrch+"%");
 			pstmt.setString(2, "%"+spaceSrch+"%");
 			pstmt.setString(3, "%"+spaceSrch+"%");
+			
+			if(spaceType != null) {
+				pstmt.setString(4, "%"+spaceType+"%");				
+			} else {
+				pstmt.setString(4, "%%");
+			}
 			
 			rset = pstmt.executeQuery();
 			
@@ -180,7 +186,7 @@ public class SearchDAO {
 	}
 
 	public List<SpaceJoin> selectFilterList(Connection conn, int srchPrice1, int srchPrice2, String[] facility,
-			String spaceSrch) {
+			List<SpaceJoin> spaceList) {
 		List<SpaceJoin> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -201,9 +207,6 @@ public class SearchDAO {
 			}
 			
 			pstmt.setString(3, fac);
-			pstmt.setString(4, "%"+spaceSrch+"%");
-			pstmt.setString(5, "%"+spaceSrch+"%");
-			pstmt.setString(6, "%"+spaceSrch+"%");
 			
 			rset = pstmt.executeQuery();
 			
@@ -224,7 +227,11 @@ public class SearchDAO {
 				s.setCompanyPlace(rset.getString("company_place"));
 				s.setSpacePrice(rset.getInt("space_price"));
 				
-				list.add(s);
+				for(int i=0; i<spaceList.size(); i++) {
+					if(spaceList.get(i).getSpaceNo() == s.getSpaceNo()) {
+						list.add(s);						
+					}
+				}
 			}
 			
 		} catch(Exception e) {
@@ -238,7 +245,7 @@ public class SearchDAO {
 	}
 
 	public List<SpaceJoin> selectFilterPriceZeroList(Connection conn, int srchPrice1, String[] facility,
-			String spaceSrch) {
+			List<SpaceJoin> spaceList) {
 		List<SpaceJoin> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -258,9 +265,6 @@ public class SearchDAO {
 			}
 			
 			pstmt.setString(2, fac);
-			pstmt.setString(3, "%"+spaceSrch+"%");
-			pstmt.setString(4, "%"+spaceSrch+"%");
-			pstmt.setString(5, "%"+spaceSrch+"%");
 			
 			rset = pstmt.executeQuery();
 			
@@ -281,7 +285,11 @@ public class SearchDAO {
 				s.setCompanyPlace(rset.getString("company_place"));
 				s.setSpacePrice(rset.getInt("space_price"));
 				
-				list.add(s);
+				for(int i=0; i<spaceList.size(); i++) {
+					if(spaceList.get(i).getSpaceNo() == s.getSpaceNo()) {
+						list.add(s);						
+					}
+				}
 			}
 			
 		} catch(Exception e) {
@@ -295,7 +303,7 @@ public class SearchDAO {
 	}
 
 	public List<SpaceJoin> selectFilterFacilityNullList(Connection conn, int srchPrice1, int srchPrice2,
-			String spaceSrch) {
+			List<SpaceJoin> spaceList) {
 		List<SpaceJoin> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -305,10 +313,6 @@ public class SearchDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, srchPrice1);
 			pstmt.setInt(2, srchPrice2);
-			
-			pstmt.setString(3, "%"+spaceSrch+"%");
-			pstmt.setString(4, "%"+spaceSrch+"%");
-			pstmt.setString(5, "%"+spaceSrch+"%");
 			
 			rset = pstmt.executeQuery();
 			
@@ -329,7 +333,11 @@ public class SearchDAO {
 				s.setCompanyPlace(rset.getString("company_place"));
 				s.setSpacePrice(rset.getInt("space_price"));
 				
-				list.add(s);
+				for(int i=0; i<spaceList.size(); i++) {
+					if(spaceList.get(i).getSpaceNo() == s.getSpaceNo()) {
+						list.add(s);						
+					}
+				}
 			}
 			
 		} catch(Exception e) {
@@ -342,7 +350,7 @@ public class SearchDAO {
 		return list;
 	}
 
-	public List<SpaceJoin> selectFilterNullList(Connection conn, int srchPrice1, String spaceSrch) {
+	public List<SpaceJoin> selectFilterNullList(Connection conn, int srchPrice1, List<SpaceJoin> spaceList) {
 		List<SpaceJoin> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -351,10 +359,6 @@ public class SearchDAO {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, srchPrice1);
-			
-			pstmt.setString(2, "%"+spaceSrch+"%");
-			pstmt.setString(3, "%"+spaceSrch+"%");
-			pstmt.setString(4, "%"+spaceSrch+"%");
 			
 			rset = pstmt.executeQuery();
 			
@@ -375,7 +379,11 @@ public class SearchDAO {
 				s.setCompanyPlace(rset.getString("company_place"));
 				s.setSpacePrice(rset.getInt("space_price"));
 				
-				list.add(s);
+				for(int i=0; i<spaceList.size(); i++) {
+					if(spaceList.get(i).getSpaceNo() == s.getSpaceNo()) {
+						list.add(s);						
+					}
+				}
 			}
 			
 		} catch(Exception e) {

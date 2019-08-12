@@ -33,6 +33,7 @@ public class SpaceFinderServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String spaceSrch = request.getParameter("spaceSrch");
+		String spaceType = "";
 		
 		if(spaceSrch.equals("")) {
 			request.setAttribute("msg", "검색어를 입력해주세요.");
@@ -41,11 +42,16 @@ public class SpaceFinderServlet extends HttpServlet {
 			return;
 		}
 		
-		List<SpaceJoin> list = new SearchService().selectSpacelist(spaceSrch);
+		if(request.getParameter("spaceType") != null) {
+			spaceType = request.getParameter("spaceType");
+		}
+		
+		List<SpaceJoin> list = new SearchService().selectSpaceList(spaceSrch, spaceType);
 		
 		
 		request.setAttribute("list", list);
 		request.setAttribute("spaceSrch", spaceSrch);
+		request.setAttribute("spaceType", spaceType);
 		request.getRequestDispatcher("/WEB-INF/views/search/spaceFinder.jsp").forward(request, response);
 	}
 

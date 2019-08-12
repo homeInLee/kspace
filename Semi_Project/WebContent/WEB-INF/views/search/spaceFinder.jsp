@@ -5,13 +5,31 @@
 <%
 	List<SpaceJoin> spaceList = (List<SpaceJoin>)request.getAttribute("list");
 	String spaceSrch = request.getParameter("spaceSrch");
+	String spaceType = request.getParameter("spaceType");
 %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/sub.css" />
 <script src="<%=request.getContextPath()%>/js/spaceList.js"></script>
+<script src="<%=request.getContextPath()%>/js/jquery-3.4.1.js"></script>
+<script>
+$(()=> {
+	alert("111");
+	
+$("#spaceType").on('click', function() {
+	alert("222");
+});
+
+$("#spaceType").on('change', function() {
+	alert("333");
+	var spaceType = this.value;
+	location.href = "<%=request.getContextPath()%>/search/spaceFinder?spaceType=" + spaceType;
+});
+});
+
+</script>
 <div class="sub_container">
     <section class="spacePage">
         <article class="spaceSrch-wrap">
-            <h3 class="fw300"><span class="fw500"><%=spaceSrch %></span>(으)로 검색한 결과입니다.</h3>
+            <h3 class="fw300"><span class="fw500"><%=spaceSrch %> <%if(spaceType != null){%><%=spaceType %><% } %></span>(으)로 검색한 결과입니다.</h3>
                 <div class="noFilter">
                     <div>
                         <p>공간 유형</p>

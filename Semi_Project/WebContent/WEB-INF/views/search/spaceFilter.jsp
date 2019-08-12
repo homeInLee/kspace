@@ -8,6 +8,14 @@
 %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/sub.css" />
 <script src="<%=request.getContextPath()%>/js/spaceList.js"></script>
+<script src="<%=request.getContextPath()%>/js/jquery-3.4.1.js"></script>
+<script>
+$("#spaceType").on('change', function() {
+	alert("333");
+	var spaceType = this.value;
+	location.href = "<%=request.getContextPath()%>/search/spaceFinder?spaceType=" + spaceType;
+});
+</script>
 <div class="sub_container">
     <section class="spacePage">
         <article class="spaceSrch-wrap">
