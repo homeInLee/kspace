@@ -320,4 +320,92 @@ public class SpaceDAO {
 		return sDayOff;
 	}
 
+	public int deleteSpace(Connection conn, int delSpaceNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteSpace");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, delSpaceNo);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int updateDayOff(Connection conn, int spaceNo, SpaceDayOff dayoff) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateDayOff");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, dayoff.getDayOffEvent());
+			pstmt.setString(2, dayoff.getMaxSpaceDayOff());
+			pstmt.setInt(3, spaceNo);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int updateSpace(Connection conn, int spaceNo, Space space) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateSpace");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, space.getSpaceIntro());
+			pstmt.setString(2, space.getBookingTime());
+			pstmt.setInt(3, space.getMaxBookingPeople());
+			pstmt.setInt(4, space.getMinBookingPeople());
+			pstmt.setString(5, space.getSpaceThema());
+			pstmt.setString(6, "N");
+			pstmt.setString(7, space.getHashtag());
+			pstmt.setString(8, space.getSpaceName());
+			pstmt.setString(9, space.getSpaceFacilities());
+			pstmt.setString(10, space.getSpaceSlogan());
+			pstmt.setInt(11, spaceNo);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int updateSpaceImg(Connection conn, SpaceImageFile spaceImg) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateSpaceImg");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, spaceImg.getImageOriginalFileName());
+			pstmt.setString(2, spaceImg.getImageRenamedFileName());
+			if(spaceImg.getFlag()!=null) {
+				pstmt.setString(3, spaceImg.getFlag());
+			} else {
+				pstmt.setString(3, "Y");
+			}
+			pstmt.setInt(4, spaceImg.getSpaceNo());
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
 }

@@ -11,7 +11,7 @@
 <div class="sub_container">
     <section class="subPage">
         <article>
-            <h3 class="tit txt_center">공간 검수 목록</h3>
+            <h3 class="tit txt_center">공간 목록</h3>
             <ul class="recom-space clearfix">
             <% if(hostSpaceList!=null) { 
             	for(int i=0; i<hostSpaceList.size(); i++){

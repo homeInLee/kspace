@@ -96,5 +96,54 @@ public class SpaceService {
 		return sDayOff;
 	}
 	
+	public int deleteSpace(int delSpaceNo) {
+		Connection conn = getConnection();
+		int result = new SpaceDAO().deleteSpace(conn, delSpaceNo);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+	
+	public int updateDayOff(int spaceNo, SpaceDayOff dayoff) {
+		Connection conn = getConnection();
+		int result = new SpaceDAO().updateDayOff(conn, spaceNo, dayoff);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+	public int updateSpace(int spaceNo, Space space) {
+		Connection conn = getConnection();
+		int result = new SpaceDAO().updateSpace(conn, spaceNo, space);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+	
+	public int updateSpaceImg(SpaceImageFile spaceImg) {
+		Connection conn = getConnection();
+		int result = new SpaceDAO().updateSpaceImg(conn, spaceImg);
+		if(result > 0) {
+			commit(conn);
+		} else {
+			result = new SpaceDAO().insertSpaceImg(conn, spaceImg);
+			if(result>0) 
+				commit(conn);
+			else
+				rollback(conn);
+		}
+			
+		close(conn);
+		return result;
+	}
+	
 	
 }

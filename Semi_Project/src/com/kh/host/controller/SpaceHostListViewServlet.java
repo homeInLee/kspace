@@ -9,7 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kh.host.model.service.CompanyService;
 import com.kh.host.model.service.SpaceService;
+import com.kh.host.model.vo.Company;
 import com.kh.host.model.vo.Space;
 import com.kh.host.model.vo.SpaceDayOff;
 import com.kh.host.model.vo.SpaceImageFile;
@@ -34,14 +36,18 @@ public class SpaceHostListViewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//로그인한 아이디가 null이 아니고, 공간 등록한 호스트 아이디가 맞는지 확인
+		
 		int spaceNo = Integer.parseInt(request.getParameter("spaceNo"));
 		
 		Space s = new SpaceService().spaceSelectOneBySpaceNo(spaceNo);
+		Company c = new CompanyService().CompanySelectOneByCompanyNo(s.getCompanyNo());
 		List<SpaceImageFile> sImg = new SpaceService().selectSpaceImgBySpaceNo(spaceNo);
 		List<SpacePrice> sPrice = new SpaceService().selectSpacePriceBySpaceNo(spaceNo);
 		List<SpaceDayOff> sDayOff = new SpaceService().selectSpaceDayOffBySpaceNo(spaceNo);
 		
 		request.setAttribute("space", s);
+		request.setAttribute("company", c);
 		request.setAttribute("spaceImg", sImg);
 		request.setAttribute("sPrice", sPrice);
 		request.setAttribute("sDayOff", sDayOff);

@@ -7,8 +7,10 @@
 <%@page import="com.kh.host.model.vo.SpacePrice"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.kh.host.model.vo.SpaceDayOff"%>
+<%@page import="com.kh.host.model.vo.Company"%>
 <%
 	Space s = (Space)request.getAttribute("space");
+	Company c = (Company)request.getAttribute("company");
 	List<SpaceImageFile> sImg = (List<SpaceImageFile>)request.getAttribute("spaceImg");
 	List<SpacePrice> sPrice = (List<SpacePrice>)request.getAttribute("sPrice");
 	List<SpaceDayOff> sDayOff = (List<SpaceDayOff>)request.getAttribute("sDayOff");
@@ -115,13 +117,17 @@ function enrollValidate(){
 }
 
 function goDelMySpace(){
-	
+	if(!comfirm("정말 삭제하시겠습니까?")){
+		return;
+	}
+	<%-- 로그인한 아이디와 <%=c.getUserId() %>가 맞는지 검사하기 --%>
+	$("form[name=delMySpaceFrm]").submit();
 }
 </script>
 
 <div class="sub_container">
 	<form action="<%=request.getContextPath() %>/host/delMySpace" name="delMySpaceFrm" method="post">
-		<input type="hidden" name="" value="" />
+		<input type="hidden" name="delSpaceNo" value="<%=s.getSpaceNo()%>" />
 	</form>
     <section class="subPage spaceEnroll">
         <article>
@@ -134,6 +140,7 @@ function goDelMySpace(){
             		method="post" encType="multipart/form-data" onsubmit="return enrollValidate();">
             	<!-- 호스트 아이디 value값 바꾸기 -->
             	<input type="hidden" name="hostId" value="JeonGaNe" />
+            	<input type="hidden" name="updateSpaceNo" value="<%=s.getSpaceNo()%>" />
             	<div class="clearfix">
             		<h4>공간유형<span class="req">*</span></h4>
             		<p>최대 5개 선택 가능</p>

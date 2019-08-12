@@ -27,16 +27,16 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.FileRenamePolicy;
 
 /**
- * Servlet implementation class SpaceEnrollEndServlet
+ * Servlet implementation class SpaceUpdateServlet
  */
-@WebServlet("/host/spaceEnrollEnd")
-public class SpaceEnrollEndServlet extends HttpServlet {
+@WebServlet("/host/spaceUpdate")
+public class SpaceUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SpaceEnrollEndServlet() {
+    public SpaceUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -64,11 +64,13 @@ public class SpaceEnrollEndServlet extends HttpServlet {
 		FileRenamePolicy mvcRenamePolicy = new MvcRenamePolicy();
 		MultipartRequest mReq = new MultipartRequest(request, saveDirectory, maxPostSize, encoding, mvcRenamePolicy);
 		
-		//1.파라미터 핸들링
-		String userId = mReq.getParameter("hostId"); //공간을 등록하는 호스트 아이디
-		//호스트 아이디로 회사번호 가져오기(공간테이블에 필요함)
-		int companyNo = new SpaceService().selectCompanyNo(userId);
-		System.out.println("회사번호 : "+companyNo);
+		String userId = mReq.getParameter("hostId");
+		int spaceNo = 0;
+		try {
+			spaceNo = Integer.parseInt(mReq.getParameter("updateSpaceNo"));
+		} catch(NumberFormatException e) {
+			e.printStackTrace();
+		}
 		
 		/*********공간 테이블 데이터************/
 		//=>객체 생성 완료, 데이터 추가 성공
@@ -106,7 +108,6 @@ public class SpaceEnrollEndServlet extends HttpServlet {
 		System.out.println("편의 시설 : "+facility);
 		
 		Space space = new Space();
-		space.setCompanyNo(companyNo);
 		space.setSpaceIntro(spaceIntro);
 		space.setBookingTime(bookingTime);
 		space.setMaxBookingPeople(maxBookingPeople);
@@ -118,8 +119,6 @@ public class SpaceEnrollEndServlet extends HttpServlet {
 		space.setSpaceSlogan(spaceSlogan);
 		
 		/*********가격 테이블 데이터************/
-		//공간테이블에 데이터 넣고 해당 공간의 번호를 가져와야함.
-		//=>데이터 추가 성공
 		int enrollPrice = Integer.parseInt(mReq.getParameter("spaceEnrollPrice")); //공간 원래 가격
 		System.out.println("공간 가격 : "+enrollPrice);
 		
@@ -161,7 +160,6 @@ public class SpaceEnrollEndServlet extends HttpServlet {
 		
 		
 		/*********휴무 테이블 데이터************/
-		//=>객체 생성 완료, 데이터 추가 성공
 		String[] enrollDayOffArr = mReq.getParameterValues("spaceEnrollDayOff"); //휴무일
 		System.out.println("휴무일 : "+Arrays.toString(enrollDayOffArr));
 		
@@ -193,7 +191,6 @@ public class SpaceEnrollEndServlet extends HttpServlet {
 		
 		
 		/*********이미지 테이블 데이터************/
-		//=>데이터 추가 성공
 		String[] renamedFileImgArr = new String[4];
 		String[] originalFileImgArr = new String[4];
 		
@@ -210,143 +207,152 @@ public class SpaceEnrollEndServlet extends HttpServlet {
 		System.out.println(Arrays.toString(renamedFileImgArr));
 		System.out.println(Arrays.toString(originalFileImgArr));
 		
-		//2.업무로직
 		int result = 0; //view단 처리용
-		int spaceNo = new SpaceService().insertSpace(space);
 		System.out.println(spaceNo);
-		if(spaceNo>0) { //공간등록에 성공해서 spaceNo를 가져온다면 0보다 클 것.
-			//휴무 테이블 추가
-			int dayOffResult = new SpaceService().insertDayOff(spaceNo, dayoff);
-			if(dayOffResult > 0) {
-				result+=dayOffResult;
-				System.out.println("휴무테이블 추가 성공");
-				System.out.println(dayOffResult);
-			}
-			
-			//이미지 테이블 추가
-			int spaceImgResult = 0;
-			for(int i=0; i<renamedFileImgArr.length; i++) {
-				if(renamedFileImgArr[i]!=null && originalFileImgArr[i]!=null) {
-					SpaceImageFile spaceImg = new SpaceImageFile();
-					spaceImg.setSpaceNo(spaceNo);
-					spaceImg.setImageOriginalFileName(originalFileImgArr[i]);
-					spaceImg.setImageRenamedFileName(renamedFileImgArr[i]);
-					if(i!=0) {
-						spaceImg.setFlag("N");
-					}
-					System.out.println(spaceImg);
-					spaceImgResult = new SpaceService().insertSpaceImg(spaceImg);
-				}
-			}
-			if(spaceImgResult>0) {
-				result+=spaceImgResult;
-				System.out.println("이미지 등록 성공!");
-				System.out.println(spaceImgResult);
-			}
-			
-			//가격 - 이벤트 테이블 추가
-			//이벤트 여부 체크
-			SpacePrice eventPrice = new SpacePrice();
-			int eventResult = 0;
-			
-			//이벤트가 있어도 원래 가격은 들어가야 함.
-			eventPrice.setSpaceNo(spaceNo);
-			//eventPrice.setPriceEvent(enrollEvent);
-			eventPrice.setSpacePrice(enrollPrice);
-			eventResult = new SpaceService().insertPrice(eventPrice);
-			
-			if(enrollEvent!=null) { //이벤트가 있는 경우
-				if(enrollEventType.contains("비정기 이벤트") && enrollEventType.contains("정기 이벤트")) { //정기, 비정기이벤트
-					System.out.println("이벤트 둘 다 있음");
-					eventPrice.setSpaceNo(spaceNo);
-					eventPrice.setPriceEvent(enrollAlwaysEventDate); //1주일에 한번이면 토, 1개월에 한번이면 20일
-					eventPrice.setSpacePrice(enrollAlwaysEventPrice);
-					eventResult = new SpaceService().insertPrice(eventPrice);
-					
-					DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-					try {
-						Date startEvent = df.parse(enrollNotAlwaysEventStartDate);
-						Date endEvent = df.parse(enrollNotAlwaysEventEndDate);
-						Calendar startDay = Calendar.getInstance();
-						Calendar endDay = Calendar.getInstance();
-						startDay.setTime(startEvent);
-						endDay.setTime(endEvent);
-						//시작날짜와 끝 날짜를 비교해, 시작날짜가 작거나 같은 경우 출력
-						while(startDay.compareTo(endDay) !=1 ){
-							System.out.printf("%tF\n", startDay.getTime());
-							
-							String strDate = df.format(startDay.getTime());
-							eventPrice.setSpaceNo(spaceNo);
-							eventPrice.setPriceEvent(strDate);
-							eventPrice.setSpacePrice(enrollNotAlwaysEventPrice);
-							eventResult = new SpaceService().insertPrice(eventPrice);
-							System.out.println(eventPrice);
-							//시작날짜 + 1 일
-							startDay.add(Calendar.DATE, 1);
-						}
-						
-					} catch (ParseException e) {
-						e.printStackTrace();
-					}
-					
-				} else if(enrollEventType.equals("정기 이벤트")) { //정기 이벤트
-					
-					eventPrice.setSpaceNo(spaceNo);
-					eventPrice.setPriceEvent(enrollAlwaysEventDate); //1주일에 한번이면 토, 1개월에 한번이면 20일
-					eventPrice.setSpacePrice(enrollAlwaysEventPrice);
-					System.out.println("eventPrice객체 : "+eventPrice);
-					eventResult = new SpaceService().insertPrice(eventPrice);
-					
-				} else if(enrollEventType.equals("비정기 이벤트")) { //비정기 이벤트
-					
-					DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-					try {
-						Date startEvent = df.parse(enrollNotAlwaysEventStartDate);
-						Date endEvent = df.parse(enrollNotAlwaysEventEndDate);
-						Calendar startDay = Calendar.getInstance();
-						Calendar endDay = Calendar.getInstance();
-						startDay.setTime(startEvent);
-						endDay.setTime(endEvent);
-						//시작날짜와 끝 날짜를 비교해, 시작날짜가 작거나 같은 경우 출력
-						while(startDay.compareTo(endDay) !=1 ){
-							System.out.printf("%tF\n", startDay.getTime());
-							
-							String strDate = df.format(startDay.getTime());
-							eventPrice.setSpaceNo(spaceNo);
-							eventPrice.setPriceEvent(strDate);
-							eventPrice.setSpacePrice(enrollNotAlwaysEventPrice);
-							eventResult = new SpaceService().insertPrice(eventPrice);
-							System.out.println(eventPrice);
-							//시작날짜 + 1 일
-							startDay.add(Calendar.DATE, 1);
-						}
-						
-					} catch (ParseException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-			
-			if(eventResult > 0) {
-				result+=eventResult;
-				System.out.println("이벤트 등록 성공!");
-				System.out.println(eventResult);
-			}
-			
+		
+		//공간 테이블수정-->완료
+		int spaceResult = new SpaceService().updateSpace(spaceNo, space);
+		if(spaceResult > 0) {
+			result+=spaceResult;
+			System.out.println("공간테이블 수정 성공");
+			System.out.println(spaceResult);
 		}
 		
-		System.out.println("result="+result);
-		//3.view단 처리
-		String msg = "";
-		String loc = "/";
-		if(result>2) {
-			msg = "공간 등록 검수가 요청되었습니다.";
-		} else {
-			msg = "공간 등록 검수가 요청에 실패했습니다. 관리자에게 문의하세요.";
-		}
-		request.setAttribute("msg", msg);
-		request.setAttribute("loc", loc);
-		request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp").forward(request, response);
+		//휴무 테이블 수정
+//		int dayOffResult = new SpaceService().updateDayOff(spaceNo, dayoff);
+//		if(dayOffResult > 0) {
+//			result+=dayOffResult;
+//			System.out.println("휴무테이블 수정 성공");
+//			System.out.println(dayOffResult);
+//		}
+		
+		//이미지 테이블 추가
+		//이미지 테이블에 공간번호가 없으면 추가, 있으면 수정.
+		//update 메소드를 보내고 돌아오는 값이 0보다 크면 이미지가 있었던 것.
+		//돌아오는 값이 -1이면 이미지가 없는 것이므로 서비스단에서 insert메소드 추가
+		//이미지 테이블에 공간번호가 몇개 있는지 확인하고, 이미지 추가인지 수정인지 구분할 것.
+//		int spaceImgResult = 0;
+//		for(int i=0; i<renamedFileImgArr.length; i++) {
+//			if(renamedFileImgArr[i]!=null && originalFileImgArr[i]!=null) {
+//				SpaceImageFile spaceImg = new SpaceImageFile();
+//				spaceImg.setSpaceNo(spaceNo);
+//				spaceImg.setImageOriginalFileName(originalFileImgArr[i]);
+//				spaceImg.setImageRenamedFileName(renamedFileImgArr[i]);
+//				if(i!=0) {
+//					spaceImg.setFlag("N");
+//				}
+//				System.out.println(spaceImg);
+//				spaceImgResult = new SpaceService().updateSpaceImg(spaceImg);
+//			}
+//		}
+//		if(spaceImgResult>0) {
+//			result+=spaceImgResult;
+//			System.out.println("이미지 등록 및 수정 성공!");
+//			System.out.println(spaceImgResult);
+//		}
+//		
+//		//가격 - 이벤트 테이블 추가
+//		//이벤트 여부 체크
+//		SpacePrice eventPrice = new SpacePrice();
+//		int eventResult = 0;
+//		
+//		//이벤트가 있어도 원래 가격은 들어가야 함.
+//		eventPrice.setSpaceNo(spaceNo);
+//		//eventPrice.setPriceEvent(enrollEvent);
+//		eventPrice.setSpacePrice(enrollPrice);
+//		eventResult = new SpaceService().insertPrice(eventPrice);
+//		
+//		if(enrollEvent!=null) { //이벤트가 있는 경우
+//			if(enrollEventType.contains("비정기 이벤트") && enrollEventType.contains("정기 이벤트")) { //정기, 비정기이벤트
+//				System.out.println("이벤트 둘 다 있음");
+//				eventPrice.setSpaceNo(spaceNo);
+//				eventPrice.setPriceEvent(enrollAlwaysEventDate); //1주일에 한번이면 토, 1개월에 한번이면 20일
+//				eventPrice.setSpacePrice(enrollAlwaysEventPrice);
+//				eventResult = new SpaceService().insertPrice(eventPrice);
+//				
+//				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+//				try {
+//					Date startEvent = df.parse(enrollNotAlwaysEventStartDate);
+//					Date endEvent = df.parse(enrollNotAlwaysEventEndDate);
+//					Calendar startDay = Calendar.getInstance();
+//					Calendar endDay = Calendar.getInstance();
+//					startDay.setTime(startEvent);
+//					endDay.setTime(endEvent);
+//					//시작날짜와 끝 날짜를 비교해, 시작날짜가 작거나 같은 경우 출력
+//					while(startDay.compareTo(endDay) !=1 ){
+//						System.out.printf("%tF\n", startDay.getTime());
+//						
+//						String strDate = df.format(startDay.getTime());
+//						eventPrice.setSpaceNo(spaceNo);
+//						eventPrice.setPriceEvent(strDate);
+//						eventPrice.setSpacePrice(enrollNotAlwaysEventPrice);
+//						eventResult = new SpaceService().insertPrice(eventPrice);
+//						System.out.println(eventPrice);
+//						//시작날짜 + 1 일
+//						startDay.add(Calendar.DATE, 1);
+//					}
+//					
+//				} catch (ParseException e) {
+//					e.printStackTrace();
+//				}
+//				
+//			} else if(enrollEventType.equals("정기 이벤트")) { //정기 이벤트
+//				
+//				eventPrice.setSpaceNo(spaceNo);
+//				eventPrice.setPriceEvent(enrollAlwaysEventDate); //1주일에 한번이면 토, 1개월에 한번이면 20일
+//				eventPrice.setSpacePrice(enrollAlwaysEventPrice);
+//				System.out.println("eventPrice객체 : "+eventPrice);
+//				eventResult = new SpaceService().insertPrice(eventPrice);
+//				
+//			} else if(enrollEventType.equals("비정기 이벤트")) { //비정기 이벤트
+//				
+//				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+//				try {
+//					Date startEvent = df.parse(enrollNotAlwaysEventStartDate);
+//					Date endEvent = df.parse(enrollNotAlwaysEventEndDate);
+//					Calendar startDay = Calendar.getInstance();
+//					Calendar endDay = Calendar.getInstance();
+//					startDay.setTime(startEvent);
+//					endDay.setTime(endEvent);
+//					//시작날짜와 끝 날짜를 비교해, 시작날짜가 작거나 같은 경우 출력
+//					while(startDay.compareTo(endDay) !=1 ){
+//						System.out.printf("%tF\n", startDay.getTime());
+//						
+//						String strDate = df.format(startDay.getTime());
+//						eventPrice.setSpaceNo(spaceNo);
+//						eventPrice.setPriceEvent(strDate);
+//						eventPrice.setSpacePrice(enrollNotAlwaysEventPrice);
+//						eventResult = new SpaceService().insertPrice(eventPrice);
+//						System.out.println(eventPrice);
+//						//시작날짜 + 1 일
+//						startDay.add(Calendar.DATE, 1);
+//					}
+//					
+//				} catch (ParseException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+//		
+//		if(eventResult > 0) {
+//			result+=eventResult;
+//			System.out.println("이벤트 등록 성공!");
+//			System.out.println(eventResult);
+//		}
+//			
+//		
+//		System.out.println("result="+result);
+//		//3.view단 처리
+//		String msg = "";
+//		String loc = "/";
+//		if(result>2) {
+//			msg = "공간이 수정되었습니다.";
+//		} else {
+//			msg = "공간 수정에 실패했습니다. 관리자에게 문의하세요.";
+//		}
+//		request.setAttribute("msg", msg);
+//		request.setAttribute("loc", loc);
+//		request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp").forward(request, response);
 	}
 
 	/**
