@@ -1,7 +1,6 @@
 package com.kh.admin.banner.model.service;
 
-import static com.kh.common.JDBCTemplate.close;
-import static com.kh.common.JDBCTemplate.getConnection;
+import static com.kh.common.JDBCTemplate.*;
 
 import java.sql.Connection;
 import java.util.List;
@@ -18,4 +17,14 @@ public class AdminService {
 		return noChkSpaceList;
 	}
 
+	public int spaceChkOK(int spaceNo, String spaceChk) {
+		Connection conn = getConnection();
+		int result = new AdminDAO().spaceChkOK(conn, spaceNo, spaceChk);
+		if(result>0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
 }

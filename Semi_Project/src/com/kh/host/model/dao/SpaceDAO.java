@@ -293,4 +293,31 @@ public class SpaceDAO {
 		return spacePrice;
 	}
 
+	public List<SpaceDayOff> selectSpaceDayOffBySpaceNo(Connection conn, int spaceNo) {
+		List<SpaceDayOff> sDayOff = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectSpaceDayOffBySpaceNo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, spaceNo);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				SpaceDayOff s = new SpaceDayOff();
+				s.setSpaceNo(rset.getInt("space_no"));
+				s.setDayOffEvent(rset.getString("dayoff_event"));
+				s.setMaxSpaceDayOff(rset.getString("max_space_dayoff"));
+				sDayOff.add(s);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return sDayOff;
+	}
+
 }

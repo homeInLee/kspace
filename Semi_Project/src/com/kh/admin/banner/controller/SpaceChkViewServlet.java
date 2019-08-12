@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.kh.host.model.service.SpaceService;
 import com.kh.host.model.vo.Space;
+import com.kh.host.model.vo.SpaceDayOff;
 import com.kh.host.model.vo.SpaceImageFile;
 import com.kh.host.model.vo.SpacePrice;
 
@@ -38,10 +39,12 @@ public class SpaceChkViewServlet extends HttpServlet {
 		Space s = new SpaceService().spaceSelectOneBySpaceNo(spaceNo);
 		List<SpaceImageFile> sImg = new SpaceService().selectSpaceImgBySpaceNo(spaceNo);
 		List<SpacePrice> sPrice = new SpaceService().selectSpacePriceBySpaceNo(spaceNo);
+		List<SpaceDayOff> sDayOff = new SpaceService().selectSpaceDayOffBySpaceNo(spaceNo);
 		
 		request.setAttribute("space", s);
 		request.setAttribute("spaceImg", sImg);
 		request.setAttribute("sPrice", sPrice);
+		request.setAttribute("sDayOff", sDayOff);
 		request.getRequestDispatcher("/WEB-INF/views/admin/spaceCheck.jsp").forward(request, response);
 	}
 

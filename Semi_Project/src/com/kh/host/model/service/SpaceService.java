@@ -89,6 +89,12 @@ public class SpaceService {
 		close(conn);
 		return spacePrice;
 	}
+	public List<SpaceDayOff> selectSpaceDayOffBySpaceNo(int spaceNo) {
+		Connection conn = getConnection();
+		List<SpaceDayOff> sDayOff = new SpaceDAO().selectSpaceDayOffBySpaceNo(conn, spaceNo);
+		close(conn);
+		return sDayOff;
+	}
 	
 	
 }

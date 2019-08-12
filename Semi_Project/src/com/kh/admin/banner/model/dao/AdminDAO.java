@@ -74,5 +74,24 @@ public class AdminDAO {
 		
 		return noChkSpaceList;
 	}
+
+	public int spaceChkOK(Connection conn, int spaceNo, String spaceChk) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("spaceChkOK");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, spaceChk);
+			pstmt.setInt(2, spaceNo);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
 	
 }

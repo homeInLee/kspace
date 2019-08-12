@@ -8,7 +8,6 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.kh.host.model.vo.SpaceDayOff"%>
 <%
-	int spaceNo = Integer.parseInt(request.getParameter("spaceNo"));
 	Space s = (Space)request.getAttribute("space");
 	List<SpaceImageFile> sImg = (List<SpaceImageFile>)request.getAttribute("spaceImg");
 	List<SpacePrice> sPrice = (List<SpacePrice>)request.getAttribute("sPrice");
@@ -25,50 +24,44 @@
 	String minnotAlwaysEventDate = "";
 	String maxnotAlwaysEventDate = "";
 	
-	if(!sPrice.isEmpty()){
-		for(SpacePrice sp : sPrice){
-			if(sp.getPriceEvent()!=null){
-				bool = true;
-				if(sp.getPriceEvent().contains("일")) {
-					alwaysEvent = true;
-					alwaysEventType = "1개월";
-					if(sp.getPriceEvent().contains("요일")){
-						alwaysEventType = "1주일";
-					}
-					alwaysEventPrice = sp.getSpacePrice();
-					alwaysEventDate = sp.getPriceEvent();
-				} else if(sp.getPriceEvent().contains("-")) {
-					notAlwaysEvent = true;
-					notAlwaysEventDate.add(sp.getPriceEvent());
+	for(SpacePrice sp : sPrice){
+		if(sp.getPriceEvent()!=null){
+			bool = true;
+			if(sp.getPriceEvent().contains("일")) {
+				alwaysEvent = true;
+				alwaysEventType = "1개월";
+				if(sp.getPriceEvent().contains("요일")){
+					alwaysEventType = "1주일";
 				}
-			} else if(sp.getPriceEvent()==null) {
-				spacePrice = sp.getSpacePrice();
+				alwaysEventPrice = sp.getSpacePrice();
+				alwaysEventDate = sp.getPriceEvent();
+			} else if(sp.getPriceEvent().contains("-")) {
+				notAlwaysEvent = true;
+				notAlwaysEventDate.add(sp.getPriceEvent());
 			}
+		} else if(sp.getPriceEvent()==null) {
+			spacePrice = sp.getSpacePrice();
 		}
 	}
 	
-	if(!notAlwaysEventDate.isEmpty()){
-		for(int i=0; i<notAlwaysEventDate.size(); i++){
-			minnotAlwaysEventDate = notAlwaysEventDate.get(0);
-			maxnotAlwaysEventDate = notAlwaysEventDate.get(notAlwaysEventDate.size()-1);
-		}
+	for(int i=0; i<notAlwaysEventDate.size(); i++){
+		minnotAlwaysEventDate = notAlwaysEventDate.get(0);
+		maxnotAlwaysEventDate = notAlwaysEventDate.get(notAlwaysEventDate.size()-1);
 	}
 	
 	String sDayOffDate = "";
 	String sDayOffEvent = "";
-	if(!sDayOff.isEmpty()){
-		for(SpaceDayOff sdo :sDayOff){
-			if(sdo.getMaxSpaceDayOff()!=null){
-				sDayOffDate = sdo.getMaxSpaceDayOff();
-			}
-			if(sdo.getDayOffEvent()!=null){
-				sDayOffEvent = sdo.getDayOffEvent();
-			}
+	for(SpaceDayOff sdo :sDayOff){
+		if(sdo.getMaxSpaceDayOff()!=null){
+			sDayOffDate = sdo.getMaxSpaceDayOff();
+		}
+		if(sdo.getDayOffEvent()!=null){
+			sDayOffEvent = sdo.getDayOffEvent();
 		}
 	}
 	
 	String[] sDayOffDateArr = null;
-	if(!sDayOffDate.equals("") && sDayOffDateArr!=null){
+	if(!sDayOffDate.equals("")){
 		sDayOffDateArr = sDayOffDate.split(",");
 	}
 %>
@@ -80,19 +73,43 @@ $(document).ready(function(){
 	var str = "<%=s.getSpaceIntro()!=null?s.getSpaceIntro():""%>";
 	str = str.split('<br/>').join("\r\n");
 	$('#spaceIntro').val(str); 
-	
-	$("input, textarea, select").prop("disabled", true);
-	$("input[type=submit], input[name=spaceChkNo], input[name=spaceChkCancelNo]").prop("disabled", false);
 });
 
-function goSpaceEnrollCancel(){
-	$("form[name=spaceEnrollChkCancelFrm]").submit();
+function fileCheck(){
+	if($(this).val()!=""){
+		//파일 용량 체크
+		var fileSize = this.files[0].size;
+		var maxSize = 1024*1024*10;
+		if(fileSize > maxSize){
+			alert('파일 용량을 초과했습니다.');
+			$(this).val("");
+		}
+		
+		//확장자 체크
+		var ext = $(this).val().split(".").pop().toLowerCase();
+		if($.inArray(ext, ["gif", "jpg", "jpeg", "png"]) == -1){
+			alert('이미지 확장자만 첨부해주세요.');
+			$(this).val("");
+		}
+	}
+}
+
+function enrollValidate(){
+	if($("input[name=spaceType]:checked").length>5){
+		alert("공간 유형은 최대 5개까지 선택 가능합니다.");
+		return false;
+	}
+	
+	//textarea 엔터 : 글 입력 후 DB 저장시 적용
+	var str = $('#spaceIntro').val();
+	str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+	$('#spaceIntro').val(str);
+	
+	return true;
 }
 </script>
+
 <div class="sub_container">
-	<form action="<%=request.getContextPath() %>/admin/spaceChkNo" name="spaceEnrollChkCancelFrm" method="post">
-		<input type="hidden" name="spaceChkCancelNo" value="<%=spaceNo%>" />
-	</form>
     <section class="subPage spaceEnroll">
         <article>
         	<div class="spaceEnrollTit clearfix">
@@ -100,9 +117,10 @@ function goSpaceEnrollCancel(){
         		<p class="req">필수 선택</p>
         	</div>
             <p class="req">신중하게 공간 유형을 선택해주세요!</p>
-            <form action="<%=request.getContextPath() %>/admin/spaceChk" name="spaceEnrollChkFrm" 
-            		method="post" onsubmit="return true;">
-            	<input type="hidden" name="spaceChkNo" value="<%=spaceNo%>" />
+            <form action="<%=request.getContextPath() %>/host/spaceEnrollEnd" name="spaceEnrollEndFrm" 
+            		method="post" encType="multipart/form-data" onsubmit="return enrollValidate();">
+            	<!-- 호스트 아이디 value값 바꾸기 -->
+            	<input type="hidden" name="hostId" value="JeonGaNe" />
             	<div class="clearfix">
             		<h4>공간유형<span class="req">*</span></h4>
             		<p>최대 5개 선택 가능</p>
@@ -137,13 +155,12 @@ function goSpaceEnrollCancel(){
             	<p>이미지 사이즈 : 1024*450, 크기 : 10MB 권장</p>
             	<div class="clearfix">
             		<div id="enrollImg1" class="spaceEnroll-img">
-            		<% if(!sImg.isEmpty()){
-            			for(SpaceImageFile s1 : sImg){
+            		<% for(SpaceImageFile s1 : sImg){
             			if(s1.getImageRenamedFileName()!=null && s1.getFlag().equals("Y")){
             		%>
             			<img src="<%=request.getContextPath() %>/upload/host/<%=s1.getImageRenamedFileName() %>" alt="" height="110" />
             		<%		
-            			} }
+            			}
             		} %>
             		</div>
             		<div class="filebox"> 
@@ -155,13 +172,12 @@ function goSpaceEnrollCancel(){
             	<p>이미지 사이즈 : 1024*450, 크기 : 10MB 권장(1장당), <span>최대 3장 업로드 가능</span></p>
             	<div class="multipleFile clearfix">
             		<div id="enrollImg2" class="spaceEnroll-img">
-            		<% if(!sImg.isEmpty()){
-            			for(SpaceImageFile s2 : sImg){
+            		<% for(SpaceImageFile s2 : sImg){
             			if(s2.getImageRenamedFileName()!=null && s2.getFlag().equals("N")){
             		%>
             			<img src="<%=request.getContextPath() %>/upload/host/<%=s2.getImageRenamedFileName() %>" alt="" height="110"/>
             		<%		
-            			} }
+            			}
             		} %>
             		</div>
             		<div class="filebox"> 
@@ -185,15 +201,15 @@ function goSpaceEnrollCancel(){
             		</div>
             		<div class="spaceEnroll">
             			<h5>공간 소개<span class="req">*</span></h5>
-            			<p><textarea name="spaceIntro" id="spaceIntro" class="dp_block" cols="30" rows="10"></textarea></p>
+            			<p><textarea name="spaceIntro" id="spaceIntro" required class="dp_block" cols="30" rows="10"></textarea></p>
             		</div>
             		<div class="spaceEnroll">
             			<h5>수용인원<span class="req">*</span></h5>
             			<p>
             				최소 :&nbsp;
-            				<span class="bookingsrchPrice srchPrice dp_ib"><input type="number" name="minBookingPeople" id="minBookingPeople" value="<%=s.getMinBookingPeople()%>" class="dp_block" /></span>
+            				<span class="bookingsrchPrice srchPrice dp_ib"><input type="number" name="minBookingPeople" required id="minBookingPeople" value="<%=s.getMinBookingPeople()%>" class="dp_block" /></span>
             				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;최대 :&nbsp;
-            				<span class="bookingsrchPrice srchPrice dp_ib"><input type="number" name="maxBookingPeople" id="maxBookingPeople" value="<%=s.getMaxBookingPeople()%>" class="dp_block" /></span>
+            				<span class="bookingsrchPrice srchPrice dp_ib"><input type="number" name="maxBookingPeople" required id="maxBookingPeople" value="<%=s.getMaxBookingPeople()%>" class="dp_block" /></span>
             			</p>
             		</div>
             		<div class="spaceEnroll">
@@ -240,7 +256,7 @@ function goSpaceEnrollCancel(){
             		<div class="spaceEnroll">
             			<h5>가격<span class="req">*</span></h5>
             			<p class="srchPrice">
-            			<input type="number" name="spaceEnrollPrice" id="spaceEnrollPrice" class="dp_block" value="<%=spacePrice%>" /></p>
+            			<input type="number" name="spaceEnrollPrice" required id="spaceEnrollPrice" class="dp_block" value="<%=spacePrice%>" /></p>
             		</div>
             		<div class="spaceEnroll enrollDayOff">
             			<h5>이벤트</h5>
@@ -292,7 +308,7 @@ function goSpaceEnrollCancel(){
             			%>
             			<div>
             				<div class="custom-select">
-            					<select name="spaceEnrollTime1" id="spaceEnrollTime1" class="dp_block">
+            					<select name="spaceEnrollTime1" required id="spaceEnrollTime1" class="dp_block">
             						<option value="">선택</option>
 	                            	<option value="00:00" <%=bookingTime[0].contains("00:00")?"selected":"" %>>00:00</option>
 	                            	<option value="01:00" <%=bookingTime[0].contains("01:00")?"selected":"" %>>01:00</option>
@@ -322,7 +338,7 @@ function goSpaceEnrollCancel(){
 	                            </select>
             				</div>
             				<div class="custom-select">
-            					<select name="spaceEnrollTime2" id="spaceEnrollTime2" class="dp_block">
+            					<select name="spaceEnrollTime2" required id="spaceEnrollTime2" class="dp_block">
 	                            	<option value="">선택</option>
 	                            	<option value="00:00" <%=bookingTime[1].contains("00:00")?"selected":"" %>>00:00</option>
 	                            	<option value="01:00" <%=bookingTime[1].contains("01:00")?"selected":"" %>>01:00</option>
@@ -357,38 +373,38 @@ function goSpaceEnrollCancel(){
             			<h5>휴무일</h5>
             			<ul class="clearfix">
             				<li>
-            					<input type="checkbox" name="spaceEnrollDayOff" id="dayOff0" value="일요일" <%=!sDayOffDate.equals("") && sDayOffDate.contains("일요일")?"checked":"" %> />
+            					<input type="checkbox" name="spaceEnrollDayOff" id="dayOff0" value="일요일" <%=sDayOffDate.contains("일요일")?"checked":"" %> />
             					<label for="dayOff0">일요일</label>
             				</li>
             				<li>
-            					<input type="checkbox" name="spaceEnrollDayOff" id="dayOff1" value="월요일" <%=!sDayOffDate.equals("") && sDayOffDate.contains("월요일")?"checked":"" %> />
+            					<input type="checkbox" name="spaceEnrollDayOff" id="dayOff1" value="월요일" <%=sDayOffDate.contains("월요일")?"checked":"" %> />
             					<label for="dayOff1">월요일</label>
             				</li>
             				<li>
-            					<input type="checkbox" name="spaceEnrollDayOff" id="dayOff2" value="화요일" <%=!sDayOffDate.equals("") && sDayOffDate.contains("화요일")?"checked":"" %> />
+            					<input type="checkbox" name="spaceEnrollDayOff" id="dayOff2" value="화요일" <%=sDayOffDate.contains("화요일")?"checked":"" %> />
             					<label for="dayOff2">화요일</label>
             				</li>
             				<li>
-            					<input type="checkbox" name="spaceEnrollDayOff" id="dayOff3" value="수요일" <%=!sDayOffDate.equals("") && sDayOffDate.contains("수요일")?"checked":"" %> />
+            					<input type="checkbox" name="spaceEnrollDayOff" id="dayOff3" value="수요일" <%=sDayOffDate.contains("수요일")?"checked":"" %> />
             					<label for="dayOff3">수요일</label>
             				</li>
             				<li>
-            					<input type="checkbox" name="spaceEnrollDayOff" id="dayOff4" value="목요일" <%=!sDayOffDate.equals("") && sDayOffDate.contains("목요일")?"checked":"" %> />
+            					<input type="checkbox" name="spaceEnrollDayOff" id="dayOff4" value="목요일" <%=sDayOffDate.contains("목요일")?"checked":"" %> />
             					<label for="dayOff4">목요일</label>
             				</li>
             				<li>
-            					<input type="checkbox" name="spaceEnrollDayOff" id="dayOff5" value="금요일" <%=!sDayOffDate.equals("") && sDayOffDate.contains("금요일")?"checked":"" %> />
+            					<input type="checkbox" name="spaceEnrollDayOff" id="dayOff5" value="금요일" <%=sDayOffDate.contains("금요일")?"checked":"" %> />
             					<label for="dayOff5">금요일</label>
             				</li>
             				<li>
-            					<input type="checkbox" name="spaceEnrollDayOff" id="dayOff6" value="토요일" <%=!sDayOffDate.equals("") && sDayOffDate.contains("토요일")?"checked":"" %> />
+            					<input type="checkbox" name="spaceEnrollDayOff" id="dayOff6" value="토요일" <%=sDayOffDate.contains("토요일")?"checked":"" %> />
             					<label for="dayOff6">토요일</label>
             				</li>
             				<li class="clearfix etcDayOff">
-            					<input type="checkbox" name="spaceEnrollDayOff" id="dayOff7" value="기타" <%=!sDayOffDate.equals("") && sDayOffDate.contains("-")?"checked":"" %> />
+            					<input type="checkbox" name="spaceEnrollDayOff" id="dayOff7" value="기타" <%=sDayOffDate.contains("-")?"checked":"" %> />
             					<label for="dayOff7">기타</label>
             					<input type="text" name="spaceEnrollDayOffETC" disabled="disabled" id="spaceEnrollDayOffETC" 
-            					value="<%=sDayOffDateArr!=null?sDayOffDateArr[sDayOffDateArr.length-1]:"" %>" placeholder="ex) 2019-08-07 ~ 2019-08-10" />
+            					value="<%=sDayOffDateArr[sDayOffDateArr.length-1] %>" placeholder="ex) 2019-08-07 ~ 2019-08-10" />
             				</li>
             			</ul>
             		</div>
@@ -398,8 +414,8 @@ function goSpaceEnrollCancel(){
             		</div>
             	</div>
             	<div class="spaceEnroll-btn txt_center clearfix">
-            		<input type="submit" value="검수 완료" class="dp_ib fw600"/>
-            		<a href="javascript:goSpaceEnrollCancel();" class="dp_ib fw600">반려</a>
+            		<input type="submit" value="검수 신청" class="dp_ib fw600"/>
+            		<a href="<%=request.getContextPath() %>" class="dp_ib fw600">취소</a>
             	</div>
             </form>
         </article>

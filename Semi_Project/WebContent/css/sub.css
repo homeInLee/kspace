@@ -451,7 +451,8 @@
     width: 301px;
 }
 
-.spaceEnroll .select-items {
+.spaceEnroll .select-items,
+.placeFilter .select-items {
 	overflow: hidden;
 	overflow-y: scroll;
 	height: 200px;;
