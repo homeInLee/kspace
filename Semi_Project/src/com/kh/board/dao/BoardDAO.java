@@ -37,7 +37,7 @@ private Properties prop;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String sql = prop.getProperty("selectBoardList");
-		System.out.println(sql);
+//		System.out.println(sql);
 		try {
 			pstmt = conn.prepareStatement(sql);
 			int start = (cPage-1)*numPerPage+1;
@@ -53,7 +53,7 @@ private Properties prop;
 				b.setBoardWriter(rset.getString("board_writer"));
 				b.setBoardContent(rset.getString("board_content"));
 				b.setOriginalFileName(rset.getString("board_original_filename"));
-				b.setRenameFilName(rset.getString("board_renamed_filename"));
+				b.setRenameFileName(rset.getString("board_renamed_filename"));
 				b.setBoardDate(rset.getDate("board_date"));
 				b.setReadCount(rset.getInt("board_readcount"));
 				b.setDelDate(rset.getDate("board_date_del"));
@@ -68,7 +68,7 @@ private Properties prop;
 			close(rset);
 		}
 		
-		System.out.println("list@doa="+list);
+//		System.out.println("list@doa="+list);
 		return list;
 	}
 
@@ -90,7 +90,7 @@ private Properties prop;
 			close(pstmt);
 			close(rset);
 		}
-		System.out.println("contents@admin="+result);
+//		System.out.println("contents@admin="+result);
 		
 		return result;
 	}
@@ -107,7 +107,7 @@ private Properties prop;
 			pstmt.setString(2, b.getBoardWriter());
 			pstmt.setString(3, b.getBoardContent());
 			pstmt.setString(4, b.getOriginalFileName());
-			pstmt.setString(5, b.getRenameFilName());
+			pstmt.setString(5, b.getRenameFileName());
 			result = pstmt.executeUpdate();
 			
 		}catch (SQLException e) {
@@ -139,6 +139,119 @@ private Properties prop;
 		}
 		
 		return boardNo;
+	}
+
+	public int deleteBoard(Connection conn, int boardNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteBoard");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, boardNo);
+			result = pstmt.executeUpdate();
+					
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public Board selectBoard(Connection conn, int boardNo) {
+		Board b = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectBoard");
+//		System.out.println(sql);
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, boardNo);
+			
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				b = new Board();
+				b.setBoardNo(rset.getInt("board_no"));
+				b.setBoardTitle(rset.getString("board_title"));
+				b.setBoardWriter(rset.getString("board_writer"));
+				b.setBoardContent(rset.getString("board_content"));
+				b.setOriginalFileName(rset.getString("board_original_filename"));
+				b.setRenameFileName(rset.getString("board_renamed_filename"));
+				b.setBoardDate(rset.getDate("board_date"));
+				b.setReadCount(rset.getInt("board_readcount"));
+				b.setDelDate(rset.getDate("board_date_del"));
+				b.setDelType(rset.getString("board_del_type"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+//		System.out.println("list@doa="+list);
+		return b;
+	}
+
+	public Board selectBoardNo(Connection conn, int boardNo) {
+Board b = null;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectBoardNo");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, boardNo);
+			rset = pstmt.executeQuery();
+		if(rset.next()) {
+			b = new Board();
+			b.setBoardNo(rset.getInt("board_no"));
+			b.setBoardTitle(rset.getString("board_title"));
+			b.setBoardWriter(rset.getString("board_writer"));
+			b.setBoardContent(rset.getString("board_content"));
+			b.setOriginalFileName(rset.getString("board_original_filename"));
+			b.setRenameFileName(rset.getString("board_renamed_filename"));
+			b.setBoardDate(rset.getDate("board_date"));
+			b.setReadCount(rset.getInt("board_readcount"));
+//			b.setDelDate(rset.getDate("board_date_del"));
+//			b.setDelType(rset.getString("board_del_type"));
+		}
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rset);
+		}
+		return b;
+	}
+
+	public int updateBoard(Connection conn, Board b) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("updateBoard"); 
+		
+		try {
+			//미완성쿼리문을 가지고 객체생성.
+			pstmt = conn.prepareStatement(query);
+			//쿼리문미완성
+			pstmt.setString(1, b.getBoardTitle());
+			pstmt.setString(2, b.getBoardContent());
+			pstmt.setString(3, b.getOriginalFileName());
+			pstmt.setString(4, b.getRenameFileName());
+			pstmt.setInt(5, b.getBoardNo());
+			
+			//쿼리문실행 : 완성된 쿼리를 가지고 있는 pstmt실행(파라미터 없음)
+			//DML은 executeUpdate()
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 	
 

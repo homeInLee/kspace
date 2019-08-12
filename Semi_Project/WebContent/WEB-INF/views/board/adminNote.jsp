@@ -44,43 +44,42 @@
 							</h3>
 							<ul>
 								<li>
-								<%-- <%=b.getBoardNo() %> --%>
+								<%=b.getBoardNo() %>
 								<%=b.getBoardContent() %>
 								<%=b.getBoardWriter() %>
 								<%=b.getBoardDate() %>
 								<%if(b.getOriginalFileName() != null){ %>
 								<img src="<%=request.getContextPath() %>" alt="" />
+								<%=b.getOriginalFileName() %>
 								<%} %>
+								</li>
+								<li>
+								<%-- <%if(){ %> --%>
+								<input type="button" value="수정" onclick="updateBoard();"/>
+								<input type="button" value="삭제"  onclick="deleteBoard();"/>
+								<form action="<%=request.getContextPath()%>/admin/adminNoteDel"
+										id="boardDelete" method="post">
+										<input type="hidden" name="boardNo" value="<%=b.getBoardNo()%>" /> 
+										<input type="hidden" name="renamedFileName" value="<%=b.getRenameFileName() != null ? b.getRenameFileName() : ""%>" />
+								</form> 
+								<script>
+								function updateBoard() {
+									location.href ="<%=request.getContextPath()%>/admin/adminNoteUpdate?boardNo=<%=b.getBoardNo()%>";
+								}
+								function deleteBoard() {
+									if(!confirm("정말하시겠습니까?")){
+										return;
+									}
+									$("#boardDelete").submit();
+								}
+								</script>
+								<%-- <%} %> --%>
 								</li>
 							</ul>
 						</li>
 					<% }
 					}
 					%>
-						<!-- <li class="active">
-							<h3>
-								<span class="icon-tasks"></span>메뉴
-							</h3>
-							<ul>
-								<li><a href="#">Today's tasks</a></li>
-							</ul>
-						</li> -->
-						<!-- <li>
-							<h3>
-								<span class="icon-calendar"></span>메뉴
-							</h3>
-							<ul>
-								<li><a href="#">Team Calendar</a></li>
-							</ul>
-						</li> -->
-						<!-- <li>
-							<h3>
-								<span class="icon-heart"></span>메뉴
-							</h3>
-							<ul>
-								<li><a href="#">Global favs</a></li>
-							</ul>
-						</li> -->
 					</ul>
 				</div>
 			</div>

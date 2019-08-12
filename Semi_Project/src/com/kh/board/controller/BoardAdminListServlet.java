@@ -42,7 +42,7 @@ public class BoardAdminListServlet extends HttpServlet {
 		
 		//업무로직
 		List<Board> list = new BoardService().selectBoardList(cPage, numPerPage);
-		System.out.println("servlet"+list);
+//		System.out.println("servlet"+list);
 		
 		int totalContents = new BoardService().selectTotalContents();
 		int totalPage = (int)Math.ceil((double)totalContents/numPerPage);

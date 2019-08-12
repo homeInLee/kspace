@@ -45,7 +45,7 @@ public class BoardAdminUploadServlet extends HttpServlet {
 		//업로드시작
 		String root = getServletContext().getRealPath("/");
 		String save = root+"upload"+File.separator+"board";
-		System.out.println("save"+save);
+//		System.out.println("save"+save);
 		
 		int postSize = 1024*1024*10;
 		String encoding= "utf-8";
@@ -53,21 +53,21 @@ public class BoardAdminUploadServlet extends HttpServlet {
 		MultipartRequest mreq = new MultipartRequest(request, save, postSize, encoding, renamePolicy);
 		
 		//파마리터
-		String title = mreq.getParameter("boardTitle");
-		String writer = mreq.getParameter("boardWriter");
-		String renamefileName = mreq.getFilesystemName("upFile");//폼테그에 작성한 이름을 적어야 한ㄷ,.
-		String originalFileName = mreq.getOriginalFileName("upFile");
-		String boardContent = mreq.getParameter("boardContent");
-		boardContent = boardContent.replaceAll("<", "$lt;");
-		boardContent = boardContent.replaceAll(">", "$gt;");
+		String title = mreq.getParameter("title");
+		String writer = mreq.getParameter("writer");
+		String renamefileName = mreq.getFilesystemName("file");//폼테그에 작성한 이름을 적어야 한ㄷ,.
+		String originalFileName = mreq.getOriginalFileName("file");
+		String boardContent = mreq.getParameter("content");
+//		boardContent = boardContent.replaceAll("<", "$lt;");
+//		boardContent = boardContent.replaceAll(">", "$gt;");
 		
 		Board b = new Board();
 		b.setBoardTitle(title);
 		b.setBoardWriter(writer);
 		b.setBoardContent(boardContent);
 		b.setOriginalFileName(originalFileName);
-		b.setRenameFilName(renamefileName);
-		System.out.println("boardForm="+b);
+		b.setRenameFileName(renamefileName);
+//		System.out.println("boardForm="+b);
 		
 		//업무로직
 		int result = new BoardService().insertBoard(b);

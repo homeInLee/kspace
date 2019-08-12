@@ -37,4 +37,44 @@ public class BoardService {
 		return result;
 	}
 
+	public int deleteBoard(int boardNo) {
+		Connection conn = getConnection();
+		int result = new BoardDAO().deleteBoard(conn, boardNo);
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		return result;
+	}
+
+	public Board selectBoard(int boardNo) {
+		Connection conn = getConnection();
+		Board b = new BoardDAO().selectBoard(conn, boardNo);
+		close(conn);
+		return b;
+	}
+
+	public Board selectBoardNo(int boardNo) {
+		Connection conn = getConnection();
+		Board b = new BoardDAO().selectBoardNo(conn, boardNo);
+		close(conn);
+		return b;
+	}
+
+	public int updateBoard(Board b) {
+		Connection conn = getConnection();
+		int result = new BoardDAO().updateBoard(conn, b);
+		if(result>0){
+			commit(conn);
+		}
+		else 
+			rollback(conn);
+		
+		close(conn);
+		
+		return result;
+	}
+
 }

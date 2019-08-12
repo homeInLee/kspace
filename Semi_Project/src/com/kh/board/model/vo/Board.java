@@ -9,7 +9,7 @@ public class Board implements Serializable{
 	private String boardWriter;
 	private String boardContent;
 	private String originalFileName;
-	private String renameFilName;
+	private String renameFileName;
 	private Date boardDate;
 	private int readCount;
 	private Date delDate;
@@ -28,7 +28,7 @@ public class Board implements Serializable{
 		this.boardWriter = boardWriter;
 		this.boardContent = boardContent;
 		this.originalFileName = originalFileName;
-		this.renameFilName = renameFilName;
+		this.renameFileName = renameFilName;
 		this.boardDate = boardDate;
 		this.readCount = readCount;
 		this.delDate = delDate;
@@ -75,12 +75,12 @@ public class Board implements Serializable{
 		this.originalFileName = originalFileName;
 	}
 
-	public String getRenameFilName() {
-		return renameFilName;
+	public String getRenameFileName() {
+		return renameFileName;
 	}
 
-	public void setRenameFilName(String renameFilName) {
-		this.renameFilName = renameFilName;
+	public void setRenameFileName(String renameFilName) {
+		this.renameFileName = renameFilName;
 	}
 
 	public Date getBoardDate() {
@@ -119,7 +119,7 @@ public class Board implements Serializable{
 	public String toString() {
 		return "Board [boardNo=" + boardNo + ", boardTitle=" + boardTitle + ", boardWriter=" + boardWriter
 				+ ", boardContent=" + boardContent + ", originalFileName=" + originalFileName + ", renameFilName="
-				+ renameFilName + ", boardDate=" + boardDate + ", readCount=" + readCount + ", delDate=" + delDate
+				+ renameFileName + ", boardDate=" + boardDate + ", readCount=" + readCount + ", delDate=" + delDate
 				+ ", delType=" + delType + "]";
 	}
 	
