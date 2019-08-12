@@ -39,9 +39,30 @@ public class SearchService {
 		return list;
 	}
 
-	public List<SpaceJoin> selectFilterList(int srchPrice1, int srchPrice2, String[] facility, List<SpaceJoin> spaceList) {
+	public List<SpaceJoin> selectFilterList(int srchPrice1, int srchPrice2, String[] facility, String spaceSrch) {
 		Connection conn = getConnection();
-		List<SpaceJoin> list = new SearchDAO().selectFilterList(conn, srchPrice1, srchPrice2, facility, spaceList);
+		List<SpaceJoin> list = new SearchDAO().selectFilterList(conn, srchPrice1, srchPrice2, facility, spaceSrch);
+		close(conn);
+		return list;
+	}
+
+	public List<SpaceJoin> selectFilterPriceZeroList(int srchPrice1, String[] facility, String spaceSrch) {
+		Connection conn = getConnection();
+		List<SpaceJoin> list = new SearchDAO().selectFilterPriceZeroList(conn, srchPrice1, facility, spaceSrch);
+		close(conn);
+		return list;
+	}
+
+	public List<SpaceJoin> selectFilterFacilityNullList(int srchPrice1, int srchPrice2, String spaceSrch) {
+		Connection conn = getConnection();
+		List<SpaceJoin> list = new SearchDAO().selectFilterFacilityNullList(conn, srchPrice1, srchPrice2, spaceSrch);
+		close(conn);
+		return list;
+	}
+
+	public List<SpaceJoin> selectFilterNullList(int srchPrice1, String spaceSrch) {
+		Connection conn = getConnection();
+		List<SpaceJoin> list = new SearchDAO().selectFilterNullList(conn, srchPrice1, spaceSrch);
 		close(conn);
 		return list;
 	}

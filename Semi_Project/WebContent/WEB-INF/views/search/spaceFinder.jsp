@@ -65,6 +65,7 @@
                     </div>
                 </div>
             <form action="<%=request.getContextPath() %>/search/searchFilter" method="get" class="dp_block">
+            <input type="hidden" name="spaceSrch" value="<%=spaceSrch%>" />
                 <div class="srchFilter-wrap">
                     <div>
                         <div class="srchFilter clearfix" style="width: 587px;">

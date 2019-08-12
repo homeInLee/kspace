@@ -180,21 +180,30 @@ public class SearchDAO {
 	}
 
 	public List<SpaceJoin> selectFilterList(Connection conn, int srchPrice1, int srchPrice2, String[] facility,
-			List<SpaceJoin> spaceList) {
+			String spaceSrch) {
 		List<SpaceJoin> list = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
+		String fac = "";
 		String sql = prop.getProperty("selectFilterList");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			if(srchPrice1 != 0 && srchPrice2 != 0) {
 			pstmt.setInt(1, srchPrice1);
 			pstmt.setInt(2, srchPrice2);
+			
 			for(int i=0; i<facility.length; i++) {
-				pstmt.setString(i+3, "%"+facility[i]+"%");				
+				fac += "%" + facility[i];
+				
+				if(i == facility.length - 1) {
+					fac += "%";
+				}
 			}
-			}
+			
+			pstmt.setString(3, fac);
+			pstmt.setString(4, "%"+spaceSrch+"%");
+			pstmt.setString(5, "%"+spaceSrch+"%");
+			pstmt.setString(6, "%"+spaceSrch+"%");
 			
 			rset = pstmt.executeQuery();
 			
@@ -215,11 +224,158 @@ public class SearchDAO {
 				s.setCompanyPlace(rset.getString("company_place"));
 				s.setSpacePrice(rset.getInt("space_price"));
 				
-				for(int i=0; i<spaceList.size(); i++) {
-					if(spaceList.get(i).getSpaceNo() == s.getSpaceNo()) {
-						list.add(s);
-					}
+				list.add(s);
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public List<SpaceJoin> selectFilterPriceZeroList(Connection conn, int srchPrice1, String[] facility,
+			String spaceSrch) {
+		List<SpaceJoin> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String fac = "";
+		String sql = prop.getProperty("selectFilterPriceZeroList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, srchPrice1);
+			
+			for(int i=0; i<facility.length; i++) {
+				fac += "%" + facility[i];
+				
+				if(i == facility.length - 1) {
+					fac += "%";
 				}
+			}
+			
+			pstmt.setString(2, fac);
+			pstmt.setString(3, "%"+spaceSrch+"%");
+			pstmt.setString(4, "%"+spaceSrch+"%");
+			pstmt.setString(5, "%"+spaceSrch+"%");
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				SpaceJoin s = new SpaceJoin();
+				s.setSpaceNo(rset.getInt("space_no"));
+				s.setCompanyNo(rset.getInt("company_no"));
+				s.setSpaceIntro(rset.getString("space_intro"));
+				s.setBookingTime(rset.getString("booking_time"));
+				s.setMaxBookingPeople(rset.getInt("max_booking_people"));
+				s.setMinBookingPeople(rset.getInt("min_booking_people"));
+				s.setSpaceThema(rset.getString("space_thema"));
+				s.setSpaceCheck(rset.getString("space_check"));
+				s.setHashtag(rset.getString("hashtag"));
+				s.setSpaceName(rset.getString("space_name"));
+				s.setSpaceFacilities(rset.getString("space_facilities"));
+				s.setSpaceSlogan(rset.getString("space_slogan"));
+				s.setCompanyPlace(rset.getString("company_place"));
+				s.setSpacePrice(rset.getInt("space_price"));
+				
+				list.add(s);
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public List<SpaceJoin> selectFilterFacilityNullList(Connection conn, int srchPrice1, int srchPrice2,
+			String spaceSrch) {
+		List<SpaceJoin> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectFilterFacilityNullList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, srchPrice1);
+			pstmt.setInt(2, srchPrice2);
+			
+			pstmt.setString(3, "%"+spaceSrch+"%");
+			pstmt.setString(4, "%"+spaceSrch+"%");
+			pstmt.setString(5, "%"+spaceSrch+"%");
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				SpaceJoin s = new SpaceJoin();
+				s.setSpaceNo(rset.getInt("space_no"));
+				s.setCompanyNo(rset.getInt("company_no"));
+				s.setSpaceIntro(rset.getString("space_intro"));
+				s.setBookingTime(rset.getString("booking_time"));
+				s.setMaxBookingPeople(rset.getInt("max_booking_people"));
+				s.setMinBookingPeople(rset.getInt("min_booking_people"));
+				s.setSpaceThema(rset.getString("space_thema"));
+				s.setSpaceCheck(rset.getString("space_check"));
+				s.setHashtag(rset.getString("hashtag"));
+				s.setSpaceName(rset.getString("space_name"));
+				s.setSpaceFacilities(rset.getString("space_facilities"));
+				s.setSpaceSlogan(rset.getString("space_slogan"));
+				s.setCompanyPlace(rset.getString("company_place"));
+				s.setSpacePrice(rset.getInt("space_price"));
+				
+				list.add(s);
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public List<SpaceJoin> selectFilterNullList(Connection conn, int srchPrice1, String spaceSrch) {
+		List<SpaceJoin> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectFilterNullList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, srchPrice1);
+			
+			pstmt.setString(2, "%"+spaceSrch+"%");
+			pstmt.setString(3, "%"+spaceSrch+"%");
+			pstmt.setString(4, "%"+spaceSrch+"%");
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				SpaceJoin s = new SpaceJoin();
+				s.setSpaceNo(rset.getInt("space_no"));
+				s.setCompanyNo(rset.getInt("company_no"));
+				s.setSpaceIntro(rset.getString("space_intro"));
+				s.setBookingTime(rset.getString("booking_time"));
+				s.setMaxBookingPeople(rset.getInt("max_booking_people"));
+				s.setMinBookingPeople(rset.getInt("min_booking_people"));
+				s.setSpaceThema(rset.getString("space_thema"));
+				s.setSpaceCheck(rset.getString("space_check"));
+				s.setHashtag(rset.getString("hashtag"));
+				s.setSpaceName(rset.getString("space_name"));
+				s.setSpaceFacilities(rset.getString("space_facilities"));
+				s.setSpaceSlogan(rset.getString("space_slogan"));
+				s.setCompanyPlace(rset.getString("company_place"));
+				s.setSpacePrice(rset.getInt("space_price"));
+				
+				list.add(s);
 			}
 			
 		} catch(Exception e) {
