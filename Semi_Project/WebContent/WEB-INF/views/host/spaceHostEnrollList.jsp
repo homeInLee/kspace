@@ -7,7 +7,24 @@
 	List<SpaceAll> hostSpaceList = (List<SpaceAll>)request.getAttribute("hostSpaceList");
 %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/sub.css" />
+<style>
+.recom-space li a {
+	position:relative;
+}
 
+.recom-result{
+	position:absolute;
+	top:0;
+	left:0;
+	width: 50px;
+	height: 50px;
+	color:#fff;
+	background: rgba(0,0,0,0.5);
+	font-size: 15px;
+	line-height: 50px;
+	z-index:1;
+}
+</style>
 <div class="sub_container">
     <section class="subPage">
         <article>
@@ -25,6 +42,15 @@
             %>
             	<li>
 	                <a href="<%=request.getContextPath() %>/host/spaceHostListView?spaceNo=<%=s.getSpaceNo() %>" class="dp_block">
+	                    <p class="recom-result txt_center">
+	                    <% if(s.getSpaceCheck().equals("Y")){ %>
+	                    	완료
+	                    <% } else if(s.getSpaceCheck().equals("N")){ %>
+	                    	검수중
+	                    <% } else if(s.getSpaceCheck().equals("B")) { %>
+	                    	반려
+	                    <% }%>
+	                    </p>
 	                    <div class="recom-space-img">
 	                    	<%if("Y".equals(s.getFlag()) && s.getFlag()!=null && s.getImageRenamedFileName()!=null) %>
 	                    	<img src="<%=request.getContextPath()%>/upload/host/<%=s.getImageRenamedFileName() %>" alt="이미지영역" class="dp_block">
