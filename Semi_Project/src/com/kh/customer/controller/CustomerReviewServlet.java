@@ -1,4 +1,4 @@
-package com.kh.board.controller;
+package com.kh.customer.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,21 +7,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.kh.board.model.vo.Board;
-import com.kh.board.model.exception.BoardExcaption;
-import com.kh.board.model.service.BoardService;
-
 /**
- * Servlet implementation class AdminBoardUpdateServlet
+ * Servlet implementation class CustomerReviewServlet
  */
-@WebServlet("/admin/adminNoteUpdate")
-public class BoardAdminUpdateServlet extends HttpServlet {
+@WebServlet("/customer/customerReview")
+public class CustomerReviewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public BoardAdminUpdateServlet() {
+    public CustomerReviewServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,20 +26,8 @@ public class BoardAdminUpdateServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//1.파라미터 핸들링
-				int boardNo;
-				try {
-				boardNo = Integer.parseInt(request.getParameter("boardNo"));
-				}catch(NumberFormatException e) {
-					throw new BoardExcaption("유효하지 않아");
-				}
-				//2.업무로직
-				Board b = new BoardService().selectBoardNo(boardNo);
-				
-				//3.view단처리
-				request.setAttribute("board", b);
-				System.out.println(b);
-				request.getRequestDispatcher("/WEB-INF/views/board/adminNoteUpdate.jsp").forward(request, response);
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**

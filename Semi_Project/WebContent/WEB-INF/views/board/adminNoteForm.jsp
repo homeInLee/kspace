@@ -23,7 +23,7 @@
          			<td><textarea name="content" required="required" /></textarea></td>
          		</tr>
          		<tr>
-         			<th>제목</th>
+         			<th>파일첨부</th>
          			<td><input type="file" name="file"/></td>
          		</tr>
          		<tr>

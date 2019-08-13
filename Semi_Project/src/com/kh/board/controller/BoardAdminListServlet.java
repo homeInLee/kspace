@@ -10,7 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kh.board.model.vo.Board;
-import com.kh.board.service.BoardService;
+import com.kh.paging.model.vo.Paging;
+import com.kh.board.model.service.BoardService;
 
 /**
  * Servlet implementation class BoardListServlet
@@ -47,32 +48,36 @@ public class BoardAdminListServlet extends HttpServlet {
 		int totalContents = new BoardService().selectTotalContents();
 		int totalPage = (int)Math.ceil((double)totalContents/numPerPage);
 		
-		String pageBar ="";
-		final int pageBarSize = 5;
-		int pageEnd = (int)Math.ceil((double)totalContents/numPerPage)*5;
-		int pageStart = (pageEnd-pageBarSize)+1;
-		int pageNo = pageStart;
-		if(pageNo == 1) {
-			pageBar += "<span>[이전]</span>";
-		}else {
-			pageBar += "<a href='"+request.getContextPath()+"/admin/adminNote?cpage="
-					+(pageNo-1)+"'>[이전]</a>";
-		}
-		
-		while(pageNo<= pageEnd && pageNo<=totalPage) {
-			if(pageNo == cPage) {
-				pageBar += "<span class='cPage'>"+pageNo+"</span>";
-			}else {
-				pageBar += "<a href='"+request.getContextPath()+"/admin/adminNote?cPage="
-						+pageNo+"'>"+pageNo+"</a>";
-			}
-			pageNo++;
-		}
+//		String pageBar ="";
+//		final int pageBarSize = 5;
+//		int pageEnd = (int)Math.ceil((double)totalContents/numPerPage)*5;
+//		int pageStart = (pageEnd-pageBarSize)+1;
+//		int pageNo = pageStart;
+//		if(pageNo == 1) {
+//			pageBar += "<span>[이전]</span>";
+//		}else {
+//			pageBar += "<a href='"+request.getContextPath()+"/admin/adminNote?cpage="
+//					+(pageNo-1)+"'>[이전]</a>";
+//		}
+//		
+//		while(pageNo<= pageEnd && pageNo<=totalPage) {
+//			if(pageNo == cPage) {
+//				pageBar += "<span class='cPage'>"+pageNo+"</span>";
+//			}else {
+//				pageBar += "<a href='"+request.getContextPath()+"/admin/adminNote?cPage="
+//						+pageNo+"'>"+pageNo+"</a>";
+//			}
+//			pageNo++;
+//		}
+		Paging paging = new Paging();
+		paging.setPage(cPage);
+		paging.setTotalCount(totalContents);
 		
 		request.setAttribute("list", list);
-		request.setAttribute("pageBar", pageBar);
-		request.setAttribute("cPage", cPage);
-		request.setAttribute("numPerPage", numPerPage);
+//		request.setAttribute("pageBar", pageBar);
+//		request.setAttribute("cPage", cPage);
+//		request.setAttribute("numPerPage", numPerPage);
+		request.setAttribute("paging", paging);
 		request.getRequestDispatcher("/WEB-INF/views/board/adminNote.jsp").forward(request, response);
 	}
 

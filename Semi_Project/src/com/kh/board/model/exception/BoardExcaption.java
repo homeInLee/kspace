@@ -1,4 +1,4 @@
-package com.kh.board;
+package com.kh.board.model.exception;
 
 public class BoardExcaption extends RuntimeException{
 	

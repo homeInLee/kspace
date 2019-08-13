@@ -1,4 +1,4 @@
-package com.kh.board.dao;
+package com.kh.board.model.dao;
 import static com.kh.common.JDBCTemplate.*;
 
 import java.io.FileNotFoundException;

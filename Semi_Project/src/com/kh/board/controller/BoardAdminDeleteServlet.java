@@ -10,8 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kh.board.model.service.BoardService;
 import com.kh.board.model.vo.Board;
-import com.kh.board.service.BoardService;
+
 
 /**
  * Servlet implementation class BoardAdminDeleteServlet

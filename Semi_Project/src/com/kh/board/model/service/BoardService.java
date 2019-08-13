@@ -1,9 +1,9 @@
-package com.kh.board.service;
+package com.kh.board.model.service;
 
 import java.sql.Connection;
 import java.util.List;
 
-import com.kh.board.dao.BoardDAO;
+import com.kh.board.model.dao.BoardDAO;
 import com.kh.board.model.vo.Board;
 import static com.kh.common.JDBCTemplate.*;
 

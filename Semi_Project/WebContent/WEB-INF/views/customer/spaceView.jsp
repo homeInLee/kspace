@@ -143,40 +143,15 @@ function insertBooking(){
 	            	</li>
 	            </ul>
 	            <div class="review-tit mt50 clearfix">
-	            	<h5 class="spaceInfo-tit">
+	            	<%-- <h5 class="spaceInfo-tit">
 	            		이용후기 <span class="dp_ib">후기갯수</span> 
 	            		· 평균평점 <span class="dp_ib">평점</span>
 	            	</h5>
-	            	<a href="" class="dp_block">후기 작성하기</a>
+	            	<a href="<%=request.getContextPath() %>/customer/customerReviewFrom" class="dp_block">후기 작성하기</a>
 	            </div>
 	            <ul class="review-list">
-	            	<li>
-	            		<div class="review-conts">
-	            			<strong>후기 남긴 아이디</strong>
-	            			<p class="review-con">후기 내용</p>
-	            			<p class="review-time">후기 남긴 시간</p>
-	            			<p class="review-star">★★★★★</p>
-	            		</div>
-	            		<div class="review-reply">
-	            			<strong>호스트의 답글</strong>
-	            			<p class="review-con">답한 내용</p>
-	            			<p class="review-time">답한 시간</p>
-	            		</div>
-	            	</li>
-	            	<li>
-	            		<div class="review-conts">
-	            			<strong>후기 남긴 아이디</strong>
-	            			<p class="review-con">후기 내용</p>
-	            			<p class="review-time">후기 남긴 시간</p>
-	            			<p class="review-star">★★★★★</p>
-	            		</div>
-	            		<div class="review-reply">
-	            			<strong>호스트의 답글</strong>
-	            			<p class="review-con">답한 내용</p>
-	            			<p class="review-time">답한 시간</p>
-	            		</div>
-	            	</li>
-	            </ul>
+	            </ul> --%>
+	            	<%@ include file="/WEB-INF/views/customer/review.jsp" %>
         	</div>
             <div class="reservation-container">
             <!-- 예약 -->
