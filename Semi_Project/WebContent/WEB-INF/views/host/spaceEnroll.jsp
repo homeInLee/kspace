@@ -6,6 +6,14 @@
 <script>
 $(()=>{
 	$("#spaceEnrollFile").on('change', fileCheck);
+	
+	$("input[name=spaceType]").on('change', function(e){
+		if($("input[name=spaceType]:checked").length>5){
+			alert("공간 유형은 최대 5개까지 선택 가능합니다.");
+			console.log(e.target);
+			e.target.checked=false;
+		}
+	});
 });
 
 function fileCheck(){
@@ -28,8 +36,36 @@ function fileCheck(){
 }
 
 function enrollValidate(){
+	if($("input[name=spaceType]:checked").length==0){
+		alert("공간 유형을 선택해주세요.");
+		return false;
+	}
+	
 	if($("input[name=spaceType]:checked").length>5){
 		alert("공간 유형은 최대 5개까지 선택 가능합니다.");
+		return false;
+	}
+	
+	if($("input[name=spaceEnrollFile]").val()==""){
+		alert("대표이미지를 첨부해주세요.");
+		return false;
+	}
+	
+	if($("select[name=spaceEnrollTime1] option:selected").val()==""){
+		alert("예약 가능 시간을 선택해주세요.");
+		return false;
+	}
+	
+	if($("select[name=spaceEnrollTime2] option:selected").val()==""){
+		alert("예약 가능 시간을 선택해주세요.");
+		return false;
+	}
+	
+	var regExOnlyNum=/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/;
+	var bookingStartTime = $("#spaceEnrollNotAlwaysEventStartDate").val();
+	var bookingEndTime = $("#spaceEnrollNotAlwaysEventEndDate").val();
+	if(!regExOnlyNum.test(bookingStartTime) || !regExOnlyNum.test(bookingEndTime)){
+		alert("비정기이벤트 날짜 형식을 확인해주세요.");
 		return false;
 	}
 	
@@ -37,12 +73,6 @@ function enrollValidate(){
 	var str = $('#spaceIntro').val();
 	str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
 	$('#spaceIntro').val(str);
-	
-	//DB에서 불러와 textarea로 수정 시 <br>이 그대로 노출되는 것을 방지
-	//상세보기 view단에서 처리하면 될듯.
-	/* var str = $('#spaceIntro').val();
-	str = str.split('<br/>').join("\r\n");
-	$('#spaceIntro').val(str); */
 	
 	return true;
 }
@@ -223,7 +253,7 @@ function enrollValidate(){
             			<h5>예약 가능 시간<span class="req">*</span></h5>
             			<div>
             				<div class="custom-select">
-            					<select name="spaceEnrollTime1" required id="spaceEnrollTime1" class="dp_block">
+            					<select name="spaceEnrollTime1" id="spaceEnrollTime1" class="dp_block">
 	                            	<option value="">선택</option>
 	                            	<option value="00:00">00:00</option>
 	                            	<option value="01:00">01:00</option>
@@ -253,7 +283,7 @@ function enrollValidate(){
 	                            </select>
             				</div>
             				<div class="custom-select">
-            					<select name="spaceEnrollTime2" required id="spaceEnrollTime2" class="dp_block">
+            					<select name="spaceEnrollTime2" id="spaceEnrollTime2" class="dp_block">
 	                            	<option value="">선택</option>
 	                            	<option value="00:00">00:00</option>
 	                            	<option value="01:00">01:00</option>
