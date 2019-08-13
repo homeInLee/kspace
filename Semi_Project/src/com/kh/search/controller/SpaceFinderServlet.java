@@ -32,14 +32,11 @@ public class SpaceFinderServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String spaceSrch = request.getParameter("spaceSrch");
+		String spaceSrch = "";
 		String spaceType = "";
 		
-		if(spaceSrch.equals("")) {
-			request.setAttribute("msg", "검색어를 입력해주세요.");
-			request.setAttribute("loc", "/");
-			request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp").forward(request, response);
-			return;
+		if(request.getParameter("spaceSrch") != null) {
+			spaceSrch = request.getParameter("spaceSrch");
 		}
 		
 		if(request.getParameter("spaceType") != null) {

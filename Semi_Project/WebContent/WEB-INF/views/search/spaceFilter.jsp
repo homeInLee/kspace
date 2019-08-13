@@ -5,33 +5,36 @@
 <%
 	List<SpaceJoin> spaceList = (List<SpaceJoin>)request.getAttribute("list");
 	String spaceSrch = request.getParameter("spaceSrch");
+	String spaceType = request.getParameter("spaceType");
 %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/sub.css" />
 <script src="<%=request.getContextPath()%>/js/spaceList.js"></script>
 <script src="<%=request.getContextPath()%>/js/jquery-3.4.1.js"></script>
 <script>
-$("#spaceType").on('change', function() {
-	alert("333");
-	var spaceType = this.value;
-	location.href = "<%=request.getContextPath()%>/search/spaceFinder?spaceType=" + spaceType;
+$(()=> {
+	$(".select-items").click(function() {
+		
+		location.href= "<%=request.getContextPath()%>/search/spaceFinder?spaceType=<%=spaceType%>&spaceSrch=<%=spaceSrch%>";
+	});	
 });
+
 </script>
 <div class="sub_container">
     <section class="spacePage">
         <article class="spaceSrch-wrap">
-            <h3 class="fw300"><span class="fw500"><%=spaceSrch %></span>(으)로 검색한 결과입니다.</h3>
+            <h3 class="fw300"><span class="fw500"><%if(spaceSrch != null){%><%=spaceSrch %><% } %> <%if(spaceType != null){%><%=spaceType %><% } %></span>(으)로 검색한 결과입니다.</h3>
                 <div class="noFilter">
                     <div>
                         <p>공간 유형</p>
                         <div class="custom-select">
                             <select name="spaceType" id="spaceType">
                             	<option value="">전체</option>
-                                <option value="스터디룸">스터디룸</option>
-                                <option value="공연장">공연장</option>
-                                <option value="세미나실">세미나실</option>
-                                <option value="파티룸">파티룸</option>
-                                <option value="카페">카페</option>
-                                <option value="기타">기타</option>
+                                <option value="스터디룸" <%=spaceType.equals("스터디룸")?"selected":"" %>>스터디룸</option>
+                                <option value="공연장" <%=spaceType.equals("공연장")?"selected":"" %>>공연장</option>
+                                <option value="세미나실" <%=spaceType.equals("세미나실")?"selected":"" %>>세미나실</option>
+                                <option value="파티룸" <%=spaceType.equals("파티룸")?"selected":"" %>>파티룸</option>
+                                <option value="카페" <%=spaceType.equals("카페")?"selected":"" %>>카페</option>
+                                <option value="기타" <%=spaceType.equals("기타")?"selected":"" %>>기타</option>
                             </select>
                         </div>
                     </div>
@@ -74,6 +77,7 @@ $("#spaceType").on('change', function() {
                 </div>
             <form action="<%=request.getContextPath() %>/search/searchFilter" method="get" class="dp_block">
             <input type="hidden" name="spaceSrch" value="<%=spaceSrch%>" />
+            <input type="hidden" name="spaceType" value="<%=spaceType%>" />
                 <div class="srchFilter-wrap">
                     <div>
                         <div class="srchFilter clearfix" style="width: 587px;">

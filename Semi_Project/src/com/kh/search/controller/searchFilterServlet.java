@@ -66,6 +66,10 @@ public class searchFilterServlet extends HttpServlet {
 		String spaceSrch = request.getParameter("spaceSrch");
 		String spaceType = "";
 		
+		if(request.getParameter("spaceType") != null) {
+			spaceType = request.getParameter("spaceType");
+		}
+		
 		List<SpaceJoin> spaceList = new SearchService().selectSpaceList(spaceSrch, spaceType);
 
 		if(srchPrice2 != 0 && facility != null) {
@@ -80,6 +84,7 @@ public class searchFilterServlet extends HttpServlet {
 
 		request.setAttribute("list", list);
 		request.setAttribute("spaceSrch", spaceSrch);
+		request.setAttribute("spaceType", spaceType);
 		request.getRequestDispatcher("/WEB-INF/views/search/spaceFilter.jsp").forward(request, response);
 	}
 

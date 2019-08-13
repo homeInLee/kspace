@@ -27,12 +27,12 @@
             <article>
                 <h3 class="tit txt_center">유형으로 검색하기</h3>
                 <ul class="space-type clearfix">
-                    <li><a href="" class="dp_block">스터디룸</a></li>
-                    <li><a href="" class="dp_block">공연장</a></li>
-                    <li><a href="" class="dp_block">세미나실</a></li>
-                    <li><a href="" class="dp_block">파티룸</a></li>
-                    <li><a href="" class="dp_block">카페</a></li>
-                    <li><a href="" class="dp_block">기타</a></li>
+                    <li><a href="<%=request.getContextPath()%>/search/spaceFinder?spaceType=스터디룸" class="dp_block">스터디룸</a></li>
+                    <li><a href="<%=request.getContextPath()%>/search/spaceFinder?spaceType=공연장" class="dp_block">공연장</a></li>
+                    <li><a href="<%=request.getContextPath()%>/search/spaceFinder?spaceType=세미나실" class="dp_block">세미나실</a></li>
+                    <li><a href="<%=request.getContextPath()%>/search/spaceFinder?spaceType=파티룸" class="dp_block">파티룸</a></li>
+                    <li><a href="<%=request.getContextPath()%>/search/spaceFinder?spaceType=카페" class="dp_block">카페</a></li>
+                    <li><a href="<%=request.getContextPath()%>/search/spaceFinder?spaceType=기타" class="dp_block">기타</a></li>
                 </ul>
             </article>
             <article>
