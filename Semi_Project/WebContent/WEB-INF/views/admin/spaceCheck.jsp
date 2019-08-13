@@ -77,13 +77,33 @@
 <script>
 $(document).ready(function(){
 	$("#spaceEnrollFile").on('change', fileCheck);
+	
 	var str = "<%=s.getSpaceIntro()!=null?s.getSpaceIntro():""%>";
 	str = str.split('<br/>').join("\r\n");
-	$('#spaceIntro').val(str); 
+	$('#spaceIntro').val(str);
 	
 	$("input, textarea, select").prop("disabled", true);
 	$("input[type=submit], input[name=spaceChkNo], input[name=spaceChkCancelNo]").prop("disabled", false);
 });
+
+function fileCheck(){
+	if($(this).val()!=""){
+		//파일 용량 체크
+		var fileSize = this.files[0].size;
+		var maxSize = 1024*1024*10;
+		if(fileSize > maxSize){
+			alert('파일 용량을 초과했습니다.');
+			$(this).val("");
+		}
+		
+		//확장자 체크
+		var ext = $(this).val().split(".").pop().toLowerCase();
+		if($.inArray(ext, ["gif", "jpg", "jpeg", "png"]) == -1){
+			alert('이미지 확장자만 첨부해주세요.');
+			$(this).val("");
+		}
+	}
+}
 
 function goSpaceEnrollCancel(){
 	$("form[name=spaceEnrollChkCancelFrm]").submit();
@@ -148,7 +168,7 @@ function goSpaceEnrollCancel(){
             		</div>
             		<div class="filebox"> 
 	            		<label for="spaceEnrollFile">파일 첨부</label> 
-	            		<input type="file" name="spaceEnrollFile" id="spaceEnrollFile" class="upload-hidden">
+	            		<input type="file" name="spaceEnrollFile" id="spaceEnrollFile" class="upload-hidden" value="">
             		</div>
             	</div>
             	<h4>이미지</h4>

@@ -146,7 +146,9 @@ $(document).ready(function(){
     		var reader = new FileReader();
     		
     		reader.onload=function(e){
-    			if($("#enrollImg2 img").length>2){
+    			//같은걸 바꿨을 때는 이미지 변경
+    			//if($("#enrollImg2 img").length>2){
+    			if($("#enrollImg2 img").hasClass(enrollFileId)==true){
     				$("#enrollImg2 ."+enrollFileId).attr("src", e.target.result);
     			} else {
     				$("#enrollImg2").append("<img src='"+e.target.result+"' height='110' class='"+enrollFileId+"'>");

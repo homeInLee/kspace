@@ -3,6 +3,7 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%@page import="com.kh.host.model.vo.SpaceImageFile"%>
 <%@page import="java.util.List"%>
+<%@page import="java.util.*"%>
 <%@page import="com.kh.host.model.vo.Space"%>
 <%@page import="com.kh.host.model.vo.SpacePrice"%>
 <%@page import="java.util.ArrayList"%>
@@ -71,6 +72,23 @@
 	String[] sDayOffDateArr = null;
 	if(!sDayOffDate.equals("") && sDayOffDateArr!=null){
 		sDayOffDateArr = sDayOffDate.split(",");
+	}
+	
+	String originalYimg = "";
+	String renameYimg = "";
+	String[] originalNimg = new String[4];
+	String[] renameNimg = new String[4];
+	if(!sImg.isEmpty()){
+		for(int i=0; i<sImg.size(); i++){
+			SpaceImageFile s1 = sImg.get(i);
+			if(s1.getImageRenamedFileName()!=null && s1.getFlag().equals("Y")){
+				originalYimg = s1.getImageOriginalFileName();
+				renameYimg = s1.getImageRenamedFileName();
+			} else if (s1.getImageRenamedFileName()!=null && s1.getFlag().equals("N")){
+				originalNimg[i] = s1.getImageOriginalFileName();
+				renameNimg[i] = s1.getImageRenamedFileName();
+			}
+		}
 	}
 %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/sub.css" />
@@ -175,38 +193,38 @@ function goDelMySpace(){
             	<p>이미지 사이즈 : 1024*450, 크기 : 10MB 권장</p>
             	<div class="clearfix">
             		<div id="enrollImg1" class="spaceEnroll-img">
-            		<% for(SpaceImageFile s1 : sImg){
-            			if(s1.getImageRenamedFileName()!=null && s1.getFlag().equals("Y")){
-            		%>
-            			<img src="<%=request.getContextPath() %>/upload/host/<%=s1.getImageRenamedFileName() %>" alt="" height="110" />
-            		<%		
-            			}
-            		} %>
+            			<img src="<%=request.getContextPath() %>/upload/host/<%=renameYimg %>" alt="" height="110" />
             		</div>
             		<div class="filebox"> 
 	            		<label for="spaceEnrollFile">파일 첨부</label> 
 	            		<input type="file" name="spaceEnrollFile" id="spaceEnrollFile" class="upload-hidden">
+	            		<input type="hidden" name="spaceEnrollFileOldOriginal" value="<%=originalYimg!=null?originalYimg:""%>" />
+	            		<input type="hidden" name="spaceEnrollFileOldRename" value="<%=renameYimg!=null?renameYimg:""%>" />
             		</div>
             	</div>
             	<h4>이미지</h4>
             	<p>이미지 사이즈 : 1024*450, 크기 : 10MB 권장(1장당), <span>최대 3장 업로드 가능</span></p>
             	<div class="multipleFile clearfix">
             		<div id="enrollImg2" class="spaceEnroll-img">
-            		<% for(SpaceImageFile s2 : sImg){
-            			if(s2.getImageRenamedFileName()!=null && s2.getFlag().equals("N")){
-            		%>
-            			<img src="<%=request.getContextPath() %>/upload/host/<%=s2.getImageRenamedFileName() %>" alt="" height="110"/>
-            		<%		
-            			}
-            		} %>
+            			<% for(int i=0; i<renameNimg.length; i++) { 
+            				if (renameNimg[i]!=null){ %>
+            				<img src="<%=request.getContextPath() %>/upload/host/<%=renameNimg[i] %>" alt="" height="110" class="spaceEnrollFileImg<%=i+1 %>"/>
+            			<% } 
+            			} %>
             		</div>
             		<div class="filebox"> 
 	            		<label for="spaceEnrollFileImg1">파일 첨부1</label> 
 	            		<input type="file" name="spaceEnrollFileImg1" id="spaceEnrollFileImg1" class="upload-hidden">
+	            		<input type="hidden" name="spaceEnrollFileOldImg1" value="<%=originalNimg!=null&&originalNimg[0]!=null?originalNimg[0]:"" %>" />
+	            		<input type="hidden" name="spaceEnrollFileOldImgRename1" value="<%=renameNimg!=null&&renameNimg[0]!=null?renameNimg[0]:"" %>" />
 	            		<label for="spaceEnrollFileImg2" style="margin: 14px 0;">파일 첨부2</label> 
 	            		<input type="file" name="spaceEnrollFileImg2" id="spaceEnrollFileImg2" class="upload-hidden">
+	            		<input type="hidden" name="spaceEnrollFileOldImg2" value="<%=originalNimg!=null&&originalNimg[1]!=null?originalNimg[1]:"" %>" />
+	            		<input type="hidden" name="spaceEnrollFileOldImgRename2" value="<%=renameNimg!=null&&renameNimg[1]!=null?renameNimg[1]:"" %>" />
 	            		<label for="spaceEnrollFileImg3">파일 첨부3</label> 
 	            		<input type="file" name="spaceEnrollFileImg3" id="spaceEnrollFileImg3" class="upload-hidden">
+	            		<input type="hidden" name="spaceEnrollFileOldImg3" value="<%=originalNimg!=null&&originalNimg[2]!=null?originalNimg[2]:"" %>" />
+            			<input type="hidden" name="spaceEnrollFileOldImgRename3" value="<%=renameNimg!=null&&renameNimg[2]!=null?renameNimg[2]:"" %>" />
             		</div>
             	</div>
             	<h4>공간 정보</h4>
@@ -305,7 +323,7 @@ function goDelMySpace(){
             			</div>
             			<div class="spaceEnrollEvent">
             				<div class="clearfix" style="width:100%; float:none;">
-            					<input type="checkbox" name="spaceEnrollEventType" disabled="disabled" id="spaceEnrollNotAlwaysEvent" value="비정기 이벤트" <%=notAlwaysEvent?"checked":"" %> />
+            					<input type="checkbox" name="spaceEnrollEventType" id="spaceEnrollNotAlwaysEvent" value="비정기 이벤트" <%=notAlwaysEvent?"checked":"" %> />
 	            				<label for="spaceEnrollNotAlwaysEvent" class="dp_ib">비정기 이벤트</label>
             				</div>
 	            			

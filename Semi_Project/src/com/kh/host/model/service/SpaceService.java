@@ -127,23 +127,40 @@ public class SpaceService {
 		close(conn);
 		return result;
 	}
-	
-	public int updateSpaceImg(SpaceImageFile spaceImg) {
+	public int selectSpaceImg(int spaceNo) {
 		Connection conn = getConnection();
-		int result = new SpaceDAO().updateSpaceImg(conn, spaceImg);
-		if(result > 0) {
-			commit(conn);
-		} else {
-			result = new SpaceDAO().insertSpaceImg(conn, spaceImg);
-			if(result>0) 
-				commit(conn);
-			else
-				rollback(conn);
-		}
-			
+		int result = new SpaceDAO().selectSpaceImg(conn, spaceNo);
 		close(conn);
 		return result;
 	}
 	
+	public int deleteSpaceImg(int spaceNo) {
+		Connection conn = getConnection();
+		int result = new SpaceDAO().deleteSpaceImg(conn, spaceNo);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
+	
+	public int selectSpacePrice(int spaceNo) {
+		Connection conn = getConnection();
+		int result = new SpaceDAO().selectSpacePrice(conn, spaceNo);
+		close(conn);
+		return result;
+	}
+	
+	public int deleteSpacePrice(int spaceNo) {
+		Connection conn = getConnection();
+		int result = new SpaceDAO().deleteSpacePrice(conn, spaceNo);
+		if(result > 0)
+			commit(conn);
+		else
+			rollback(conn);
+		close(conn);
+		return result;
+	}
 	
 }

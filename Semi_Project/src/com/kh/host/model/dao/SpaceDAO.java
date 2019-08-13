@@ -384,20 +384,78 @@ public class SpaceDAO {
 		return result;
 	}
 
-	public int updateSpaceImg(Connection conn, SpaceImageFile spaceImg) {
+	public int selectSpaceImg(Connection conn, int spaceNo) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String sql = prop.getProperty("updateSpaceImg");
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectSpaceImg");
+		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, spaceImg.getImageOriginalFileName());
-			pstmt.setString(2, spaceImg.getImageRenamedFileName());
-			if(spaceImg.getFlag()!=null) {
-				pstmt.setString(3, spaceImg.getFlag());
-			} else {
-				pstmt.setString(3, "Y");
+			pstmt.setInt(1, spaceNo);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				result = rset.getInt("cnt");
 			}
-			pstmt.setInt(4, spaceImg.getSpaceNo());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int deleteSpaceImg(Connection conn, int spaceNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteSpaceImg");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, spaceNo);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int selectSpacePrice(Connection conn, int spaceNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectSpacePrice");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, spaceNo);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				result = rset.getInt("cnt");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int deleteSpacePrice(Connection conn, int spaceNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteSpacePrice");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, spaceNo);
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
