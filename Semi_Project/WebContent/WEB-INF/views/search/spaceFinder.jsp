@@ -12,11 +12,19 @@
 <script src="<%=request.getContextPath()%>/js/jquery-3.4.1.js"></script>
 <script>
 $(()=> {
-$(".select-items").click(function() {
+$("#spaceType-select .select-items").click(function() {
 	var spaceType = $("#spaceType-select option:selected").val();
+	var spaceArea = $("#spaceArea-select option:selected").val();
 	
 	location.href= "<%=request.getContextPath()%>/search/spaceFinder?spaceType=" + spaceType + "<%if(spaceSrch!=null){%>&spaceSrch=<%=spaceSrch%><%}%>";
-});	
+});
+
+$("#spaceArea-select .select-items").click(function() {
+	var spaceType = $("#spaceType-select option:selected").val();
+	var spaceArea = $("#spaceArea-select option:selected").val();
+	
+	location.href= "<%=request.getContextPath()%>/search/spaceFinder?spaceType=" + spaceType + "<%if(spaceSrch!=null){%>&spaceSrch=<%=spaceSrch%><%}%>";
+});
 });
 
 </script>
@@ -41,7 +49,7 @@ $(".select-items").click(function() {
                     </div>
                     <div class="placeFilter">
                         <p>지역</p>
-                        <div class="custom-select">
+                        <div class="custom-select" id="spaceArea-select">
                             <select name="spaceArea" id="spaceArea"  class="dp_block">
                             	<option value="spaceAreaTotal">전체</option>
                                 <option value="도봉구">도봉구</option>
