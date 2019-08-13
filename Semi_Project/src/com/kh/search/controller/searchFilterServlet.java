@@ -67,12 +67,17 @@ public class searchFilterServlet extends HttpServlet {
 		
 		String spaceSrch = request.getParameter("spaceSrch");
 		String spaceType = "";
+		String spaceArea = "";
 		
 		if(request.getParameter("spaceType") != null) {
 			spaceType = request.getParameter("spaceType");
 		}
 		
-		List<SpaceJoin> spaceList = new SearchService().selectSpaceList(spaceSrch, spaceType);
+		if(request.getParameter("spaceArea") != null) {
+			spaceArea = request.getParameter("spaceArea");
+		}
+		
+		List<SpaceJoin> spaceList = new SearchService().selectSpaceList(spaceSrch, spaceType, spaceArea);
 
 		if(srchPrice2 != 0 && facility != null) {
 			list = new SearchService().selectFilterList(srchPrice1, srchPrice2, facility, spaceList);			
@@ -83,10 +88,13 @@ public class searchFilterServlet extends HttpServlet {
 		} else {
 			list = new SearchService().selectFilterNullList(srchPrice1, spaceList);
 		}
+		
+		System.out.println("spaceArea=" + spaceArea);
 
 		request.setAttribute("list", list);
 		request.setAttribute("spaceSrch", spaceSrch);
 		request.setAttribute("spaceType", spaceType);
+		request.setAttribute("spaceArea", spaceArea);
 		request.getRequestDispatcher("/WEB-INF/views/search/spaceFilter.jsp").forward(request, response);
 	}
 

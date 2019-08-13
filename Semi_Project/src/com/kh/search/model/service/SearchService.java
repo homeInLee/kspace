@@ -25,9 +25,9 @@ public class SearchService {
 		return list;
 	}
 
-	public List<SpaceJoin> selectSpaceList(String spaceSrch, String spaceType) {
+	public List<SpaceJoin> selectSpaceList(String spaceSrch, String spaceType, String spaceArea) {
 		Connection conn = getConnection();
-		List<SpaceJoin> list = new SearchDAO().selectSpaceList(conn, spaceSrch, spaceType);
+		List<SpaceJoin> list = new SearchDAO().selectSpaceList(conn, spaceSrch, spaceType, spaceArea);
 		close(conn);
 		return list;
 	}

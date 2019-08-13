@@ -104,7 +104,7 @@ public class SearchDAO {
 		return hashList;
 	}
 
-	public List<SpaceJoin> selectSpaceList(Connection conn, String spaceSrch, String spaceType) {
+	public List<SpaceJoin> selectSpaceList(Connection conn, String spaceSrch, String spaceType, String spaceArea) {
 		List<SpaceJoin> placeList = new ArrayList<>();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -120,6 +120,12 @@ public class SearchDAO {
 				pstmt.setString(4, "%"+spaceType+"%");				
 			} else {
 				pstmt.setString(4, "%%");
+			}
+			
+			if(spaceArea != null) {
+				pstmt.setString(5, "%"+spaceArea+"%");
+			} else {
+				pstmt.setString(5, "%%");
 			}
 			
 			rset = pstmt.executeQuery();

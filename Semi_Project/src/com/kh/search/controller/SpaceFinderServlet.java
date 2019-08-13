@@ -36,6 +36,7 @@ public class SpaceFinderServlet extends HttpServlet {
 		
 		String spaceSrch = "";
 		String spaceType = "";
+		String spaceArea = "";
 		
 		if(request.getParameter("spaceSrch") != null) {
 			spaceSrch = request.getParameter("spaceSrch");
@@ -45,11 +46,16 @@ public class SpaceFinderServlet extends HttpServlet {
 			spaceType = request.getParameter("spaceType");
 		}
 		
-		List<SpaceJoin> list = new SearchService().selectSpaceList(spaceSrch, spaceType);
+		if(request.getParameter("spaceArea") != null) {
+			spaceArea = request.getParameter("spaceArea");
+		}
+		
+		List<SpaceJoin> list = new SearchService().selectSpaceList(spaceSrch, spaceType, spaceArea);
 
 		request.setAttribute("list", list);
 		request.setAttribute("spaceSrch", spaceSrch);
 		request.setAttribute("spaceType", spaceType);
+		request.setAttribute("spaceArea", spaceArea);
 		request.getRequestDispatcher("/WEB-INF/views/search/spaceFinder.jsp").forward(request, response);
 	}
 
