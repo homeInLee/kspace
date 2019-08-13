@@ -5,7 +5,7 @@
 <%
 	List<SpaceJoin> spaceList = (List<SpaceJoin>)request.getAttribute("list");
 	String spaceSrch = request.getParameter("spaceSrch");
-	String spaceType = request.getParameter("spaceType");
+	String spaceType = request.getParameter("spaceType") == null ? "" : request.getParameter("spaceType");
 %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/sub.css" />
 <script src="<%=request.getContextPath()%>/js/spaceList.js"></script>

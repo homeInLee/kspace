@@ -32,6 +32,8 @@ public class SpaceFinderServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		request.setCharacterEncoding("utf-8");
+		
 		String spaceSrch = "";
 		String spaceType = "";
 		
@@ -44,8 +46,7 @@ public class SpaceFinderServlet extends HttpServlet {
 		}
 		
 		List<SpaceJoin> list = new SearchService().selectSpaceList(spaceSrch, spaceType);
-		
-		
+
 		request.setAttribute("list", list);
 		request.setAttribute("spaceSrch", spaceSrch);
 		request.setAttribute("spaceType", spaceType);
