@@ -14,6 +14,7 @@ $(()=>{
 			e.target.checked=false;
 		}
 	});
+	
 });
 
 function fileCheck(){
@@ -61,12 +62,48 @@ function enrollValidate(){
 		return false;
 	}
 	
-	var regExOnlyNum=/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/;
-	var bookingStartTime = $("#spaceEnrollNotAlwaysEventStartDate").val();
-	var bookingEndTime = $("#spaceEnrollNotAlwaysEventEndDate").val();
-	if(!regExOnlyNum.test(bookingStartTime) || !regExOnlyNum.test(bookingEndTime)){
-		alert("비정기이벤트 날짜 형식을 확인해주세요.");
-		return false;
+	if($("#spaceEnrollNotAlwaysEvent").prop("checked")){
+		var regExOnlyNum=/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/;
+		var bookingStartTime = $("#spaceEnrollNotAlwaysEventStartDate").val();
+		var bookingEndTime = $("#spaceEnrollNotAlwaysEventEndDate").val();
+		if(!regExOnlyNum.test(bookingStartTime) || !regExOnlyNum.test(bookingEndTime)){
+			alert("비정기이벤트 날짜 형식을 확인해주세요.");
+			$("#spaceEnrollNotAlwaysEventStartDate").focus();
+			return false;
+		}
+		
+		if($("input[name=spaceEnrollNotAlwaysEventPrice]").val()==''){
+			alert("비정기이벤트 가격을 입력해주세요.");
+			$("input[name=spaceEnrollNotAlwaysEventPrice]").focus();
+			return false;
+		}
+	}
+	
+	if($("#spaceEnrollAlwaysEvent").prop("checked")){
+		var alwaysEventType = $("#spaceEnrollAlwaysEventType option:selected").val();
+		var alwaysEventVal = $("#spaceEnrollAlwaysEventDate").val();
+		var alwaysEventReg;
+		if(alwaysEventType=='1주일'){
+			alwaysEventReg = /(월|화|수|목|금|토|일)요일/;
+			if(!alwaysEventReg.test(alwaysEventVal)){
+				alert("1주일 단위 정기이벤트일 경우, 요일을 입력해주세요.");
+				$("#spaceEnrollAlwaysEventDate").focus();
+				return false;
+			}
+		} else if(alwaysEventType=='1개월'){
+			alwaysEventReg = /[0-9]일/;
+			if(!alwaysEventReg.test(alwaysEventVal)){
+				alert("1개월 단위 정기이벤트일 경우, 몇일인지를 입력해주세요.");
+				$("#spaceEnrollAlwaysEventDate").focus();
+				return false;
+			}
+		}
+		
+		if($("input[name=spaceEnrollAlwaysEventPrice]").val()==''){
+			alert("정기이벤트 가격을 입력해주세요.");
+			$("input[name=spaceEnrollAlwaysEventPrice]").focus();
+			return false;
+		}
 	}
 	
 	//textarea 엔터 : 글 입력 후 DB 저장시 적용
@@ -216,7 +253,7 @@ function enrollValidate(){
             			<input type="checkbox" name="spaceEnrollEvent" id="spaceEnrollEvent" />
             			<label for="spaceEnrollEvent">적용</label>
             			<p>정기/비정기</p>
-            			<div class="spaceEnrollEvent">
+            			<div class="spaceEnrollEvent" id="validateEvent">
             				<input type="checkbox" name="spaceEnrollEventType" disabled="disabled" id="spaceEnrollAlwaysEvent" value="정기 이벤트" />
             				<label for="spaceEnrollAlwaysEvent" class="dp_ib">정기 이벤트</label>
             				<div class="custom-select">

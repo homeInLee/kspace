@@ -16,12 +16,12 @@
 	position:absolute;
 	top:0;
 	left:0;
-	width: 50px;
-	height: 50px;
+	width: 45px;
+	height: 45px;
 	color:#fff;
-	background: rgba(0,0,0,0.5);
-	font-size: 15px;
-	line-height: 50px;
+	background: rgba(241,104,94,0.7);
+	font-size: 14px;
+	line-height: 45px;
 	z-index:1;
 }
 </style>
