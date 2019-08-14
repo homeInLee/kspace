@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="<%=request.getContextPath() %>/css/slick-theme.css">
     <script type="text/javascript" src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath() %>/js/common.js"></script>
-    <script type="text/javascript" src="<%=request.getContextPath() %>/js/slick/slick.js"></script>
 <script>
 $(()=> {
 	$("#spaceSrch").keyup(e => {
@@ -168,8 +167,8 @@ $(()=> {
 	        </nav>
 	        <div id="nav-bottom" class="txt_center">
 	            <div class="clearfix">
-	                <a href="" class="dp_ib">로그인</a>
-	                <a href="" class="dp_ib">회원가입</a>
+	                <a href="<%=request.getContextPath()%>/customer/login" class="dp_ib">로그인</a>
+	                <a href="<%=request.getContextPath()%>/customer/signup" class="dp_ib">회원가입</a>
 	            </div>
 	            <p>Copyright KH SPACE Corp. All Rights Reserved.</p>
 	        </div>

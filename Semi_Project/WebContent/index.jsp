@@ -5,6 +5,7 @@
 <%
 	List<Banner> list = new BannerService().selectAllBanner();
 %>
+<script type="text/javascript" src="<%=request.getContextPath() %>/js/slick/slick.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/index.js"></script>
     <div id="main_container">
         <section id="main-sec1">
