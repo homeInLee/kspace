@@ -80,7 +80,6 @@ $(()=>{
 
 });
 </script>
-<li>
 	<div class="review-tit mt50 clearfix">
 		<h5 class="spaceInfo-tit">
 			이용후기 <span class="dp_ib">후기갯수</span> · 평균평점 <span class="dp_ib">평점</span>
@@ -181,11 +180,10 @@ $(()=>{
 		<%}
 		}
 		%>
-	</table> <jsp:include page="/paging/reviewPaging.jsp">
+	</table> <jsp:include page="/WEB-INF/views/common/paging/reviewPaging.jsp">
 		<jsp:param value="${paging.page}" name="page" />
 		<jsp:param value="${paging.startPage}" name="startPage" />
 		<jsp:param value="${paging.endPage}" name="endPage" />
 		<jsp:param value="${paging.prev}" name="prev" />
 		<jsp:param value="${paging.next}" name="next" />
 	</jsp:include>
-</li>

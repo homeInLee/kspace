@@ -58,7 +58,7 @@ public class SpaceViewServlet extends HttpServlet {
 		
 		List<Review> review = new ReviewService().selectReviewList(spaceNo,cPage, numPerPage );
 		
-		int totalContents = new ReviewService().selectTotalContents();
+		int totalContents = new ReviewService().selectTotalContents(spaceNo);
 		int totalPage = (int)Math.ceil((double)totalContents/numPerPage);
 		
 		Paging paging = new Paging();
