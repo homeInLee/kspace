@@ -9,11 +9,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.kh.board.model.service.BoardService;
 import com.kh.customer.model.service.ReviewService;
 import com.kh.customer.model.vo.Review;
 import com.kh.host.model.service.SpaceService;
+import com.kh.host.model.vo.Company;
 import com.kh.host.model.vo.Space;
+import com.kh.host.model.vo.SpaceDayOff;
+import com.kh.host.model.vo.SpaceImageFile;
 import com.kh.paging.model.vo.Paging;
 
 /**
@@ -50,6 +52,10 @@ public class SpaceViewServlet extends HttpServlet {
 //		}
 		
 		Space space = new SpaceService().spaceSelectOneBySpaceNo(spaceNo);
+		List<SpaceImageFile> spaceImg = new SpaceService().selectSpaceImgBySpaceNo(spaceNo);
+		List<SpaceDayOff> dayOff = new SpaceService().selectSpaceDayOffBySpaceNo(spaceNo);
+		Company company = new SpaceService().selectCompanyByCompanyNo(space.getCompanyNo());
+		
 		List<Review> review = new ReviewService().selectReviewList(spaceNo,cPage, numPerPage );
 		
 		int totalContents = new ReviewService().selectTotalContents();
@@ -62,6 +68,9 @@ public class SpaceViewServlet extends HttpServlet {
 		request.setAttribute("space", space);
 		request.setAttribute("review", review);
 		request.setAttribute("paging", paging);
+		request.setAttribute("spaceImg", spaceImg);
+		request.setAttribute("dayOff", dayOff);
+		request.setAttribute("company", company);
 		request.getRequestDispatcher("/WEB-INF/views/customer/spaceView.jsp").forward(request, response);
 	}
 

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.kh.host.model.vo.Company;
 import com.kh.host.model.vo.Space;
 import com.kh.host.model.vo.SpaceDayOff;
 import com.kh.host.model.vo.SpaceImageFile;
@@ -464,6 +465,36 @@ public class SpaceDAO {
 		}
 		
 		return result;
+	}
+
+	public Company selectCompanyByCompanyNo(Connection conn, int companyNo) {
+		Company c = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectCompanyByCompanyNo");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, companyNo);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				c = new Company();
+				c.setCompanyNo(rset.getInt("company_no"));
+				c.setCompanyName(rset.getString("company_name"));
+				c.setCompanyPlace(rset.getString("company_place"));
+				c.setCompanyPointGa(rset.getInt("company_point_ga"));
+				c.setCompanyPointHa(rset.getInt("company_point_ha"));
+				c.setUserId(rset.getString("user_id"));
+				c.setDelType(rset.getString("del_type"));
+				c.setDelDate(rset.getDate("del_date"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return c;
 	}
 
 }

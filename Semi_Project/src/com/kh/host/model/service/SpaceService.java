@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.util.List;
 
 import com.kh.host.model.dao.SpaceDAO;
+import com.kh.host.model.vo.Company;
 import com.kh.host.model.vo.Space;
 import com.kh.host.model.vo.SpaceDayOff;
 import com.kh.host.model.vo.SpaceImageFile;
@@ -89,6 +90,7 @@ public class SpaceService {
 		close(conn);
 		return spacePrice;
 	}
+	
 	public List<SpaceDayOff> selectSpaceDayOffBySpaceNo(int spaceNo) {
 		Connection conn = getConnection();
 		List<SpaceDayOff> sDayOff = new SpaceDAO().selectSpaceDayOffBySpaceNo(conn, spaceNo);
@@ -161,6 +163,13 @@ public class SpaceService {
 			rollback(conn);
 		close(conn);
 		return result;
+	}
+	
+	public Company selectCompanyByCompanyNo(int companyNo) {
+		Connection conn = getConnection();
+		Company company = new SpaceDAO().selectCompanyByCompanyNo(conn, companyNo);
+		close(conn);
+		return company;
 	}
 	
 }

@@ -41,7 +41,11 @@
             			continue;
             %>
             	<li>
+            	<%if(s.getSpaceCheck().equals("Y")){ %>
+            		<a href="<%=request.getContextPath() %>/customer/spaceView?spaceNo=<%=s.getSpaceNo() %>" class="dp_block">
+            	<% } else { %>
 	                <a href="<%=request.getContextPath() %>/host/spaceHostListView?spaceNo=<%=s.getSpaceNo() %>" class="dp_block">
+            	<% } %>
 	                    <p class="recom-result txt_center">
 	                    <% if(s.getSpaceCheck().equals("Y")){ %>
 	                    	완료

@@ -1,3 +1,6 @@
+<%@page import="com.kh.host.model.vo.Company"%>
+<%@page import="com.kh.host.model.vo.SpaceDayOff"%>
+<%@page import="com.kh.host.model.vo.SpaceImageFile"%>
 <%@page import="com.kh.host.model.vo.Space"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -6,9 +9,38 @@
 <%@page import="java.util.List"%>
 <%
 	Space s = (Space)request.getAttribute("space");
+	String[] hashTagArr = null;
+	if(s.getHashtag()!=null){
+		hashTagArr = s.getHashtag().split(", ");
+	}
+	
+	List<SpaceImageFile> spaceImg = (List<SpaceImageFile>)request.getAttribute("spaceImg");
+	String yImg = null;
+	String[] nImg = new String[4];
+	if(!spaceImg.isEmpty()){
+		for(int i=0; i<spaceImg.size(); i++){
+			SpaceImageFile sImg = spaceImg.get(i);
+			if(!sImg.getImageRenamedFileName().equals("") && sImg.getFlag().equals("Y")){
+				yImg = sImg.getImageRenamedFileName();
+			} else if(!sImg.getImageRenamedFileName().equals("") && sImg.getFlag().equals("N")){
+				nImg[i] = sImg.getImageRenamedFileName();
+			}
+		}
+	}
+	
+	List<SpaceDayOff> dayOffList = (List<SpaceDayOff>)request.getAttribute("dayOff");
+	String dayOff = null;
+	String dayOffReason = null;
+	if(!dayOffList.isEmpty()){
+		for(SpaceDayOff day : dayOffList){
+			dayOff = day.getMaxSpaceDayOff();
+			dayOffReason = day.getDayOffEvent();
+		}
+	}
+	
+	Company company = (Company)request.getAttribute("company");
 %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/sub.css" />
-<script type="text/javascript" src="<%=request.getContextPath() %>/js/slick/slick.js"></script>
 <script>
 $(document).ready(function(){
 	$(".spaceViewImg-wrap").slick({
@@ -29,7 +61,11 @@ function insertBooking(){
 </script>
 <div class="sub_container">
 	<section id="spaceViewTitleImg">
-		<img src="<%=request.getContextPath() %>/images/example2.jpeg" alt="대표이미지" class="dp_block" />
+		<% if(yImg!=null){ %>
+		<img src="<%=request.getContextPath() %>/upload/host/<%=yImg %>" alt="대표이미지" class="dp_block" />
+		<%} else { %>
+			<p class="txt_center" style="line-height:450px;">등록된 이미지가 없습니다.</p>
+		<% }%>
 		<a href="" class="dibs-area dp_block">
 			<img src="<%=request.getContextPath() %>/images/heart.png" width="42" alt="찜하기" class="dp_block"/>
 		</a>
@@ -38,39 +74,44 @@ function insertBooking(){
         <article>
         	<button onclick="insertBooking();">예약하기</button>
         	<div class="spaceInfo-container">
-        		<h3 class="tit"></h3>
-	            <p class="fw300">공간 슬로건</p>
+        		<h3 class="tit"><%=s.getSpaceName()!=null?s.getSpaceName():"" %></h3>
+	            <p class="fw300"><%=s.getSpaceSlogan()!=null?s.getSpaceSlogan():"" %></p>
 	            <div class="hashTags">
-	            	<span class="dp_ib">#해시태그1</span>
-	            	<span class="dp_ib">#해시태그1</span>
-	            	<span class="dp_ib">#해시태그1</span>
+	            	<%if(hashTagArr!=null){
+	            		for(int i=0; i<hashTagArr.length; i++){
+	            	%>
+	            	<span class="dp_ib">#<%=hashTagArr[i] %></span>
+	            	<%		
+	            		}
+	            	} %>
 	            </div>
 	            <div class="spaceViewImg-wrap clearfix">
-	            	<div class="spaceViewImg"><img src="<%=request.getContextPath() %>/images/example.jpeg" class="dp_block" alt="" /></div>
-	            	<div class="spaceViewImg"><img src="<%=request.getContextPath() %>/images/example2.jpeg" class="dp_block" alt="" /></div>
-	            	<div class="spaceViewImg"><img src="<%=request.getContextPath() %>/images/example3.jpeg" class="dp_block" alt="" /></div>
+	            	<% for(int i=0; i<nImg.length; i++){
+	            		if(nImg[i]!=null) { %>
+	            	<div class="spaceViewImg"><img src="<%=request.getContextPath() %>/upload/host/<%=nImg[i] %>" class="dp_block" alt="" /></div>
+	            	<% }
+	            	} %>
 	            </div>
-	            <h4 class="fw300">공간 슬로건</h4>
+	            <h4 class="fw300"><%=s.getSpaceSlogan()!=null?s.getSpaceSlogan():"" %></h4>
 	            <h5 class="spaceInfo-tit">공간 소개</h5>
 	            <div>
-	            	<p>공간 내용</p>
+	            	<p><%=s.getSpaceIntro()!=null?s.getSpaceIntro():"" %></p>
 	            	<table class="spaceInfo-tb">
 	            		<tr>
-	            			<th style="width:75px;">영업시간</th>
-	            			<td>ㅇㅇㅇㅇ</td>
+	            			<th style="width:110px;">예약 가능 시간</th>
+	            			<td><%=s.getBookingTime()!=null?s.getBookingTime():"" %></td>
 	            		</tr>
 	            		<tr>
 	            			<th style="width:75px;">휴무일</th>
-	            			<td>없음/날짜</td>
+	            			<td>
+	            				<%=dayOff!=null?dayOff:"없음" %>
+	            				<%=dayOffReason!=null?"<br />"+dayOffReason:"" %>
+	            			</td>
 	            		</tr>
 	            	</table>
 	            </div>
 	            <h5 class="spaceInfo-tit mt50">편의 시설</h5>
-	            <ul class="infoFacility clearfix">
-	            	<li>편의시설1</li>
-	            	<li>편의시설2</li>
-	            	<li>편의시설3</li>
-	            </ul>
+	            <p class="refund-info"><%=s.getSpaceFacilities()!=null?s.getSpaceFacilities():"없음" %></p>
 	            <h5 class="spaceInfo-tit mt50">예약시 주의사항</h5>
 	            <table class="spaceInfo-tb">
 	            	<tr>
@@ -107,10 +148,13 @@ function insertBooking(){
 	            </table>
 	            <div class="spaceCompanyInfo-wrap">
 	            	<div class="spaceCompanyInfo">
-	            		<h3>공간명</h3>
-	            		<p>회사 주소</p>
+	            		<h3><%=s.getSpaceName()!=null?s.getSpaceName():"" %></h3>
+	            		<p><%=company.getCompanyPlace()!=null?company.getCompanyPlace():"" %></p>
+	            		<div class="txt_right">
+	            			<a id="searchMap" href="" class="dp_ib txt_center" target="_blank">길찾기</a>
+	            		</div>
 	            	</div>
-	            	<div class="spaceCompanyInfo-map">지도들어갈 곳</div>
+	            	<div id="spaceCompanyInfo-map" class="spaceCompanyInfo-map" style="height:450px;"></div>
 	            </div>
 	            <div class="review-tit mt50 clearfix">
 	            	<h5 class="spaceInfo-tit">Q&ampA <span class="dp_ib">질문갯수</span></h5>
@@ -159,5 +203,38 @@ function insertBooking(){
         </article>
     </section>
 </div>
-
+<script type="text/javascript"
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=17a175acb43ce7feb97791cd23eb85e7&libraries=services"></script>
+<script>
+var mapContainer = document.getElementById('spaceCompanyInfo-map'), // 지도를 표시할 div 
+mapOption = {
+    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+    level: 3 // 지도의 확대 레벨
+};  
+//지도를 생성합니다    
+var map = new kakao.maps.Map(mapContainer, mapOption);
+//주소-좌표 변환 객체를 생성합니다
+var geocoder = new kakao.maps.services.Geocoder();
+//주소로 좌표를 검색합니다
+geocoder.addressSearch('서울특별시 강남구 강남구 테헤란로14길 6', function(result, status) {
+// 정상적으로 검색이 완료됐으면
+ if (status === kakao.maps.services.Status.OK) {
+    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+    // 결과값으로 받은 위치를 마커로 표시합니다
+    var marker = new kakao.maps.Marker({
+        map: map,
+        position: coords
+    });
+    // 인포윈도우로 장소에 대한 설명을 표시합니다
+    var infowindow = new kakao.maps.InfoWindow({
+        content: '<div style="width:150px;text-align:center;padding:6px 0;">kh정보교육원</div>'
+    });
+    infowindow.open(map, marker);
+    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+    map.setCenter(coords);
+    console.log(coords)
+    $("#searchMap").attr("href", "https://map.kakao.com/link/to/kh정보교육원,"+coords.Ha+","+coords.Ga);
+} 
+});  
+</script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

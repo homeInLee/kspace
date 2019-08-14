@@ -172,9 +172,13 @@ public class SpaceEnrollEndServlet extends HttpServlet {
 		if(enrollDayOffArr!=null) {
 			for(int i=0; i<enrollDayOffArr.length; i++) {
 				if(enrollDayOffArr[i].equals("기타")) {
-					maxSpaceDayOff += spaceEnrollDayOffETC;
+					maxSpaceDayOff += ", "+spaceEnrollDayOffETC;
 				} else {
-					maxSpaceDayOff += enrollDayOffArr[i]+",";
+					if(i!=0) {
+						maxSpaceDayOff += ", "+enrollDayOffArr[i];
+					} else {
+						maxSpaceDayOff += enrollDayOffArr[i];
+					}
 				}
 			}
 		}

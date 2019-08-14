@@ -818,6 +818,10 @@
 	text-align:left;
 }
 
+.spaceInfo-tb td {
+	padding: 8px 0;
+}
+
 .refund-desk {
 	margin:30px 0;
 }
@@ -926,4 +930,22 @@
 	color:#fff;
 	padding:5px 10px 5px 30px;
 	/* border-radius:20px; */
+}
+
+#searchMap {
+	margin-top:20px;
+	border-radius:30px;
+	border:1px solid #ACC800;
+	box-sizing:border-box;
+	width:200px;
+	height:43px;
+	line-height:43px;
+	color:#ACC800;
+	transition:background .4s linear;
+	-webkit-transition:background .4s linear;
+}
+
+#searchMap:hover {
+	background:#ACC800;
+	color:#fff;	
 }
