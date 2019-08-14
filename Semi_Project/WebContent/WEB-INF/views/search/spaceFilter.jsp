@@ -7,6 +7,7 @@
 	String spaceSrch = request.getParameter("spaceSrch");
 	String spaceType = request.getParameter("spaceType") == null ? "" : request.getParameter("spaceType");
 	String spaceArea = request.getParameter("spaceArea") == null ? "" : request.getParameter("spaceArea");
+	List<SpaceImageFile> imageList = (List<SpaceImageFile>)request.getAttribute("imageList");
 %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/sub.css" />
 <script src="<%=request.getContextPath()%>/js/spaceList.js"></script>
@@ -160,7 +161,18 @@ $(()=> {
                 <% for(SpaceJoin s : spaceList) { %>
                 	<li>
                     	<a href="" class="dp_block">
-                        	<div class="recom-space-img"><img src="<%=request.getContextPath() %>/images/example.jpeg" alt="이미지영역" class="dp_block"></div>
+                        	<div class="recom-space-img">
+                        	<%if(!imageList.isEmpty()) { %>
+								<% for(SpaceImageFile i : imageList) { 
+									if(s.getSpaceNo() == i.getSpaceNo()) {
+								%>
+									<img src="<%=request.getContextPath() %>/upload/host/<%=i.getImageRenamedFileName() %>" alt="" />
+							<% } else { %>
+								<img src="<%=request.getContextPath() %>/images/example.jpeg" alt="이미지영역" class="dp_block">
+							<% }}} else { %>
+								<img src="<%=request.getContextPath() %>/images/example3.jpeg" alt="이미지영역" class="dp_block">
+							<% } %>
+							</div>
                         	<div class="recom-space-conts">
                             	<h4 class="recom-tit"><%=s.getSpaceName() %></h4>
                             	<p class="recom-cont">

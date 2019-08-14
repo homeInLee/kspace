@@ -1,28 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%@ page import="java.util.*, com.kh.admin.banner.model.vo.*, com.kh.admin.banner.model.service.*" %>
 <%
 	List<Banner> list = new BannerService().selectAllBanner();
 %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>Index</title>
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/default.css">
-<link rel="stylesheet" type="text/css"
-	href="https://cdn.jsdelivr.net/gh/moonspam/NanumBarunGothic@1.0/nanumbarungothicsubset.css">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/main.css">
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/slick.css">
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/slick-theme.css">
-<script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="<%=request.getContextPath()%>/js/common.js"></script>
-<script src="<%=request.getContextPath()%>/js/slick/slick/slick.js"></script>
 <style>
 button.btn-delete, .btn-update {
 	display: none;
@@ -36,27 +18,6 @@ tr:hover button.btn-delete, tr:hover .btn-update {
 	border: 1px solid green;
 }
 </style>
-</head>
-<body>
-	<header id="header">
-		<h1 id="logo">
-			<a href="index.html" class="dp_block fw700"><span>KH</span> Space</a>
-		</h1>
-		<div id="search-area">
-			<form action="" method="get" name="spaceSearchFrm"
-				class="dp_block clearfix">
-				<input type="text" name="spaceSrch" id="spaceSrch"
-					placeholder="지역 또는 공간유형을 검색해보세요!"> <input type="submit"
-					id="srchBtn" value="검색">
-			</form>
-		</div>
-		<a href="" class="go-space dp_block">공간 등록하기</a>
-		<div class="menu-btn clearfix">
-			<p></p>
-			<p></p>
-			<p></p>
-		</div>
-	</header>
 	<div id="nav_wrap">
 		<div id="nav-top" class="clearfix">
 			<div class="menu-close">
@@ -125,24 +86,4 @@ tr:hover button.btn-delete, tr:hover .btn-update {
 			</article>
 		</section>
 	</div>
-	<footer id="footer">
-		<article>
-			<h2 id="f_logo">
-				<a href="index.jsp" class="dp_block fw700"><span>KH</span> Space</a>
-			</h2>
-			<p class="f_info">
-				상호명 : 케이에이치 스페이스 | 대표 : 이호민 | 영업소재지 : 서울특별시 강남구 테헤란로 10 10길 9 <br>
-				영업시간 : 오후 3시30분 ~ 오후 9시50분 | 대표전화 : 02)1234-1234 <br> *공간에 대한
-				문의사항은 해당 공간 호스트에게 문의해주세요.
-			</p>
-			<div class="clearfix">
-				<p class="f_info2">
-					KH SPACE는 통신판매중개자이며 통신 판매의 당사자가 아닙니다. <br> 따라서 KH SPACE 는 공간
-					거래 정보 및 거래에 대해 책임지지 않습니다.
-				</p>
-				<p class="cop">Copyright KH SPACE Corp. All Rights Reserved.</p>
-			</div>
-		</article>
-	</footer>
-</body>
-</html>
+<%@ include file="/WEB-INF/views/common/footer.jsp" %>

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
+import com.kh.host.model.vo.SpaceImageFile;
 import com.kh.host.model.vo.SpaceJoin;
 import com.kh.search.model.service.SearchService;
 
@@ -89,12 +90,15 @@ public class searchFilterServlet extends HttpServlet {
 			list = new SearchService().selectFilterNullList(srchPrice1, spaceList);
 		}
 		
+		List<SpaceImageFile> imageList = new SearchService().selectImageList();
+		
 		System.out.println("spaceArea=" + spaceArea);
 
 		request.setAttribute("list", list);
 		request.setAttribute("spaceSrch", spaceSrch);
 		request.setAttribute("spaceType", spaceType);
 		request.setAttribute("spaceArea", spaceArea);
+		request.setAttribute("imageList", imageList);
 		request.getRequestDispatcher("/WEB-INF/views/search/spaceFilter.jsp").forward(request, response);
 	}
 
