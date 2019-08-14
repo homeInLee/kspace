@@ -1,12 +1,12 @@
-<%@page import="com.kh.host.model.vo.Company"%>
-<%@page import="com.kh.host.model.vo.SpaceDayOff"%>
-<%@page import="com.kh.host.model.vo.SpaceImageFile"%>
-<%@page import="com.kh.host.model.vo.Space"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%@page import="com.kh.admin.banner.model.vo.SpaceAll"%>
 <%@page import="java.util.List"%>
+<%@page import="com.kh.host.model.vo.Company"%>
+<%@page import="com.kh.host.model.vo.SpaceDayOff"%>
+<%@page import="com.kh.host.model.vo.SpaceImageFile"%>
+<%@page import="com.kh.host.model.vo.Space"%>
 <%
 	Space s = (Space)request.getAttribute("space");
 	String[] hashTagArr = null;
@@ -41,17 +41,18 @@
 	Company company = (Company)request.getAttribute("company");
 %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/sub.css" />
-<script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/js/slick/slick.js"></script>
+<script type="text/javascript">
 $(document).ready(function(){
 	$(".spaceViewImg-wrap").slick({
-        infinite: true,
-        speed:500,
-        autoplay: true,
-        autoplaySpeed: 3000,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        adaptiveHeight: true
-    });
+	    infinite: true,
+	    speed:500,
+	    autoplay: true,
+	    autoplaySpeed: 3000,
+	    slidesToShow: 1,
+	    slidesToScroll: 1,
+	    adaptiveHeight: true
+	});
 });
 </script>
 <script>
@@ -112,21 +113,6 @@ function insertBooking(){
 	            </div>
 	            <h5 class="spaceInfo-tit mt50">편의 시설</h5>
 	            <p class="refund-info"><%=s.getSpaceFacilities()!=null?s.getSpaceFacilities():"없음" %></p>
-	            <h5 class="spaceInfo-tit mt50">예약시 주의사항</h5>
-	            <table class="spaceInfo-tb">
-	            	<tr>
-	            		<th>1</th>
-	            		<td>어쩌구 저쩌구</td>
-	            	</tr>
-	            	<tr>
-	            		<th>2</th>
-	            		<td>어쩌구 저쩌구</td>
-	            	</tr>
-	            	<tr>
-	            		<th>3</th>
-	            		<td>어쩌구 저쩌구</td>
-	            	</tr>
-	            </table>
 	            <h5 class="spaceInfo-tit mt50">환불 규정 안내</h5>
 	            <p class="refund-info">
 	            	<span class="dp_block req">이용당일(첫 날) 이후에 환불 관련 사항은 호스트에게 직접 문의하셔야 합니다.</span>
@@ -156,45 +142,6 @@ function insertBooking(){
 	            	</div>
 	            	<div id="spaceCompanyInfo-map" class="spaceCompanyInfo-map" style="height:450px;"></div>
 	            </div>
-	            <div class="review-tit mt50 clearfix">
-	            	<h5 class="spaceInfo-tit">Q&ampA <span class="dp_ib">질문갯수</span></h5>
-	            	<a href="" class="dp_block">질문 작성하기</a>
-	            </div>
-	            <ul class="review-list">
-	            	<li>
-	            		<div class="review-conts">
-	            			<strong>질문자 아이디</strong>
-	            			<p class="review-con">질문 내용</p>
-	            			<p class="review-time">질문 시간</p>
-	            		</div>
-	            		<div class="review-reply">
-	            			<strong>호스트의 답글</strong>
-	            			<p class="review-con">답한 내용</p>
-	            			<p class="review-time">답한 시간</p>
-	            		</div>
-	            	</li>
-	            	<li>
-	            		<div class="review-conts">
-	            			<strong>질문자 아이디</strong>
-	            			<p class="review-con">질문 내용</p>
-	            			<p class="review-time">질문 시간</p>
-	            		</div>
-	            		<div class="review-reply">
-	            			<strong>호스트의 답글</strong>
-	            			<p class="review-con">답한 내용</p>
-	            			<p class="review-time">답한 시간</p>
-	            		</div>
-	            	</li>
-	            </ul>
-	            <div class="review-tit mt50 clearfix">
-	            	<%-- <h5 class="spaceInfo-tit">
-	            		이용후기 <span class="dp_ib">후기갯수</span> 
-	            		· 평균평점 <span class="dp_ib">평점</span>
-	            	</h5>
-	            	<a href="<%=request.getContextPath() %>/customer/customerReviewFrom" class="dp_block">후기 작성하기</a>
-	            </div>
-	            <ul class="review-list">
-	            </ul> --%>
 	            <%@ include file="/WEB-INF/views/customer/review.jsp" %>
         	</div>
             <div class="reservation-container">
@@ -203,38 +150,5 @@ function insertBooking(){
         </article>
     </section>
 </div>
-<script type="text/javascript"
-		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=17a175acb43ce7feb97791cd23eb85e7&libraries=services"></script>
-<script>
-var mapContainer = document.getElementById('spaceCompanyInfo-map'), // 지도를 표시할 div 
-mapOption = {
-    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-    level: 3 // 지도의 확대 레벨
-};  
-//지도를 생성합니다    
-var map = new kakao.maps.Map(mapContainer, mapOption);
-//주소-좌표 변환 객체를 생성합니다
-var geocoder = new kakao.maps.services.Geocoder();
-//주소로 좌표를 검색합니다
-geocoder.addressSearch('서울특별시 강남구 강남구 테헤란로14길 6', function(result, status) {
-// 정상적으로 검색이 완료됐으면
- if (status === kakao.maps.services.Status.OK) {
-    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-    // 결과값으로 받은 위치를 마커로 표시합니다
-    var marker = new kakao.maps.Marker({
-        map: map,
-        position: coords
-    });
-    // 인포윈도우로 장소에 대한 설명을 표시합니다
-    var infowindow = new kakao.maps.InfoWindow({
-        content: '<div style="width:150px;text-align:center;padding:6px 0;">kh정보교육원</div>'
-    });
-    infowindow.open(map, marker);
-    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-    map.setCenter(coords);
-    console.log(coords)
-    $("#searchMap").attr("href", "https://map.kakao.com/link/to/kh정보교육원,"+coords.Ha+","+coords.Ga);
-} 
-});  
-</script>
+
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
