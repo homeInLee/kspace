@@ -151,7 +151,7 @@ function insertBooking(){
 	            </div>
 	            <ul class="review-list">
 	            </ul> --%>
-	            	<%@ include file="/WEB-INF/views/customer/review.jsp" %>
+	            <%@ include file="/WEB-INF/views/customer/review.jsp" %>
         	</div>
             <div class="reservation-container">
             <!-- 예약 -->

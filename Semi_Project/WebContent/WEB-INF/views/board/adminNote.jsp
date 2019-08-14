@@ -84,7 +84,7 @@
 					</ul>
 				</div>
 			</div>
-			<jsp:include page="/paging/paging.jsp">
+			<jsp:include page="/paging/notePaging.jsp">
 			    <jsp:param value="${paging.page}" name="page"/>
 			    <jsp:param value="${paging.startPage}" name="startPage"/>
 			    <jsp:param value="${paging.endPage}" name="endPage"/>

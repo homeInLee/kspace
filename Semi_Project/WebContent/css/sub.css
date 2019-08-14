@@ -868,21 +868,22 @@
 }
 
 .review-list {
+	width: 500px;
 	margin-top:20px;
 }
 
-.review-list li {
+.review-list td {
 	position:relative;
-	padding:15px 0 15px 110px;
+	padding:15px 0 15px 0;
 	border-top:1px solid #ebebeb;
 	box-sizing:border-box;
 }
 
-.review-list li:first-child {
+.review-list td:first-child {
 	border-top:0;
 }
 
-.review-list li strong {
+.review-list td strong {
 	font-size:18px;
 }
 
@@ -919,10 +920,10 @@
 	float:left;
 }
 
-.review-tit a {
+#reviewBtn{
 	float:right;
 	background:#ACC800;
 	color:#fff;
 	padding:5px 10px 5px 30px;
-	border-radius:20px;
+	/* border-radius:20px; */
 }
