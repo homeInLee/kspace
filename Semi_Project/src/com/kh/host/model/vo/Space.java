@@ -18,6 +18,7 @@ public class Space implements Serializable {
 	private String spaceName;
 	private String spaceFacilities;
 	private String spaceSlogan;
+	
 	public Space() {
 		super();
 		// TODO Auto-generated constructor stub

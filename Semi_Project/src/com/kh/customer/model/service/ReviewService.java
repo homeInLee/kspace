@@ -36,10 +36,22 @@ public class ReviewService {
 		return list;
 	}
 
-	public int selectTotalContents() {
+	public int selectTotalContents(int spaceNo) {
 		Connection conn = getConnection();
-		int result = new ReviewDAO().selectTotalContents(conn);
+		int result = new ReviewDAO().selectTotalContents(conn,spaceNo);
 		close(conn);
+		return result;
+	}
+
+	public int deleteReview(int reviewNo) {
+		Connection conn = getConnection();
+		int result = new ReviewDAO().deleteReview(conn, reviewNo);
+		if(result>0)
+			commit(conn);
+		else 
+			rollback(conn);
+		close(conn);
+		
 		return result;
 	}
 

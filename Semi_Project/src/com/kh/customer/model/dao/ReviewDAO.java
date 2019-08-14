@@ -62,11 +62,11 @@ public class ReviewDAO {
 		
 		String sql = prop.getProperty("selectReviewList");
 		
+		int start = (cPage-1)*numPerPage+1;
+		int end = cPage * numPerPage;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, spaceNo);
-			int start = (cPage-1)*numPerPage+1;
-			int end = cPage * numPerPage;
 			pstmt.setInt(2, start);
 			pstmt.setInt(3, end);
 			
@@ -94,13 +94,14 @@ public class ReviewDAO {
 		return list;
 	}
 
-	public int selectTotalContents(Connection conn) {
+	public int selectTotalContents(Connection conn, int spaceNo) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String sql = prop.getProperty("selectTotalContents");
 		try {
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, spaceNo);
 			rset = pstmt.executeQuery();
 			if(rset.next()) {
 				result = rset.getInt("totalContents");
@@ -114,6 +115,23 @@ public class ReviewDAO {
 		}
 //		System.out.println("contents@admin="+result);
 		
+		return result;
+	}
+
+	public int deleteReview(Connection conn, int reviewNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteReview");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, reviewNo);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+				
 		return result;
 	}
 
