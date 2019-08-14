@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kh.host.model.vo.SpaceImageFile;
 import com.kh.host.model.vo.SpaceJoin;
 import com.kh.search.model.service.SearchService;
 
@@ -51,11 +52,13 @@ public class SpaceFinderServlet extends HttpServlet {
 		}
 		
 		List<SpaceJoin> list = new SearchService().selectSpaceList(spaceSrch, spaceType, spaceArea);
+		List<SpaceImageFile> imageList = new SearchService().selectImageList();
 
 		request.setAttribute("list", list);
 		request.setAttribute("spaceSrch", spaceSrch);
 		request.setAttribute("spaceType", spaceType);
 		request.setAttribute("spaceArea", spaceArea);
+		request.setAttribute("imageList", imageList);
 		request.getRequestDispatcher("/WEB-INF/views/search/spaceFinder.jsp").forward(request, response);
 	}
 

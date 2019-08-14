@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 
-import com.kh.host.model.vo.Space;
+import com.kh.host.model.vo.SpaceImageFile;
 import com.kh.host.model.vo.SpaceJoin;
 
 public class SearchDAO {
@@ -400,6 +400,37 @@ public class SearchDAO {
 		}
 		
 		return list;
+	}
+
+	public List<SpaceImageFile> selectImageList(Connection conn) {
+		List<SpaceImageFile> imageList = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectImageList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				SpaceImageFile s = new SpaceImageFile();
+				s.setSpaceNo(rset.getInt("space_no"));
+				s.setImageOriginalFileName(rset.getString("image_original_filename"));
+				s.setImageRenamedFileName(rset.getString("image_renamed_filename"));
+				s.setFlag(rset.getString("flag"));
+				
+				imageList.add(s);
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return imageList;
 	}
 
 }

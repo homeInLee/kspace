@@ -6,6 +6,7 @@ import static com.kh.common.JDBCTemplate.getConnection;
 import java.sql.Connection;
 import java.util.List;
 
+import com.kh.host.model.vo.SpaceImageFile;
 import com.kh.host.model.vo.SpaceJoin;
 import com.kh.search.model.dao.SearchDAO;
 
@@ -63,6 +64,13 @@ public class SearchService {
 	public List<SpaceJoin> selectFilterNullList(int srchPrice1, List<SpaceJoin> spaceList) {
 		Connection conn = getConnection();
 		List<SpaceJoin> list = new SearchDAO().selectFilterNullList(conn, srchPrice1, spaceList);
+		close(conn);
+		return list;
+	}
+
+	public List<SpaceImageFile> selectImageList() {
+		Connection conn = getConnection();
+		List<SpaceImageFile> list = new SearchDAO().selectImageList(conn);
 		close(conn);
 		return list;
 	}

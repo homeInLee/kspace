@@ -131,7 +131,7 @@ $(()=> {
         </h1>
         <div id="search-area">
             <form action="<%=request.getContextPath() %>/search/spaceFinder" method="get" name="spaceSearchFrm"  class="dp_block clearfix">
-                <input type="text" name="spaceSrch" id="spaceSrch" placeholder="지역 또는 공간유형을 검색해보세요!">
+                <input type="text" name="spaceSrch" id="spaceSrch" placeholder="지역 또는 공간유형을 검색해보세요!" autocomplete="off">
                 <input type="submit" id="srchBtn" value="검색">
             </form>
                 <ul id="autoComplete"></ul>
