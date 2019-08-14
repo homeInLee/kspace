@@ -158,7 +158,9 @@
 									<img src="<%=request.getContextPath() %>/upload/host/<%=img.getImageRenamedFileName() %>" alt="" />
 							<% } else { %>
 								<img src="<%=request.getContextPath() %>/images/example3.jpeg" alt="이미지영역" class="dp_block">
-							<% }}} %>
+							<% }}} else { %>
+								<img src="<%=request.getContextPath() %>/images/example3.jpeg" alt="이미지영역" class="dp_block">
+							<% } %>
 							</div>
                             	<div class="member-recom-conts">
                                 	<p class="hashTag">
