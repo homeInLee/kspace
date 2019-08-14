@@ -130,7 +130,7 @@ $(()=> {
         </h1>
         <div id="search-area">
             <form action="<%=request.getContextPath() %>/search/spaceFinder" method="get" name="spaceSearchFrm"  class="dp_block clearfix">
-                <input type="text" name="spaceSrch" id="spaceSrch" placeholder="지역 또는 공간유형을 검색해보세요!" autocomplete="off">
+                <input type="text" name="spaceSrch" id="spaceSrch" placeholder="지역, 공간유형 또는 해시태그를 검색해보세요!" autocomplete="off">
                 <input type="submit" id="srchBtn" value="검색">
             </form>
                 <ul id="autoComplete"></ul>
@@ -148,17 +148,16 @@ $(()=> {
 	            <div class="menu-close"><img src="<%=request.getContextPath() %>/images/close.png" alt="" width="24px"></div>
 	            <div class="nav-ico"></div>
 	            <p>
-	                <a href="" class="dp_ib fw600">로그인</a>이 필요합니다.
+	                <a href="<%=request.getContextPath()%>/customer/login" class="dp_ib fw600">로그인</a>이 필요합니다.
 	            </p>
 	        </div>
 	        <nav id="menu">
 	            <ul class="menu1">
 	                <li><a href="<%=request.getContextPath() %>" class="dp_block">KH Space Home</a></li>
-	                <li><a href="" class="dp_block">내 정보 보기</a></li>
+	                <li><a href="<%=request.getContextPath()%>/customer/mypage" class="dp_block">내 정보 보기</a></li>
 	                <li><a href="<%=request.getContextPath() %>/booking/bookingList?userId=datbot" class="dp_block">예약 리스트</a></li>
 	                <li><a href="" class="dp_block">찜한 공간</a></li>
 	                <li><a href="<%=request.getContextPath() %>/customer/spaceList" class="dp_block">전체 공간보기</a></li>
-	                <li><a href="" class="dp_block">추천 공간</a></li>
 	                <li><a href="<%=request.getContextPath() %>/board/adminNote" class="dp_block">공지사항</a></li>
 	                <li><a href="<%=request.getContextPath()%>/banner/information" class="dp_block">배너 등록</a></li>
 	                <li><a href="<%=request.getContextPath()%>/admin/spaceChkList" class="dp_block">관리자 공간 검수 리스트</a></li>

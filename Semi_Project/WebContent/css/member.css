@@ -11,3 +11,153 @@
 	width:648px;
 	margin:auto;
 }
+
+.checks {position: relative;}
+ 
+.checks input[type="radio"],
+.checks input[type="checkbox"] { 
+	position: absolute; 
+	width: 1px; 
+	height: 1px; 
+	padding: 0; 
+	margin: -1px; 
+	overflow: hidden; 
+	clip:rect(0,0,0,0); 
+	border: 0; 
+} 
+
+.checks input[type="radio"] + label,
+.checks input[type="checkbox"] + label { 
+	display: inline-block; 
+	position: relative; 
+	padding-left: 30px; 
+	cursor: pointer; 
+	-webkit-user-select: none; 
+	-moz-user-select: none; 
+	-ms-user-select: none; 
+} 
+
+.checks input[type="radio"] + label:before,
+.checks input[type="checkbox"] + label:before { 
+	content: ''; 
+	position: absolute; 
+	left: 0; 
+	top: 0; 
+	width: 21px; 
+	height: 21px; 
+	text-align: center; 
+	background: #fafafa; 
+	border: 1px solid #ccc; 
+} 
+
+/*
+.checks input[type="radio"] + label:active:before, 
+.checks input[type="radio"]:checked + label:active:before,
+.checks input[type="checkbox"]+label:active:before, { 
+	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1); 
+} 
+*/
+
+.checks input[type="radio"]:checked + label:before,
+.checks input[type="checkbox"]:checked + label:before { 
+	border: 1px solid #ACC800; 
+} 
+
+.checks input[type="radio"]:checked + label:after,
+.checks input[type="checkbox"]:checked + label:after { 
+	content: '\2714'; 
+	position: absolute; 
+	top: 0; 
+	left: 5px; 
+	width: 13px; 
+	height: 13px; 
+	color: #ACC800; 
+}
+
+.regFrm {
+	margin-top:40px;
+	padding:32px;
+	background:#fff;
+	box-sizing:border-box;	
+}
+
+.regFrm input[type=text],
+.regFrm input[type=password] {
+	display:block;
+	width:100%;
+	height:43px;
+	margin-bottom:15px;
+	padding-left: 15px;
+	line-height:44px;
+	font-size:15px;
+	border:1px solid #ccc;
+	box-sizing:border-box;
+}
+
+.regFrm input[type=submit],
+.regFrm input[type=reset],
+.regFrm a {
+	display: inline-block;
+	width:150px;
+	height:43px;
+	margin-top:15px;
+	line-height:45px;
+	cursor:pointer;
+	font-size:15px;
+	color:#fff;
+}
+
+.regFrm input[type=submit] {
+	margin-right:15px;
+	background:#ACC800;
+}
+
+.regFrm input[type=reset],
+.regFrm a {
+	background:#656565;
+}
+
+.logrinFrm,
+.myPage {
+	margin-top:0;
+}
+
+.myPage table {
+	width:100%;
+	border-top:1px solid #ccc;
+	border-bottom:1px solid #ccc;
+	box-sizing:border-box;
+}
+
+.myPage table th {
+	font-weight:400;
+	text-align:left;
+	color:#000;
+	width:120px;
+	font-size:15px;
+	padding:15px 0 15px 15px;
+	box-sizing:border-box;
+}
+
+.myPage table td {
+	text-align:left;
+	color:#656565;
+	font-size:15px;
+	padding:15px 0 15px 15px;
+	box-sizing:border-box;
+}
+
+.myPage > div > p {
+	padding:15px 0;
+}
+
+.myPage a {
+	display:block;
+	background:transparent;
+	width: 90px;
+	height: auto;
+	margin:15px auto 0;
+	line-height:1.5;
+	border-bottom:1px solid #656565;
+	color:#656565;
+}

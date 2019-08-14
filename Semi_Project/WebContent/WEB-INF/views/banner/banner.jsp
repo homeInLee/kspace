@@ -18,35 +18,6 @@ tr:hover button.btn-delete, tr:hover .btn-update {
 	border: 1px solid green;
 }
 </style>
-	<div id="nav_wrap">
-		<div id="nav-top" class="clearfix">
-			<div class="menu-close">
-				<img src="<%=request.getContextPath()%>/img/close.png" alt=""
-					width="24px">
-			</div>
-			<div class="nav-ico"></div>
-			<p>
-				<a href="" class="dp_ib fw600">로그인</a>이 필요합니다.
-			</p>
-		</div>
-		<nav id="menu">
-			<ul class="menu1">
-				<li><a href="index.html" class="dp_block">KH Space Home</a></li>
-				<li><a href="subPage.html" class="dp_block">내 정보 보기</a></li>
-				<li><a href="" class="dp_block">예약 리스트</a></li>
-				<li><a href="" class="dp_block">찜한 공간</a></li>
-				<li><a href="" class="dp_block">추천 공간</a></li>
-				<li><a href="" class="dp_block">공지사항</a></li>
-			</ul>
-		</nav>
-		<div id="nav-bottom" class="txt_center">
-			<div class="clearfix">
-				<a href="" class="dp_ib">로그인</a> <a href="" class="dp_ib">회원가입</a>
-			</div>
-			<p>Copyright KH SPACE Corp. All Rights Reserved.</p>
-		</div>
-	</div>
-	<div id="dim-layer"></div>
 	<div class="sub_container">
 		<section class="subPage">
 			<article>
