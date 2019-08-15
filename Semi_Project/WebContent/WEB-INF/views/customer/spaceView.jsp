@@ -7,6 +7,7 @@
 <%@page import="com.kh.host.model.vo.SpaceDayOff"%>
 <%@page import="com.kh.host.model.vo.SpaceImageFile"%>
 <%@page import="com.kh.host.model.vo.Space"%>
+<%@page import="com.kh.customer.model.vo.SpaceDibs"%>
 <%
 	Space s = (Space)request.getAttribute("space");
 	String[] hashTagArr = null;
@@ -39,11 +40,68 @@
 	}
 	
 	Company company = (Company)request.getAttribute("company");
+	SpaceDibs jjimCheck = (SpaceDibs)request.getAttribute("jjimCheck");
 %>
 <script>
 function insertBooking(){
 	location.href = "<%=request.getContextPath()%>/customer/insertBooking?userId=datbot&spaceNo=1";
 }
+
+$(()=>{
+	$("#jjim-btn").click(function(e){
+		var jjim_info = {
+			spaceNo : <%=request.getParameter("spaceNo") %>,
+			userId : "JeonGaNe" //찜하는 사람 아이디 -> 로그인한 아이디, 로그인 안한 사람은 로그인 하게 할 것.
+		}
+		
+		if(<%=jjimCheck!=null%>){ //찜 되어있으면,
+			if(!confirm("찜한 공간을 취소하시겠습니까?")){
+				return;
+			}
+			
+			$.ajax({
+				url: "<%=request.getContextPath()%>/customer/jjimDelete",
+				type: "post",
+				data: jjim_info,
+				dataType : "json",
+				success: function(data){
+					if(data>0){
+						alert("찜 취소되었습니다.");
+						$("#jjim-btn img").attr("src", "<%=request.getContextPath()%>/images/heart.png");
+					} else {
+						alert("찜 취소 실패");
+					}
+				},
+				error: function(jqxhr, textStatus, errorThrown){
+					console.log("ajax 처리 실패!");
+					console.log(jqxhr, textStatus, errorThrown);
+				}
+			});
+		
+		
+		} else { //찜 안되어있으면,
+			$.ajax({
+				url: "<%=request.getContextPath()%>/customer/jjim",
+				type: "post",
+				data: jjim_info,
+				dataType : "json",
+				success: function(data){
+					if(data>0){
+						alert("해당 공간을 찜하였습니다.");
+						$("#jjim-btn img").attr("src", "<%=request.getContextPath()%>/images/like.png");
+					} else {
+						alert("찜 실패");
+					}
+				},
+				error: function(jqxhr, textStatus, errorThrown){
+					console.log("ajax 처리 실패!");
+					console.log(jqxhr, textStatus, errorThrown);
+				}
+			});
+		}
+		
+	});
+});
 </script>
 <style>
 	#spaceViewTitleImg {
@@ -61,9 +119,13 @@ function insertBooking(){
 		<%} else { %>
 			<p class="txt_center" style="line-height:450px;">등록된 이미지가 없습니다.</p>
 		<% }%> --%>
-		<a href="" class="dibs-area dp_block">
-			<img src="<%=request.getContextPath() %>/images/heart.png" width="42" alt="찜하기" class="dp_block"/>
-		</a>
+		<button id="jjim-btn" class="dibs-area dp_block">
+			<%if(jjimCheck!=null){ %>
+				<img src="<%=request.getContextPath() %>/images/like.png" width="42" alt="찜하기" class="dp_block"/>
+			<% } else { %>
+				<img src="<%=request.getContextPath() %>/images/heart.png" width="42" alt="찜하기" class="dp_block"/>
+			<% }%>
+		</button>
 	</section>
     <section class="spaceView-container subPage">
         <article>

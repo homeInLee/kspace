@@ -4,7 +4,7 @@
     <footer id="footer">
         <article>
             <h2 id="f_logo">
-                <a href="index.html" class="dp_block fw700"><span>KH</span> Space</a>
+                <a href="<%=request.getContextPath() %>" class="dp_block fw700"><span>KH</span> Space</a>
             </h2>
             <p class="f_info">
                 상호명 : 케이에이치 스페이스  |  대표 : 이호민  |  영업소재지 : 서울특별시 강남구 테헤란로 10 10길 9 <br>

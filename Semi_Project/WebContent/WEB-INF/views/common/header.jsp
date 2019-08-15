@@ -156,7 +156,7 @@ $(()=> {
 	                <li><a href="<%=request.getContextPath() %>" class="dp_block">KH Space Home</a></li>
 	                <li><a href="<%=request.getContextPath()%>/customer/mypage" class="dp_block">내 정보 보기</a></li>
 	                <li><a href="<%=request.getContextPath() %>/booking/bookingList?userId=datbot" class="dp_block">예약 리스트</a></li>
-	                <li><a href="" class="dp_block">찜한 공간</a></li>
+	                <li><a href="<%=request.getContextPath()%>/customer/jjimSpace" class="dp_block">찜한 공간</a></li>
 	                <li><a href="<%=request.getContextPath() %>/customer/spaceList" class="dp_block">전체 공간보기</a></li>
 	                <li><a href="<%=request.getContextPath() %>/board/adminNote" class="dp_block">공지사항</a></li>
 	                <li><a href="<%=request.getContextPath()%>/banner/information" class="dp_block">배너 등록</a></li>

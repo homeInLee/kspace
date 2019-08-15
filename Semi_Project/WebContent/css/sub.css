@@ -725,6 +725,9 @@
 	position: absolute;
 	right: 60px;
 	bottom: 30px;
+	background:transparent;
+	border:none;
+	cursor:pointer;
 }
 
 .spaceViewImg-wrap .spaceViewImg:first-child {
