@@ -727,12 +727,19 @@
 	bottom: 30px;
 }
 
+.spaceViewImg-wrap .spaceViewImg:first-child {
+	margin-top:0;
+}
+
 .spaceViewImg-wrap .spaceViewImg {
-	float:left;
+	margin-top:10px;
+	border:1px solid #ccc;
+	box-sizing:border-box;
 }
 
 .spaceViewImg-wrap .spaceViewImg img {
-	width: 624px;
+	width: 622px;
+	box-sizing:border-box;
 }
 
 .spaceInfo-container {

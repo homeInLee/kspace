@@ -19,4 +19,11 @@ public class CompanyService {
 		return c;
 	}
 
+	public Company selectCompanyByUserId(String userId) {
+		Connection conn = getConnection();
+		Company c = new CompanyDAO().selectCompanyByUserId(conn, userId);
+		close(conn);
+		return c;
+	}
+
 }

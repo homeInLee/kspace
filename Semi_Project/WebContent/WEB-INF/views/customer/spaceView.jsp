@@ -40,33 +40,27 @@
 	
 	Company company = (Company)request.getAttribute("company");
 %>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/sub.css" />
-<script type="text/javascript" src="<%=request.getContextPath() %>/js/slick/slick.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){
-	$(".spaceViewImg-wrap").slick({
-	    infinite: true,
-	    speed:500,
-	    autoplay: true,
-	    autoplaySpeed: 3000,
-	    slidesToShow: 1,
-	    slidesToScroll: 1,
-	    adaptiveHeight: true
-	});
-});
-</script>
 <script>
 function insertBooking(){
 	location.href = "<%=request.getContextPath()%>/customer/insertBooking?userId=datbot&spaceNo=1";
 }
 </script>
+<style>
+	#spaceViewTitleImg {
+		background:url('<%=request.getContextPath() %>/upload/host/<%=yImg %>') no-repeat center center;
+		background-size:cover;
+	}
+</style>
 <div class="sub_container">
 	<section id="spaceViewTitleImg">
-		<% if(yImg!=null){ %>
+		<% if(yImg==null) {%>
+			<p class="txt_center" style="line-height:450px;">등록된 이미지가 없습니다.</p>
+		<% } %>
+		<%-- <% if(yImg!=null){ %>
 		<img src="<%=request.getContextPath() %>/upload/host/<%=yImg %>" alt="대표이미지" class="dp_block" />
 		<%} else { %>
 			<p class="txt_center" style="line-height:450px;">등록된 이미지가 없습니다.</p>
-		<% }%>
+		<% }%> --%>
 		<a href="" class="dibs-area dp_block">
 			<img src="<%=request.getContextPath() %>/images/heart.png" width="42" alt="찜하기" class="dp_block"/>
 		</a>
@@ -86,7 +80,7 @@ function insertBooking(){
 	            		}
 	            	} %>
 	            </div>
-	            <div class="spaceViewImg-wrap clearfix">
+	            <div id="spaceViewImg-wrap" class="spaceViewImg-wrap clearfix">
 	            	<% for(int i=0; i<nImg.length; i++){
 	            		if(nImg[i]!=null) { %>
 	            	<div class="spaceViewImg"><img src="<%=request.getContextPath() %>/upload/host/<%=nImg[i] %>" class="dp_block" alt="" /></div>
@@ -153,12 +147,36 @@ function insertBooking(){
 <script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=17a175acb43ce7feb97791cd23eb85e7&libraries=services"></script>
 <script>
-	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+	var mapContainer = document.getElementById('spaceCompanyInfo-map'), // 지도를 표시할 div 
 	mapOption = {
 	    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
 	    level: 3 // 지도의 확대 레벨
 	};  
 	//지도를 생성합니다    
 	var map = new kakao.maps.Map(mapContainer, mapOption);
+	
+	//주소-좌표 변환 객체를 생성합니다
+	var geocoder = new kakao.maps.services.Geocoder();
+	// 주소로 좌표를 검색합니다
+	geocoder.addressSearch('서울특별시 강남구 강남구 테헤란로14길 6', function(result, status) {
+	// 정상적으로 검색이 완료됐으면
+		if (status === kakao.maps.services.Status.OK) {
+			var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+			// 결과값으로 받은 위치를 마커로 표시합니다
+			var marker = new kakao.maps.Marker({
+			    map: map,
+			    position: coords
+			});
+			// 인포윈도우로 장소에 대한 설명을 표시합니다
+			var infowindow = new kakao.maps.InfoWindow({
+			    content: '<div style="width:150px;text-align:center;padding:6px 0;">kh정보교육원</div>'
+			});
+			infowindow.open(map, marker);
+			// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+			map.setCenter(coords);
+			console.log(coords)
+			$("#searchMap").attr("href", "https://map.kakao.com/link/to/kh정보교육원,"+coords.Ha+","+coords.Ga);
+		}	 
+	});
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

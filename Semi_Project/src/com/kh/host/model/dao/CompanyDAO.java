@@ -62,5 +62,34 @@ public class CompanyDAO {
 		
 		return c;
 	}
+	public Company selectCompanyByUserId(Connection conn, String userId) {
+		Company c = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectCompanyByUserId");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				c = new Company();
+				c.setCompanyNo(rset.getInt("company_no"));
+				c.setCompanyName(rset.getString("company_name"));
+				c.setCompanyPlace(rset.getString("company_place"));
+				c.setCompanyPointGa(rset.getInt("company_point_ga"));
+				c.setCompanyPointHa(rset.getInt("company_point_ha"));
+				c.setUserId(rset.getString("user_id"));
+				c.setDelType(rset.getString("del_type"));
+				c.setDelDate(rset.getDate("del_date"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return c;
+	}
 
 }
