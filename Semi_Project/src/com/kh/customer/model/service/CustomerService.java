@@ -29,6 +29,13 @@ public class CustomerService {
 		return list;
 	}
 	
+	public List<SpaceJoin> selectSpaceListByEditor() {
+		Connection conn = getConnection();
+		List<SpaceJoin> list = new CustomerDAO().selectSpaceListByEditor(conn);
+		close(conn);
+		return list;
+	}
+	
 	public List<Review> selectPointList() {
 		Connection conn = getConnection();
 		List<Review> list = new CustomerDAO().selectPointList(conn);

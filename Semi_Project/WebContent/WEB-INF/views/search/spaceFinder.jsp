@@ -170,7 +170,7 @@ $("#spaceArea-select .select-items").click(function() {
 							<% } else { %>
 								<img src="<%=request.getContextPath() %>/images/example.jpeg" alt="이미지영역" class="dp_block">
 							<% }}} else { %>
-								<img src="<%=request.getContextPath() %>/images/example3.jpeg" alt="이미지영역" class="dp_block">
+								<img src="<%=request.getContextPath() %>/images/example.jpeg" alt="이미지영역" class="dp_block">
 							<% } %>
                         	</div>
                         	<div class="recom-space-conts">

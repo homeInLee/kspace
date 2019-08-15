@@ -7,6 +7,7 @@
 	List<SpaceJoin> spaceList = new CustomerService().selectSpaceList();
 	List<Review> pointList = new CustomerService().selectPointList();
 	List<SpaceImageFile> imageList = new SearchService().selectImageList();
+	List<SpaceJoin> editorSpaceList = new CustomerService().selectSpaceListByEditor();
 %>
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/slick/slick.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/index.js"></script>
@@ -43,96 +44,56 @@
             <article>
                 <h3 class="tit txt_center">에디터 추천 공간</h3>
                 <ul class="recom-space clearfix">
-                    <li>
-                        <a href="" class="dp_block">
-                            <div class="recom-space-img"><img src="<%=request.getContextPath() %>/images/example.jpeg" alt="이미지영역" class="dp_block"></div>
-                            <div class="recom-space-conts">
-                                <h4 class="recom-tit">제목</h4>
-                                <p class="recom-cont">
-                                    <span class="dp_ib fw600">위치 |</span>
-                                    <span class="dp_ib">해시태그</span>
-                                </p>
-                                <p class="recom-price">
-                                    <span class="fw600">가격</span>원/시간
-                                </p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="" class="dp_block">
-                            <div class="recom-space-img"><img src="<%=request.getContextPath() %>/images/example.jpeg" alt="이미지영역" class="dp_block"></div>
-                            <div class="recom-space-conts">
-                                <h4 class="recom-tit">제목</h4>
-                                <p class="recom-cont">
-                                    <span class="dp_ib fw600">위치 |</span>
-                                    <span class="dp_ib">해시태그</span>
-                                </p>
-                                <p class="recom-price">
-                                    <span class="fw600">가격</span>원/시간
-                                </p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="" class="dp_block">
-                            <div class="recom-space-img"><img src="<%=request.getContextPath() %>/images/example.jpeg" alt="이미지영역" class="dp_block"></div>
-                            <div class="recom-space-conts">
-                                <h4 class="recom-tit">제목</h4>
-                                <p class="recom-cont">
-                                    <span class="dp_ib fw600">위치 |</span>
-                                    <span class="dp_ib">해시태그</span>
-                                </p>
-                                <p class="recom-price">
-                                    <span class="fw600">가격</span>원/시간
-                                </p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="" class="dp_block">
-                            <div class="recom-space-img"><img src="<%=request.getContextPath() %>/images/example.jpeg" alt="이미지영역" class="dp_block"></div>
-                            <div class="recom-space-conts">
-                                <h4 class="recom-tit">제목</h4>
-                                <p class="recom-cont">
-                                    <span class="dp_ib fw600">위치 |</span>
-                                    <span class="dp_ib">해시태그</span>
-                                </p>
-                                <p class="recom-price">
-                                    <span class="fw600">가격</span>원/시간
-                                </p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="" class="dp_block">
-                            <div class="recom-space-img"><img src="<%=request.getContextPath() %>/images/example.jpeg" alt="이미지영역" class="dp_block"></div>
-                            <div class="recom-space-conts">
-                                <h4 class="recom-tit">제목</h4>
-                                <p class="recom-cont">
-                                    <span class="dp_ib fw600">위치 |</span>
-                                    <span class="dp_ib">해시태그</span>
-                                </p>
-                                <p class="recom-price">
-                                    <span class="fw600">가격</span>원/시간
-                                </p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="" class="dp_block">
-                            <div class="recom-space-img"><img src="<%=request.getContextPath() %>/images/example.jpeg" alt="이미지영역" class="dp_block"></div>
-                            <div class="recom-space-conts">
-                                <h4 class="recom-tit">제목</h4>
-                                <p class="recom-cont">
-                                    <span class="dp_ib fw600">위치 |</span>
-                                    <span class="dp_ib">해시태그</span>
-                                </p>
-                                <p class="recom-price">
-                                    <span class="fw600">가격</span>원/시간
-                                </p>
-                            </div>
-                        </a>
-                    </li>
+                    <% int index = 0;
+                    if(!editorSpaceList.isEmpty()) { %>
+                <% for(SpaceJoin s : editorSpaceList) { 
+                	if(index == 6) {
+    					continue;
+    				}
+                %>
+                	<li>
+                    	<a href="" class="dp_block">
+                        	<div class="recom-space-img">
+                        	<% if(!imageList.isEmpty()) { %>
+								<% for(SpaceImageFile i : imageList) { 
+									if(s.getSpaceNo() == i.getSpaceNo()) {
+								%>
+									<img src="<%=request.getContextPath() %>/upload/host/<%=i.getImageRenamedFileName() %>" alt="" />
+							<% } else { %>
+								<img src="<%=request.getContextPath() %>/images/example.jpeg" alt="이미지영역" class="dp_block">
+							<% }}} else { %>
+								<img src="<%=request.getContextPath() %>/images/example.jpeg" alt="이미지영역" class="dp_block">
+							<% } %>
+                        	</div>
+                        	<div class="recom-space-conts">
+                            	<h4 class="recom-tit"><%=s.getSpaceName() %></h4>
+                            	<p class="recom-cont">
+                                	<span class="dp_ib fw600"><%=s.getCompanyPlace() %></span><br>
+                                	<span class="dp_ib">
+                                	<%
+                                	if(s.getHashtag() != null) {
+                                		if(s.getHashtag().contains(",")) {
+                                			String[] HashArr = s.getHashtag().split(",");
+                                			for(int i=0; i<HashArr.length; i++) {
+                                	%>
+                                	# <%=HashArr[i] %>
+                                	<% }} else { %>
+                                		# <%=s.getHashtag() %>
+                                	<% }} %>
+                                	</span>
+                            	</p>
+                            	<p class="recom-price">
+                                	<span class="fw600">
+                                	<% if(s.getPriceEvent() == null) { %>
+                                	<%=s.getSpacePrice() %>
+                                	<% } %>
+                                	</span>원/시간
+                            	</p>
+                        	</div>
+                    	</a>
+                	</li>
+                	<% index++; %>
+                <% }} %>
                 </ul>
             </article>
         </section>
@@ -140,12 +101,12 @@
             <article>
                 <h3 class="tit txt_center">회원 추천 공간</h3>
                 <ul class="member-recom-wrap clearfix">
-                    <% int index = 0;
+                    <% int k = 0;
                     if(!spaceList.isEmpty() && !pointList.isEmpty()) {
                     	for(int i=0; i<pointList.size(); i++) {
                     		for(SpaceJoin s : spaceList) {
                     			if(pointList.get(i).getSpaceNo() == s.getSpaceNo()) {
-                    				if(index == 6) {
+                    				if(k == 6) {
                     					continue;
                     				}
                     %>
@@ -193,7 +154,7 @@
                             	</div>
                         	</a>
                     	</li>
-                    	<% index++; %>
+                    	<% k++; %>
                     <% }}}} %>
                 </ul>
             </article>
