@@ -45,7 +45,42 @@ $(document).ready(function(){
 		   } else {
 			   $("#hostPwd2Check").html("");
 		   }
+	});
+	
+	$("#memberId").on("change paste keyup", function() {
+		
+		var memberId = $(this).val();
+		
+		$.ajax({
+			type: "post",
+			url: "<%=request.getContextPath()%>/customer/memberIdCheck",
+			data: {
+				memberId : memberId
+			},
+			dataType: "json",
+			success: function(result) {
+				if (result == 1) {
+                    $("#memberIdCheck").html("아이디를 6글자 이상 입력해주세요");
+                } else if(result == -1) {
+                	$("#memberIdCheck").html("중복된 아이디입니다");
+                } else {
+                	$("#memberIdCheck").html("좋은 아이디에요!");
+                }
+			}
 		});
+	});
+	
+	$('#memberPwd2').change(function(){
+		var hostPwd = $("#memberPwd").val();
+		var hostPwd2 = $(this).val();
+		
+		   if(hostPwd != hostPwd2){
+			   $("#memberPwd2Check").html("비밀번호가 일치하지 않습니다");
+			   $('#memberPwd2').focus();
+		   } else {
+			   $("#memberPwd2Check").html("비밀번호 일치!");
+		   }
+	});
 });
 
 //주소-좌표 변환 객체를 생성합니다
@@ -85,11 +120,13 @@ geocoder.addressSearch('서울특별시 강남구 강남구 테헤란로14길 6'
             </div>
             <!-- 일반 회원가입 폼 -->
             <div class="regFrm registerFrm">	
-            	<form action="" id="registerFrm" name="registerFrm" method="post" onsubmit="return validate();">
+            	<form action="<%=request.getContextPath() %>/customer/memberInsert" id="registerFrm" name="registerFrm" method="post" onsubmit="return validate();">
 		            <input type="text" placeholder="아이디" id="memberId" name="memberId" required>
+		            <span id="memberIdCheck" class="effectCheck"></span>
 		            <input type="text" placeholder="이름" id="memberName" name="memberName" required>
 		            <input type="password" placeholder="비밀번호" id="memberPwd" name="memberPwd" required>
 		            <input type="password" placeholder="비밀번호 확인" id="memberPwd2" name="memberPwd2" required>
+		            <span id="memberPwd2Check" class="effectCheck"></span>
 		            <input type="text" placeholder="전화번호" id="memberPhone" name="memberPhone" required>
 		            <input type="text" placeholder="이메일" id="memberEmail" name="memberEmail">
 					<div class="txt_center">
@@ -102,12 +139,11 @@ geocoder.addressSearch('서울특별시 강남구 강남구 테헤란로14길 6'
             <div class="regFrm hostRegisterFrm">	
             	<form action="<%=request.getContextPath() %>/host/hostInsert" id="hostRegisterFrm" name="hostRegisterFrm" method="post" onsubmit="return validate();">
 		            <input type="text" placeholder="아이디" id="hostId" name="hostId" required>
-		            <span id="hostIdCheck"></span>
+		            <span id="hostIdCheck" class="effectCheck"></span>
 		            <input type="text" placeholder="이름" id="hostName" name="hostName" required>
 		            <input type="password" placeholder="비밀번호" id="hostPwd" name="hostPwd" required>
-		            <span id="hostPwdCheck"></span>
 		            <input type="password" placeholder="비밀번호 확인" id="hostPwd2" name="hostPwd2" required>
-		            <span id="hostPwd2Check"></span>
+		            <span id="hostPwd2Check" class="effectCheck"></span>
 		            <input type="text" placeholder="전화번호" id="hostPhone" name="hostPhone" required>
 		            <input type="text" placeholder="이메일" id="hostEmail" name="hostEmail">
 		            <input type="text" placeholder="회사 이름" id="companyName" name="companyName" required>

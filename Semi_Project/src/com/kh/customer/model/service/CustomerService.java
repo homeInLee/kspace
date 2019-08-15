@@ -9,6 +9,7 @@ import com.kh.admin.banner.model.vo.SpaceAll;
 import com.kh.customer.model.dao.CustomerDAO;
 import com.kh.customer.model.vo.Review;
 import com.kh.customer.model.vo.SpaceDibs;
+import com.kh.customer.model.vo.User;
 import com.kh.host.model.vo.Space;
 import com.kh.host.model.vo.SpaceJoin;
 
@@ -74,6 +75,16 @@ public class CustomerService {
 		SpaceAll space = new CustomerDAO().selectSpace(conn, spaceNo);
 		close(conn);
 		return space;
+	}
+
+	public int InsertUserCustomer(User u) {
+		Connection conn = getConnection();
+		int result = new CustomerDAO().InsertUserCustomer(conn, u);
+		if(result>0)
+			commit(conn);
+		else
+			rollback(conn);
+		return result;
 	}
 
 }

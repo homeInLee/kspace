@@ -14,6 +14,7 @@ import java.util.Properties;
 import com.kh.admin.banner.model.vo.SpaceAll;
 import com.kh.customer.model.vo.Review;
 import com.kh.customer.model.vo.SpaceDibs;
+import com.kh.customer.model.vo.User;
 import com.kh.host.model.vo.SpaceJoin;
 
 import static com.kh.common.JDBCTemplate.*;
@@ -292,6 +293,29 @@ public class CustomerDAO {
 		}
 		
 		return s;
+	}
+
+	public int InsertUserCustomer(Connection conn, User u) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("InsertUserCustomer");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, u.getUserId());
+			pstmt.setString(2, u.getUserName());
+			pstmt.setString(3, u.getPassword());
+			pstmt.setString(4, u.getPhone());
+			pstmt.setString(5, u.getEmail());
+			result = pstmt.executeUpdate();
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
 	}
 	
 	
