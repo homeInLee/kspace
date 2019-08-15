@@ -13,6 +13,8 @@ import java.util.Properties;
 
 import com.kh.admin.banner.model.dao.AdminDAO;
 import com.kh.admin.banner.model.vo.SpaceAll;
+import com.kh.customer.model.vo.User;
+import com.kh.host.model.vo.Company;
 
 public class HostDAO {
 	
@@ -75,6 +77,75 @@ private Properties prop = new Properties();
 		}
 		
 		return hostSpaceList;
+	}
+
+	public List<User> selectUserList(Connection conn) {
+		List<User> userList = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectUserList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				User u = new User();
+				u.setUserId(rset.getString("user_id"));
+				
+				userList.add(u);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return userList;
+	}
+
+	public int InsertUserHost(Connection conn, User u) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("InsertUserHost");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, u.getUserId());
+			pstmt.setString(2, u.getUserName());
+			pstmt.setString(3, u.getPassword());
+			pstmt.setString(4, u.getPhone());
+			pstmt.setString(5, u.getEmail());
+			result = pstmt.executeUpdate();
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int InsertCompany(Connection conn, Company c, String hostId) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("InsertCompany");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, c.getCompanyName());
+			pstmt.setString(2, c.getCompanyPlace());
+			pstmt.setString(3, c.getUserId());
+			result = pstmt.executeUpdate();
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
 	}
 
 }

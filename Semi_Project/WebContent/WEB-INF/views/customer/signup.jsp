@@ -11,6 +11,41 @@ $(document).ready(function(){
 		$(".regFrm").hide();
 		$("."+regChoose+"Frm").show();
 	});
+	
+	$("#hostId").on("change paste keyup", function() {
+		
+		var hostId = $(this).val();
+		
+		$.ajax({
+			type: "post",
+			url: "<%=request.getContextPath()%>/host/hostIdCheck",
+			data: {
+				hostId : hostId
+			},
+			dataType: "json",
+			success: function(result) {
+				if (result == 1) {
+                    $("#hostIdCheck").html("아이디를 6글자 이상 입력해주세요");
+                } else if(result == -1) {
+                	$("#hostIdCheck").html("중복된 아이디입니다");
+                } else {
+                	$("#hostIdCheck").html("좋은 아이디에요!");
+                }
+			}
+		});
+	});
+	
+	$('#hostPwd2').change(function(){
+		var hostPwd = $("#hostPwd").val();
+		var hostPwd2 = $(this).val();
+		
+		   if(hostPwd != hostPwd2){
+			   $("#hostPwd2Check").html("비밀번호가 일치하지 않습니다");
+			   $('#hostPwd2').focus();
+		   } else {
+			   $("#hostPwd2Check").html("");
+		   }
+		});
 });
 
 //주소-좌표 변환 객체를 생성합니다
@@ -65,15 +100,18 @@ geocoder.addressSearch('서울특별시 강남구 강남구 테헤란로14길 6'
             </div>
             <!-- 호스트 회원가입 폼 -->
             <div class="regFrm hostRegisterFrm">	
-            	<form action="" id="hostRegisterFrm" name="hostRegisterFrm" method="post" onsubmit="return validate();">
+            	<form action="<%=request.getContextPath() %>/host/hostInsert" id="hostRegisterFrm" name="hostRegisterFrm" method="post" onsubmit="return validate();">
 		            <input type="text" placeholder="아이디" id="hostId" name="hostId" required>
+		            <span id="hostIdCheck"></span>
 		            <input type="text" placeholder="이름" id="hostName" name="hostName" required>
 		            <input type="password" placeholder="비밀번호" id="hostPwd" name="hostPwd" required>
+		            <span id="hostPwdCheck"></span>
 		            <input type="password" placeholder="비밀번호 확인" id="hostPwd2" name="hostPwd2" required>
-		            <input type="text" placeholder="전화번호" id="hostPhone" name="memberPhone" required>
-		            <input type="text" placeholder="이메일" id="hostEmail" name="memberEmail">
-		            <input type="text" placeholder="회사 이름" id="hostEmail" name="memberEmail" required>
-		            <input type="text" placeholder="회사 주소" id="hostEmail" name="memberEmail" required>
+		            <span id="hostPwd2Check"></span>
+		            <input type="text" placeholder="전화번호" id="hostPhone" name="hostPhone" required>
+		            <input type="text" placeholder="이메일" id="hostEmail" name="hostEmail">
+		            <input type="text" placeholder="회사 이름" id="companyName" name="companyName" required>
+		            <input type="text" placeholder="회사 주소" id="companyPlace" name="companyPlace" required>
 					<div class="txt_center">
 						<input type="submit" value="회원가입">
 						<input type="reset" value="초기화">
