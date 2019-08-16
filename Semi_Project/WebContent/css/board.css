@@ -29,16 +29,18 @@ padding-top:30px;
 #accordian h3 {
 	font-size: 16px;
 	line-height: 34px;
-	padding: 0 10px;
+	padding-left: 30px;
 	cursor: pointer;
 	background: ;
 	border-bottom: 2px solid #ACC800;
 	/*background: linear-gradient(#003040, #002535); */
 }
+#accordian h3 a{
+	overflow: hidden;
+    display: block;
+    padding: ;
+}
 
-#accordian h3:hover {
-	text-shadow: 0 0 1px ;
-} /* 아이콘폰트 스타일 */
 #accordian h3 span {
 	font-size: 16px;
 	margin-right: 10px;
@@ -46,7 +48,7 @@ padding-top:30px;
 
 #accordian li {
 	list-style-type: none;
-} /* 서브메뉴 스타일 */
+} 
 #accordian ul ul li a {
 	text-decoration: none;
 	font-size: 11px;
@@ -59,12 +61,17 @@ padding-top:30px;
 	-ms-transition: all 0.15s;
 	transition: all 0.15s;
 }
+.noteBox{
+	padding: 0 30px 15px;
+    background-color: #fff;
+}
 
 #accordian ul ul {
 	display: none;
 }
-/* 페이지바 */
-
+.noteBox p .p2{
+	font: 12px ;
+}
 /* board폼 */
 table#noteUpload{
 	width: 850px;

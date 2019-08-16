@@ -77,4 +77,11 @@ public class BoardService {
 		return result;
 	}
 
+	public List<Board> selectBoardTitle(String boardTitle) {
+		Connection conn = getConnection();
+		List<Board> list = new BoardDAO().selectBoardTitle(conn, boardTitle);
+		close(conn);
+		return list;
+	}
+
 }

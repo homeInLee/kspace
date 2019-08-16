@@ -253,6 +253,41 @@ Board b = null;
 		
 		return result;
 	}
+
+	public List<Board> selectBoardTitle(Connection conn, String boardTitle) {
+		List<Board> list = new ArrayList<Board>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectBoardTitle");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+boardTitle+"%");
+
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Board b = new Board();
+				b.setBoardNo(rset.getInt("board_no"));
+				b.setBoardTitle(rset.getString("board_title"));
+				b.setBoardWriter(rset.getString("board_writer"));
+				b.setBoardContent(rset.getString("board_content"));
+				b.setOriginalFileName(rset.getString("board_original_filename"));
+				b.setRenameFileName(rset.getString("board_renamed_filename"));
+				b.setBoardDate(rset.getDate("board_date"));
+				b.setReadCount(rset.getInt("board_readcount"));
+				b.setDelDate(rset.getDate("board_date_del"));
+				b.setDelType(rset.getString("board_del_type"));
+				list.add(b);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+				
+		return list;
+	}
 	
 
 }
