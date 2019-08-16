@@ -42,9 +42,9 @@ public class HostService {
 		return result;
 	}
 
-	public int InsertCompany(Company c, String hostId) {
+	public int InsertCompany(Company c) {
 		Connection conn = getConnection();
-		int result = new HostDAO().InsertCompany(conn, c, hostId);
+		int result = new HostDAO().InsertCompany(conn, c);
 		if(result > 0) {
 			commit(conn);
 		}else {

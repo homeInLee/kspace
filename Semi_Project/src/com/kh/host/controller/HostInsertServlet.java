@@ -40,6 +40,7 @@ public class HostInsertServlet extends HttpServlet {
 		String hostEmail = request.getParameter("hostEmail");
 		String companyName = request.getParameter("companyName");
 		String companyPlace = request.getParameter("companyPlace");
+		int companyFee = Integer.parseInt(request.getParameter("companyFee"));
 		
 		User u = new User();
 		u.setUserId(hostId);
@@ -51,9 +52,11 @@ public class HostInsertServlet extends HttpServlet {
 		Company c = new Company();
 		c.setCompanyName(companyName);
 		c.setCompanyPlace(companyPlace);
+		c.setUserId(hostId);
+		c.setFees(companyFee);
 		
 		int result = new HostService().InsertUserHost(u);
-		int result2 = new HostService().InsertCompany(c, hostId);
+		int result2 = new HostService().InsertCompany(c);
 		
 		String msg = "";
 		String loc = "/";

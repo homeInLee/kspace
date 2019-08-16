@@ -15,12 +15,13 @@ public class Company implements Serializable {
 	private String userId;
 	private String delType;
 	private Date delDate;
+	private int fees;
 	public Company() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public Company(int companyNo, String companyName, String companyPlace, int companyPointGa, int companyPointHa,
-			String userId, String delType, Date delDate) {
+			String userId, String delType, Date delDate, int fees) {
 		super();
 		this.companyNo = companyNo;
 		this.companyName = companyName;
@@ -30,6 +31,7 @@ public class Company implements Serializable {
 		this.userId = userId;
 		this.delType = delType;
 		this.delDate = delDate;
+		this.fees = fees;
 	}
 	public int getCompanyNo() {
 		return companyNo;
@@ -79,6 +81,12 @@ public class Company implements Serializable {
 	public void setDelDate(Date delDate) {
 		this.delDate = delDate;
 	}
+	public int getFees() {
+		return fees;
+	}
+	public void setFees(int fees) {
+		this.fees = fees;
+	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -86,7 +94,7 @@ public class Company implements Serializable {
 	public String toString() {
 		return "Company [companyNo=" + companyNo + ", companyName=" + companyName + ", companyPlace=" + companyPlace
 				+ ", companyPointGa=" + companyPointGa + ", companyPointHa=" + companyPointHa + ", userId=" + userId
-				+ ", delType=" + delType + ", delDate=" + delDate + "]";
+				+ ", delType=" + delType + ", delDate=" + delDate + ", fees=" + fees + "]";
 	}
 	
 

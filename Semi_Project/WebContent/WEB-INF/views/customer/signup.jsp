@@ -43,7 +43,7 @@ $(document).ready(function(){
 			   $("#hostPwd2Check").html("비밀번호가 일치하지 않습니다");
 			   $('#hostPwd2').focus();
 		   } else {
-			   $("#hostPwd2Check").html("");
+			   $("#hostPwd2Check").html("비밀번호 일치!");
 		   }
 	});
 	
