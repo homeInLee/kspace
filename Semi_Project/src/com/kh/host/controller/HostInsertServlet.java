@@ -33,6 +33,10 @@ public class HostInsertServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		
+		int companyFee = 0;
+		int coordsHa = 0;
+		int coordsGa = 0;
+		
 		String hostId = request.getParameter("hostId");
 		String hostName = request.getParameter("hostName");
 		String hostPwd = request.getParameter("hostPwd");
@@ -40,7 +44,45 @@ public class HostInsertServlet extends HttpServlet {
 		String hostEmail = request.getParameter("hostEmail");
 		String companyName = request.getParameter("companyName");
 		String companyPlace = request.getParameter("companyPlace");
-		int companyFee = Integer.parseInt(request.getParameter("companyFee"));
+		
+		if (request.getParameter("companyFee") != null && !request.getParameter("companyFee").equals("")) {
+			try {
+
+				companyFee = Integer.parseInt(request.getParameter("companyFee"));
+
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if (request.getParameter("coordsHa") != null && !request.getParameter("coordsHa").equals("")) {
+			try {
+
+				coordsHa = Integer.parseInt(request.getParameter("coordsHa"));
+
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if (request.getParameter("coordsGa") != null && !request.getParameter("coordsGa").equals("")) {
+			try {
+				
+				coordsGa = Integer.parseInt(request.getParameter("coordsGa"));
+				
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		System.out.println("coordsHa=" + coordsHa);
+		System.out.println("coordsGa=" + coordsGa);
 		
 		User u = new User();
 		u.setUserId(hostId);

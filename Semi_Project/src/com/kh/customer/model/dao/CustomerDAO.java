@@ -15,6 +15,7 @@ import com.kh.admin.banner.model.vo.SpaceAll;
 import com.kh.customer.model.vo.Review;
 import com.kh.customer.model.vo.SpaceDibs;
 import com.kh.customer.model.vo.User;
+import com.kh.host.model.vo.SpaceImageFile;
 import com.kh.host.model.vo.SpaceJoin;
 
 import static com.kh.common.JDBCTemplate.*;
@@ -360,6 +361,34 @@ public class CustomerDAO {
 		}
 		
 		return spaceList;
+	}
+
+	public List<SpaceImageFile> selectImageList(Connection conn) {
+		List<SpaceImageFile> imageList = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectImageList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				SpaceImageFile i = new SpaceImageFile();
+				i.setSpaceNo(rset.getInt("space_no"));
+				i.setImageOriginalFileName(rset.getString("image_original_filename"));
+				i.setImageRenamedFileName(rset.getString("image_renamed_filename"));
+				i.setFlag(rset.getString("flag"));
+				
+				imageList.add(i);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return imageList;
 	}
 	
 	

@@ -138,7 +138,11 @@ private Properties prop = new Properties();
 			pstmt.setString(1, c.getCompanyName());
 			pstmt.setString(2, c.getCompanyPlace());
 			pstmt.setString(3, c.getUserId());
-			pstmt.setInt(4, c.getFees());
+			if(c.getFees() == 0) {
+				pstmt.setInt(4, 10);
+			} else {
+				pstmt.setInt(4, c.getFees());				
+			}
 			result = pstmt.executeUpdate();
 			
 		}catch (SQLException e) {

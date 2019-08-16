@@ -11,6 +11,7 @@ import com.kh.customer.model.vo.Review;
 import com.kh.customer.model.vo.SpaceDibs;
 import com.kh.customer.model.vo.User;
 import com.kh.host.model.vo.Space;
+import com.kh.host.model.vo.SpaceImageFile;
 import com.kh.host.model.vo.SpaceJoin;
 
 public class CustomerService {
@@ -92,6 +93,13 @@ public class CustomerService {
 		else
 			rollback(conn);
 		return result;
+	}
+
+	public List<SpaceImageFile> selectImageList() {
+		Connection conn = getConnection();
+		List<SpaceImageFile> list = new CustomerDAO().selectImageList(conn);
+		close(conn);
+		return list;
 	}
 
 }

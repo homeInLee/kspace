@@ -38,7 +38,7 @@ $(()=> {
                     <div>
                         <p>공간 유형</p>
                         <div class="custom-select">
-                            <select name="spaceType" id="spaceType">
+                            <select name="spaceType" id="spaceType-select">
                             	<option value="">전체</option>
                                 <option value="스터디룸" <%=spaceType.equals("스터디룸")?"selected":"" %>>스터디룸</option>
                                 <option value="공연장" <%=spaceType.equals("공연장")?"selected":"" %>>공연장</option>
@@ -51,7 +51,7 @@ $(()=> {
                     </div>
                     <div class="placeFilter">
                         <p>지역</p>
-                        <div class="custom-select">
+                        <div class="custom-select" id="spaceArea-select">
                             <select name="spaceArea" id="spaceArea"  class="dp_block">
                             	<option value="spaceAreaTotal">전체</option>
                                 <option value="도봉구" <%=spaceArea.equals("도봉구")?"selected":"" %>>도봉구</option>
