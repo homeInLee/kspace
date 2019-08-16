@@ -20,7 +20,7 @@ import com.kh.host.model.vo.SpacePrice;
 /**
  * Servlet implementation class SpaceChkViewServlet
  */
-@WebServlet("/host/spaceHostListView")
+@WebServlet(urlPatterns="/host/spaceHostListView",name="SpaceHostListViewServlet")
 public class SpaceHostListViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

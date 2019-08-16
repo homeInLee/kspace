@@ -12,7 +12,7 @@ import com.kh.customer.model.service.BookingService;
 /**
  * Servlet implementation class InsertBookingServlet
  */
-@WebServlet("/customer/insertBooking")
+@WebServlet(urlPatterns="/customer/insertBooking",name="InsertBookingServlet")
 public class InsertBookingServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

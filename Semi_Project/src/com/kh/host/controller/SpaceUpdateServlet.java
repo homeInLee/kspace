@@ -31,7 +31,7 @@ import com.oreilly.servlet.multipart.FileRenamePolicy;
 /**
  * Servlet implementation class SpaceUpdateServlet
  */
-@WebServlet("/host/spaceUpdate")
+@WebServlet(urlPatterns="/host/spaceUpdate",name="SpaceUpdateServlet")
 public class SpaceUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

@@ -15,7 +15,7 @@ import com.kh.host.model.service.HostService;
 /**
  * Servlet implementation class SpaceHostListServlet
  */
-@WebServlet("/host/mySpaceList")
+@WebServlet(urlPatterns="/host/mySpaceList",name="SpaceHostListServlet")
 public class SpaceHostListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

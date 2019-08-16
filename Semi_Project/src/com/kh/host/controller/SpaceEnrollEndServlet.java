@@ -29,7 +29,7 @@ import com.oreilly.servlet.multipart.FileRenamePolicy;
 /**
  * Servlet implementation class SpaceEnrollEndServlet
  */
-@WebServlet("/host/spaceEnrollEnd")
+@WebServlet(urlPatterns="/host/spaceEnrollEnd",name="SpaceEnrollEndServlet")
 public class SpaceEnrollEndServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

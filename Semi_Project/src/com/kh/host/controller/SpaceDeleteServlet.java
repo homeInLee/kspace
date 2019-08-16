@@ -13,7 +13,7 @@ import com.kh.host.model.service.SpaceService;
 /**
  * Servlet implementation class SpaceDeleteServlet
  */
-@WebServlet("/host/delMySpace")
+@WebServlet(urlPatterns="/host/delMySpace",name="SpaceDeleteServlet")
 public class SpaceDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

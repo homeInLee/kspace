@@ -25,7 +25,10 @@ public class LoginServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
+		String referer = request.getHeader("Referer");
+		
+		request.getSession().setAttribute("redirectURI", referer);
 		request.getRequestDispatcher("/WEB-INF/views/customer/login.jsp").forward(request, response);
 	}
 

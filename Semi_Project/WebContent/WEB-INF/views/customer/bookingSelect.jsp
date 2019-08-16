@@ -14,7 +14,7 @@
 	int realprice = (int) request.getAttribute("realprice");
 	int price = (int) request.getAttribute("price");
 %>
-<%@ include file="/WEB-INF/views/common/header.jsp"%>
+<include file="/WEB-INF/views/common/header.jsp">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/sub.css" />
 <style>
 .booking_data_name {

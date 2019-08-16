@@ -1,5 +1,31 @@
+<%@page import="com.kh.customer.model.vo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+User memberLoggedIn = (User)session.getAttribute("memberLoggedIn");
+System.out.println("memberLoggedIn@index.jsp="+memberLoggedIn);
+
+//쿠키관련 처리
+Cookie[] cookies = request.getCookies();
+boolean saveId = false;
+String memberId = "";
+
+if(cookies != null){
+	System.out.println("---------------------------------");
+	for(Cookie c: cookies){
+		String key = c.getName();
+		String value = c.getValue();
+		System.out.println(key+" : "+value);
+		
+		//전송된 saveId쿠키가 있는 경우
+		if("saveId".equals(key)){
+			saveId = true;
+			memberId = value;
+		}
+	}
+	System.out.println("---------------------------------");
+}
+%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -148,26 +174,42 @@ $(()=> {
 	            <div class="menu-close"><img src="<%=request.getContextPath() %>/images/close.png" alt="" width="24px"></div>
 	            <div class="nav-ico"></div>
 	            <p>
+	                <%if(memberLoggedIn == null){%>
 	                <a href="<%=request.getContextPath()%>/customer/login" class="dp_ib fw600">로그인</a>이 필요합니다.
+	            <%} 
+	              else if(memberLoggedIn != null){ %>
+	              	<a class="dp_ib fw600"><%=memberLoggedIn.getUserName() %></a>님 환영합니다.
+	            <%} %>
 	            </p>
 	        </div>
 	        <nav id="menu">
 	            <ul class="menu1">
 	                <li><a href="<%=request.getContextPath() %>" class="dp_block">KH Space Home</a></li>
-	                <li><a href="<%=request.getContextPath()%>/customer/mypage" class="dp_block">내 정보 보기</a></li>
-	                <li><a href="<%=request.getContextPath() %>/booking/bookingList?userId=datbot" class="dp_block">예약 리스트</a></li>
+	                <li><a href="<%=request.getContextPath()%>/customer/mypage<%=memberLoggedIn == null ? "":"?userId="+memberLoggedIn.getUserId() %>" class="dp_block">내 정보 보기</a></li>
+	                <li><a href="<%=request.getContextPath() %>/customer/bookingList?userId=datbot" class="dp_block">예약 리스트</a></li>
 	                <li><a href="<%=request.getContextPath()%>/customer/jjimSpace" class="dp_block">찜한 공간</a></li>
 	                <li><a href="<%=request.getContextPath() %>/customer/spaceList" class="dp_block">전체 공간보기</a></li>
 	                <li><a href="<%=request.getContextPath() %>/board/adminNote" class="dp_block">공지사항</a></li>
+	                <%if(memberLoggedIn != null){ 
+	                	if(memberLoggedIn.getUserId().equals("admin")){%>
 	                <li><a href="<%=request.getContextPath()%>/banner/information" class="dp_block">배너 등록</a></li>
 	                <li><a href="<%=request.getContextPath()%>/admin/spaceChkList" class="dp_block">관리자 공간 검수 리스트</a></li>
+	                	<%} 
+	                	if(memberLoggedIn.getFlag().equals("H")){%>
 	                <li><a href="<%=request.getContextPath()%>/host/mySpaceList" class="dp_block">호스트 본인이 등록한 공간 리스트</a></li>
+	                	<%}
+	                } %>
 	            </ul>
 	        </nav>
 	        <div id="nav-bottom" class="txt_center">
 	            <div class="clearfix">
+	            	<%if(memberLoggedIn == null){%>
 	                <a href="<%=request.getContextPath()%>/customer/login" class="dp_ib">로그인</a>
 	                <a href="<%=request.getContextPath()%>/customer/signup" class="dp_ib">회원가입</a>
+	                <%} 
+	                else if(memberLoggedIn != null){ %>
+	                <a href="<%=request.getContextPath()%>/customer/logout" class="dp_ib">로그아웃</a>
+	                <%} %>
 	            </div>
 	            <p>Copyright KH SPACE Corp. All Rights Reserved.</p>
 	        </div>

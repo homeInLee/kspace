@@ -14,7 +14,7 @@ import com.kh.customer.model.service.ReviewService;
 /**
  * Servlet implementation class CustomerReviewDeleteServlet
  */
-@WebServlet("/customer/customerReviewDelete")
+@WebServlet(urlPatterns="/customer/customerReviewDelete",name="CustomerReviewDeleteServlet")
 public class CustomerReviewDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

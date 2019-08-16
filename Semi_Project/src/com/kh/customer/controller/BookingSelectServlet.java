@@ -26,7 +26,7 @@ import com.kh.host.model.vo.SpacePrice;
 /**
  * Servlet implementation class BookingSelectServlet
  */
-@WebServlet("/customer/bookingSelect")
+@WebServlet(urlPatterns="/customer/bookingSelect",name="BookingSelectServlet")
 public class BookingSelectServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

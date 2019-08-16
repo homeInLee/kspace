@@ -13,7 +13,7 @@ import com.kh.customer.model.vo.Review;
 /**
  * Servlet implementation class CustomerReviewServlet
  */
-@WebServlet("/customer/customerReview")
+@WebServlet(urlPatterns="/customer/customerReview",name="CustomerReviewInsertServlet")
 public class CustomerReviewInsertServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

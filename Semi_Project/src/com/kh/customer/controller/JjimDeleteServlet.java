@@ -14,7 +14,7 @@ import com.kh.customer.model.vo.SpaceDibs;
 /**
  * Servlet implementation class JjimDeleteServlet
  */
-@WebServlet("/customer/jjimDelete")
+@WebServlet(urlPatterns="/customer/jjimDelete",name="JjimDeleteServlet")
 public class JjimDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

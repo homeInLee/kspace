@@ -25,7 +25,7 @@ import com.kh.host.model.vo.SpacePrice;
 /**
  * Servlet implementation class BookingList
  */
-@WebServlet("/customer/bookingList")
+@WebServlet(urlPatterns="/customer/bookingList",name="BookingListServlet")
 public class BookingListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -100,7 +100,7 @@ public class BookingListServlet extends HttpServlet {
 			System.out.println("spacelist="+spacelist);
 			
 			for(int y=0; y<pricemap.get(list.get(i).getSpaceNo()).size(); y++) {
-				System.out.println("i="+i+"y="+y);
+				System.out.println("bookingsize="+i+"pricemap size="+y);
 				
 				//키값이 공간번호(i)인 방의 y번째 가격이유가 null이면 평소가격
 				if(pricemap.get(list.get(i).getSpaceNo()).get(y).getPriceEvent() == null){

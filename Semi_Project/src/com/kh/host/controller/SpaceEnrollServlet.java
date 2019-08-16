@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class SpaceEnrollServlet
  */
-@WebServlet("/host/spaceEnroll")
+@WebServlet(urlPatterns="/host/spaceEnroll",name="SpaceEnrollServlet")
 public class SpaceEnrollServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

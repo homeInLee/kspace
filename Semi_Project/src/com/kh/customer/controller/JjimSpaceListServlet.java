@@ -18,7 +18,7 @@ import com.kh.host.model.vo.Space;
 /**
  * Servlet implementation class JjimSpaceListServlet
  */
-@WebServlet("/customer/jjimSpace")
+@WebServlet(urlPatterns="/customer/jjimSpace",name="JjimSpaceListServlet")
 public class JjimSpaceListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

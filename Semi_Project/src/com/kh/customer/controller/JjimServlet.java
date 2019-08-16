@@ -15,7 +15,7 @@ import com.kh.customer.model.vo.SpaceDibs;
 /**
  * Servlet implementation class JjimServlet
  */
-@WebServlet("/customer/jjim")
+@WebServlet(urlPatterns="/customer/jjim",name="JjimServlet")
 public class JjimServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
