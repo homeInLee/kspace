@@ -148,6 +148,7 @@ geocoder.addressSearch('서울특별시 강남구 강남구 테헤란로14길 6'
 		            <input type="text" placeholder="이메일" id="hostEmail" name="hostEmail">
 		            <input type="text" placeholder="회사 이름" id="companyName" name="companyName" required>
 		            <input type="text" placeholder="회사 주소" id="companyPlace" name="companyPlace" required>
+		            <input type="number" placeholder="수수료" id="companyFee" name="companyFee">
 					<div class="txt_center">
 						<input type="submit" value="회원가입">
 						<input type="reset" value="초기화">

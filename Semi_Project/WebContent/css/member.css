@@ -82,7 +82,8 @@
 }
 
 .regFrm input[type=text],
-.regFrm input[type=password] {
+.regFrm input[type=password],
+.regFrm input[type=number] {
 	display:block;
 	width:100%;
 	height:43px;
