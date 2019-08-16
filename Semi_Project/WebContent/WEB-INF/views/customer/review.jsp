@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.kh.host.model.vo.Space"%>
 <%@page import="com.kh.customer.model.vo.Review"%>
 <%@page import="java.util.List"%>
@@ -5,7 +6,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-	List<Review> review = (List<Review>)request.getAttribute("review");
+	ArrayList<Review> review = (ArrayList<Review>)request.getAttribute("review");
+	
+	
 %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/sub.css" />
 <script src="<%=request.getContextPath()%>/js/jquery-3.4.1.js"></script>
@@ -40,17 +43,17 @@
 form[name=reviewFrm] {
 	border: 2px solid;
 }
- .star_rating {font-size:0; letter-spacing:-4px;}
- .star_rating a {
+.star_rating {font-size:0; letter-spacing:-4px;}
+.star_rating a {
    font-size:22px;
    letter-spacing:0;
    display:inline-block;
    margin-left:5px;
    color:#ccc;
    text-decoration:none;
-    }
-    .star_rating a:first-child {margin-left:0;}
-    .star_rating a.on {color:#777;}
+}
+.star_rating a:first-child {margin-left:0;}
+.star_rating a.on {color:#777;}
 </style>
 
 <script>

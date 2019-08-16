@@ -10,6 +10,7 @@
 <%@page import="com.kh.customer.model.vo.SpaceDibs"%>
 <%
 	Space s = (Space)request.getAttribute("space");
+
 	String[] hashTagArr = null;
 	if(s.getHashtag()!=null){
 		hashTagArr = s.getHashtag().split(", ");
