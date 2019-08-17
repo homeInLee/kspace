@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import com.kh.customer.model.service.CustomerService;
 import com.kh.customer.model.service.ReviewService;
+import com.kh.customer.model.service.UserService;
 import com.kh.customer.model.vo.Review;
 import com.kh.customer.model.vo.SpaceDibs;
 import com.kh.customer.model.vo.User;
@@ -68,7 +69,7 @@ public class SpaceViewServlet extends HttpServlet {
 		List<SpaceImageFile> spaceImg = new SpaceService().selectSpaceImgBySpaceNo(spaceNo);
 		List<SpaceDayOff> dayOff = new SpaceService().selectSpaceDayOffBySpaceNo(spaceNo);
 		Company company = new SpaceService().selectCompanyByCompanyNo(space.getCompanyNo());
-		
+		User u = new UserService().selectOne(company.getUserId());
 		SpaceDibs jjimCheck = null;
 		
 		if(userId!=null) {
@@ -95,6 +96,7 @@ public class SpaceViewServlet extends HttpServlet {
 		request.setAttribute("dayOff", dayOff);
 		request.setAttribute("company", company);
 		request.setAttribute("jjimCheck", jjimCheck);
+		request.setAttribute("user", u);
 		request.getRequestDispatcher("/WEB-INF/views/customer/spaceView.jsp").forward(request, response);
 	}
 

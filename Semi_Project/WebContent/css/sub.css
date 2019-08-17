@@ -942,7 +942,7 @@
 	/* border-radius:20px; */
 }
 
-#searchMap {
+.searchMap {
 	margin-top:20px;
 	border-radius:30px;
 	border:1px solid #ACC800;
@@ -955,7 +955,16 @@
 	-webkit-transition:background .4s linear;
 }
 
-#searchMap:hover {
+.searchMap:visited {
+	color:#ACC800;
+}
+
+.searchMap:hover {
 	background:#ACC800;
 	color:#fff;	
+}
+
+
+.searchMap:first-child {
+	margin-right:15px;
 }

@@ -10,8 +10,8 @@ public class Company implements Serializable {
 	private int companyNo;
 	private String companyName;
 	private String companyPlace;
-	private int companyPointGa;
-	private int companyPointHa;
+	private double companyPointGa;
+	private double companyPointHa;
 	private String userId;
 	private String delType;
 	private Date delDate;
@@ -20,7 +20,7 @@ public class Company implements Serializable {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Company(int companyNo, String companyName, String companyPlace, int companyPointGa, int companyPointHa,
+	public Company(int companyNo, String companyName, String companyPlace, double companyPointGa, double companyPointHa,
 			String userId, String delType, Date delDate, int fees) {
 		super();
 		this.companyNo = companyNo;
@@ -51,16 +51,16 @@ public class Company implements Serializable {
 	public void setCompanyPlace(String companyPlace) {
 		this.companyPlace = companyPlace;
 	}
-	public int getCompanyPointGa() {
+	public double getCompanyPointGa() {
 		return companyPointGa;
 	}
-	public void setCompanyPointGa(int companyPointGa) {
-		this.companyPointGa = companyPointGa;
+	public void setCompanyPointGa(double coordsGa) {
+		this.companyPointGa = coordsGa;
 	}
-	public int getCompanyPointHa() {
+	public double getCompanyPointHa() {
 		return companyPointHa;
 	}
-	public void setCompanyPointHa(int companyPointHa) {
+	public void setCompanyPointHa(double companyPointHa) {
 		this.companyPointHa = companyPointHa;
 	}
 	public String getUserId() {

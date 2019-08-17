@@ -42,6 +42,7 @@
 	
 	Company company = (Company)request.getAttribute("company");
 	SpaceDibs jjimCheck = (SpaceDibs)request.getAttribute("jjimCheck");
+	User u = (User)request.getAttribute("user");
 %>
 <script>
 function insertBooking(){
@@ -216,7 +217,8 @@ function goDelMySpace(){
 	            		<h3><%=s.getSpaceName()!=null?s.getSpaceName():"" %></h3>
 	            		<p><%=company.getCompanyPlace()!=null?company.getCompanyPlace():"" %></p>
 	            		<div class="txt_right">
-	            			<a id="searchMap" href="" class="dp_ib txt_center" target="_blank">길찾기</a>
+	            			<a href="tel:<%=u.getPhone() %>" class="searchMap dp_ib txt_center">전화 걸기</a>
+	            			<a id="searchMap" href="" class="searchMap dp_ib txt_center" target="_blank">길찾기</a>
 	            		</div>
 	            	</div>
 	            	<div id="spaceCompanyInfo-map" class="spaceCompanyInfo-map" style="height:450px;"></div>
@@ -239,7 +241,7 @@ function goDelMySpace(){
 <script>
 	var mapContainer = document.getElementById('spaceCompanyInfo-map'), // 지도를 표시할 div 
 	mapOption = {
-	    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+	    center: new kakao.maps.LatLng(<%=company.getCompanyPointHa()%>, <%=company.getCompanyPointGa()%>), // 지도의 중심좌표
 	    level: 3 // 지도의 확대 레벨
 	};  
 	//지도를 생성합니다    
@@ -248,7 +250,7 @@ function goDelMySpace(){
 	//주소-좌표 변환 객체를 생성합니다
 	var geocoder = new kakao.maps.services.Geocoder();
 	// 주소로 좌표를 검색합니다
-	geocoder.addressSearch('서울특별시 강남구 강남구 테헤란로14길 6', function(result, status) {
+	geocoder.addressSearch('<%=company.getCompanyPlace()%>', function(result, status) {
 	// 정상적으로 검색이 완료됐으면
 		if (status === kakao.maps.services.Status.OK) {
 			var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
@@ -259,13 +261,13 @@ function goDelMySpace(){
 			});
 			// 인포윈도우로 장소에 대한 설명을 표시합니다
 			var infowindow = new kakao.maps.InfoWindow({
-			    content: '<div style="width:150px;text-align:center;padding:6px 0;">kh정보교육원</div>'
+			    content: '<div style="width:150px;text-align:center;padding:6px 0;"><%=company.getCompanyName()%></div>'
 			});
 			infowindow.open(map, marker);
 			// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 			map.setCenter(coords);
 			console.log(coords)
-			$("#searchMap").attr("href", "https://map.kakao.com/link/to/kh정보교육원,"+coords.Ha+","+coords.Ga);
+			$("#searchMap").attr("href", "https://map.kakao.com/link/to/<%=company.getCompanyName()%>,"+coords.Ha+","+coords.Ga);
 		}	 
 	});
 </script>

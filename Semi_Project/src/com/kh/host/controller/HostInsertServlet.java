@@ -34,8 +34,8 @@ public class HostInsertServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		int companyFee = 0;
-		int coordsHa = 0;
-		int coordsGa = 0;
+		double coordsHa = 0;
+		double coordsGa = 0;
 		
 		String hostId = request.getParameter("hostId");
 		String hostName = request.getParameter("hostName");
@@ -45,7 +45,7 @@ public class HostInsertServlet extends HttpServlet {
 		String companyName = request.getParameter("companyName");
 		String companyPlace = request.getParameter("companyPlace");
 		
-		if (request.getParameter("companyFee") != null && !request.getParameter("companyFee").equals("")) {
+		if (request.getParameter("companyFee") != null || !request.getParameter("companyFee").equals("")) {
 			try {
 
 				companyFee = Integer.parseInt(request.getParameter("companyFee"));
@@ -57,10 +57,10 @@ public class HostInsertServlet extends HttpServlet {
 			}
 		}
 		
-		if (request.getParameter("coordsHa") != null && !request.getParameter("coordsHa").equals("")) {
+		if (request.getParameter("coordsHa") != null || !request.getParameter("coordsHa").equals("")) {
 			try {
 
-				coordsHa = Integer.parseInt(request.getParameter("coordsHa"));
+				coordsHa = Double.parseDouble(request.getParameter("coordsHa"));
 
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
@@ -69,10 +69,10 @@ public class HostInsertServlet extends HttpServlet {
 			}
 		}
 		
-		if (request.getParameter("coordsGa") != null && !request.getParameter("coordsGa").equals("")) {
+		if (request.getParameter("coordsGa") != null || !request.getParameter("coordsGa").equals("")) {
 			try {
 				
-				coordsGa = Integer.parseInt(request.getParameter("coordsGa"));
+				coordsGa = Double.parseDouble(request.getParameter("coordsGa"));
 				
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
@@ -96,6 +96,8 @@ public class HostInsertServlet extends HttpServlet {
 		c.setCompanyPlace(companyPlace);
 		c.setUserId(hostId);
 		c.setFees(companyFee);
+		c.setCompanyPointGa(coordsGa);
+		c.setCompanyPointHa(coordsHa);
 		
 		int result = new HostService().InsertUserHost(u);
 		int result2 = new HostService().InsertCompany(c);
