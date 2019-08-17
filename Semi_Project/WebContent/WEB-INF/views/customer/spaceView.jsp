@@ -50,9 +50,15 @@ function insertBooking(){
 
 $(()=>{
 	$("#jjim-btn").click(function(e){
+		if(<%=memberLoggedIn==null %>){
+			alert("로그인 후 이용하실 수 있습니다.");
+			return;
+		}
+		
+		var login_id = "<%=memberLoggedIn!=null?memberLoggedIn.getUserId():"" %>";
 		var jjim_info = {
 			spaceNo : <%=request.getParameter("spaceNo") %>,
-			userId : "JeonGaNe" //찜하는 사람 아이디 -> 로그인한 아이디, 로그인 안한 사람은 로그인 하게 할 것.
+			userId : login_id
 		}
 		
 		if(<%=jjimCheck!=null%>){ //찜 되어있으면,
@@ -103,6 +109,19 @@ $(()=>{
 		
 	});
 });
+
+function goDelMySpace(){
+	if(<%= memberLoggedIn==null || (memberLoggedIn!=null && !memberLoggedIn.getUserId().equals(company.getUserId()))%>){
+		alert("작성한 호스트만 삭제 가능합니다.");
+		return;
+	}
+	
+	if(!confirm("정말 삭제하시겠습니까?")){
+		return;
+	}
+	<%-- 로그인한 아이디와 <%=c.getUserId() %>가 맞는지 검사하기 --%>
+	$("form[name=delMySpaceFrm]").submit();
+}
 </script>
 <style>
 	#spaceViewTitleImg {
@@ -111,6 +130,9 @@ $(()=>{
 	}
 </style>
 <div class="sub_container">
+	<form action="<%=request.getContextPath() %>/host/delMySpace" name="delMySpaceFrm" method="post">
+		<input type="hidden" name="delSpaceNo" value="<%=s.getSpaceNo()%>" />
+	</form>
 	<section id="spaceViewTitleImg">
 		<% if(yImg==null) {%>
 			<p class="txt_center" style="line-height:450px;">등록된 이미지가 없습니다.</p>
@@ -204,6 +226,11 @@ $(()=>{
             <div class="reservation-container">
             <!-- 예약 -->
             </div>
+            <%if(memberLoggedIn!=null && memberLoggedIn.getUserId().equals(company.getUserId())){ %>
+            	<div class="spaceEnroll-btn txt_center clearfix">
+            		<a href="javascript:goDelMySpace();" class="dp_ib fw600">삭제</a>
+            	</div>
+            <%} %>
         </article>
     </section>
 </div>

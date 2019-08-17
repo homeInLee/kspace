@@ -24,13 +24,22 @@
 	line-height: 45px;
 	z-index:1;
 }
+
+.recom-space li.no-list {
+    float: none;
+    width: 100%;
+    text-align: center;
+    background: transparent;
+    border: none;
+    line-height: 250px;
+}
 </style>
 <div class="sub_container">
     <section class="subPage">
         <article>
             <h3 class="tit txt_center">공간 목록</h3>
             <ul class="recom-space clearfix">
-            <% if(hostSpaceList!=null) { 
+            <% if(!hostSpaceList.isEmpty()) { 
             	for(int i=0; i<hostSpaceList.size(); i++){
             		SpaceAll prev = null;
             		SpaceAll s = hostSpaceList.get(i);
@@ -70,7 +79,9 @@
 	            </li>
             <%
             	}
-            }%>
+            } else {%>
+            	<li class="no-list">등록한 공간이 없습니다.</li>
+            <% } %>
             </ul>
         </article>
     </section>

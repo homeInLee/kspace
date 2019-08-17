@@ -36,8 +36,6 @@ public class SpaceHostListViewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//로그인한 아이디가 null이 아니고, 공간 등록한 호스트 아이디가 맞는지 확인
-		
 		int spaceNo = Integer.parseInt(request.getParameter("spaceNo"));
 		
 		Space s = new SpaceService().spaceSelectOneBySpaceNo(spaceNo);

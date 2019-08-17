@@ -135,7 +135,12 @@ function enrollValidate(){
 }
 
 function goDelMySpace(){
-	if(!comfirm("정말 삭제하시겠습니까?")){
+	if(<%= memberLoggedIn==null || (memberLoggedIn!=null && !memberLoggedIn.getUserId().equals(c.getUserId()))%>){
+		alert("작성한 호스트만 삭제 가능합니다.");
+		return;
+	}
+	
+	if(!confirm("정말 삭제하시겠습니까?")){
 		return;
 	}
 	<%-- 로그인한 아이디와 <%=c.getUserId() %>가 맞는지 검사하기 --%>
@@ -157,7 +162,9 @@ function goDelMySpace(){
             <form action="<%=request.getContextPath() %>/host/spaceUpdate" name="spaceUpdateFrm" 
             		method="post" encType="multipart/form-data" onsubmit="return enrollValidate();">
             	<!-- 호스트 아이디 value값 바꾸기 -->
-            	<input type="hidden" name="hostId" value="JeonGaNe" />
+            	<% if(memberLoggedIn!=null) { %>
+            	<input type="hidden" name="hostId" value="<%=c.getUserId()%>" />
+            	<% } %>
             	<input type="hidden" name="updateSpaceNo" value="<%=s.getSpaceNo()%>" />
             	<div class="clearfix">
             		<h4>공간유형<span class="req">*</span></h4>

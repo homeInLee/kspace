@@ -8,11 +8,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.kh.customer.model.service.CustomerService;
 import com.kh.customer.model.service.ReviewService;
 import com.kh.customer.model.vo.Review;
 import com.kh.customer.model.vo.SpaceDibs;
+import com.kh.customer.model.vo.User;
 import com.kh.host.model.service.SpaceService;
 import com.kh.host.model.vo.Company;
 import com.kh.host.model.vo.Space;
@@ -53,19 +55,29 @@ public class SpaceViewServlet extends HttpServlet {
 //			e.printStackTrace();
 //		}
 		
-		String userId = "JeonGaNe";
+		HttpServletRequest httpreq = (HttpServletRequest)request;
+		HttpSession session = httpreq.getSession();
+		User memberLoggedIn = (User)session.getAttribute("memberLoggedIn");
+		
+		String userId = null;
+		if(memberLoggedIn!=null) {
+			userId = memberLoggedIn.getUserId();
+		}
 		
 		Space space = new SpaceService().spaceSelectOneBySpaceNo(spaceNo);
 		List<SpaceImageFile> spaceImg = new SpaceService().selectSpaceImgBySpaceNo(spaceNo);
 		List<SpaceDayOff> dayOff = new SpaceService().selectSpaceDayOffBySpaceNo(spaceNo);
 		Company company = new SpaceService().selectCompanyByCompanyNo(space.getCompanyNo());
 		
+		SpaceDibs jjimCheck = null;
 		
-		SpaceDibs jjim = new SpaceDibs();
-		jjim.setSpaceNo(spaceNo);
-		jjim.setUserId(userId);
+		if(userId!=null) {
+			SpaceDibs jjim = new SpaceDibs();
+			jjim.setSpaceNo(spaceNo);
+			jjim.setUserId(userId);
+			jjimCheck = new CustomerService().selectCehckJjim(jjim);
+		}
 		
-		SpaceDibs jjimCheck = new CustomerService().selectCehckJjim(jjim);
 		
 		List<Review> review = new ReviewService().selectReviewList(spaceNo,cPage, numPerPage );
 		

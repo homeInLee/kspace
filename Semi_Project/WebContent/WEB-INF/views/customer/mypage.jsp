@@ -38,6 +38,7 @@
             			<th>회원 유형</th>
             			<td><%=u.getFlag().equals("H")?"호스트":"일반" %></td>
             		</tr>
+            		<% if(u.getFlag().equals("H")) { %>
             		<tr>
             			<th>회사명</th>
             			<td><%=c!=null&&c.getCompanyName()!=null?c.getCompanyName():"" %></td>
@@ -46,6 +47,7 @@
             			<th>회사 주소</th>
             			<td><%=c!=null&&c.getCompanyPlace()!=null?c.getCompanyPlace():"" %></td>
             		</tr>
+            		<% } %>
             	</table>
             	<!-- <a href="" class="txt_center">회원 탈퇴하기</a> -->
             </div>

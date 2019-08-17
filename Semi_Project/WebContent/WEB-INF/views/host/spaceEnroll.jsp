@@ -126,7 +126,9 @@ function enrollValidate(){
             <form action="<%=request.getContextPath() %>/host/spaceEnrollEnd" name="spaceEnrollEndFrm" 
             		method="post" encType="multipart/form-data" onsubmit="return enrollValidate();">
             	<!-- 호스트 아이디 value값 바꾸기 -->
-            	<input type="hidden" name="hostId" value="JeonGaNe" />
+            	<% if(memberLoggedIn!=null) { %>
+            	<input type="hidden" name="hostId" value="<%=memberLoggedIn.getUserId()%>" />
+            	<% } %>
             	<div class="clearfix">
             		<h4>공간유형<span class="req">*</span></h4>
             		<p>최대 5개 선택 가능</p>

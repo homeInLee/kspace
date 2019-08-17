@@ -9,10 +9,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.kh.admin.banner.model.vo.SpaceAll;
 import com.kh.customer.model.service.CustomerService;
 import com.kh.customer.model.vo.SpaceDibs;
+import com.kh.customer.model.vo.User;
 import com.kh.host.model.vo.Space;
 
 /**
@@ -34,7 +36,11 @@ public class JjimSpaceListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userId = "JeonGaNe";
+		HttpServletRequest httpreq = (HttpServletRequest)request;
+		HttpSession session = httpreq.getSession();
+		User memberLoggedIn = (User)session.getAttribute("memberLoggedIn");
+		
+		String userId = memberLoggedIn.getUserId();
 		
 		List<SpaceDibs> jjimSpace = new CustomerService().selectJjimList(userId);
 		
