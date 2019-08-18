@@ -54,12 +54,16 @@
                 	<li>
                     	<a href="<%=request.getContextPath() %>/customer/spaceView?spaceNo=<%=s.getSpaceNo() %>" class="dp_block">
                         	<div class="recom-space-img">
-                        	<% if(!imageList.isEmpty()) { %>
+                        	<% int chk = 0;
+                        		if(!imageList.isEmpty()) { %>
 								<% for(SpaceImageFile i : imageList) { 
 									if(s.getSpaceNo() == i.getSpaceNo()) {
+										chk = 1;
 								%>
 									<img src="<%=request.getContextPath() %>/upload/host/<%=i.getImageRenamedFileName() %>" alt="" />
-							<% }}} else { %>
+							<% }}} %>
+							
+							<% if(chk == 0) { %>
 								<img src="<%=request.getContextPath() %>/images/example.jpeg" alt="이미지영역" class="dp_block">
 							<% } %>
                         	</div>
@@ -111,14 +115,16 @@
                     	<li>
                         <a href="<%=request.getContextPath() %>/customer/spaceView?spaceNo=<%=s.getSpaceNo() %>" class="dp_block">
                             <div class="recom-space-img">
-							<%if(!imageList.isEmpty()) { %>
+							<% int chk = 0;
+                        		if(!imageList.isEmpty()) { %>
 								<% for(SpaceImageFile img : imageList) { 
 									if(s.getSpaceNo() == img.getSpaceNo()) {
+										chk = 1;
 								%>
 									<img src="<%=request.getContextPath() %>/upload/host/<%=img.getImageRenamedFileName() %>" alt="" />
-							<% } else { %>
-								<img src="<%=request.getContextPath() %>/images/example3.jpeg" alt="이미지영역" class="dp_block">
-							<% }}} else{  %>
+							<% }}} %>
+							
+							<% if(chk == 0) { %>
 								<img src="<%=request.getContextPath() %>/images/example3.jpeg" alt="이미지영역" class="dp_block">
 							<% } %>
 							</div>
