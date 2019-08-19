@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+#update {
+	border: 1px solid #ACC800;
+}
+
+#content {
+	border: 1px solid #ACC800;
+}
+
+#banner_insert, #banner_list {
+	margin: auto;
+	width: 100%;
+}
+
+#banner_list {
+	text-align: center;
+}
+
+#submit {
+	width: 100px;
+	height: 20px;
+	background: #608FFB;
+	color: white;
+}
+
+.btn-update, .btn-delete {
+	width: 50px;
+	height: 20px;
+	background: #608FFB;
+	color: white;
+	border: 1px solid #608FFB;
+}

@@ -15,15 +15,17 @@
         <section id="main-sec1">
         	<div id="main-banner-container">
 	        	<div id="main-banner-wrap" class="clearfix">
-	                <div class="main-banner"><img src="<%=request.getContextPath() %>/images/example2.jpeg" alt=""></div>
-	                <div class="main-banner"><img src="<%=request.getContextPath() %>/images/example2.jpeg" alt=""></div>
-	                <div class="main-banner"><img src="<%=request.getContextPath() %>/images/example2.jpeg" alt=""></div>
 	                <%if(!list.isEmpty()) { %>
 					<% for(Banner b : list) { %>
 					<div class="main-banner">
 						<img src="<%=request.getContextPath() %>/upload/banner/<%=b.getBannerRenamedFileName() %>" alt="" />
+						<div id="bannerContent"><%=b.getBannerContent()!=null?b.getBannerContent():"" %></div>
 					</div>
-					<% }} %>
+					<% }} else { %>
+					<div class="main-banner">
+						등록된 배너가 없습니다.
+					</div>
+					<% } %>
 	            </div>
         		<div class="prev"><img src="<%=request.getContextPath() %>/images/prev-arrow.png" alt="이전" width="45" /></div>
             	<div class="next"><img src="<%=request.getContextPath() %>/images/next-arrow.png" alt="다음" width="45" /></div>
