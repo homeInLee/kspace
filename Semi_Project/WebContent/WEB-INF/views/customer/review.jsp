@@ -1,3 +1,4 @@
+<%@page import="com.kh.customer.model.vo.User"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.kh.host.model.vo.Space"%>
 <%@page import="com.kh.customer.model.vo.Review"%>
@@ -7,6 +8,7 @@
 	pageEncoding="UTF-8"%>
 <%
 	ArrayList<Review> review = (ArrayList<Review>)request.getAttribute("review");
+	
 	
 	
 %>
@@ -177,7 +179,9 @@ $(()=>{
 					%>
 					</p>
 				</div>
+				<%if(memberLoggedIn != null &&"admin".equals(memberLoggedIn.getUserId())){ %>
 				<button class="btn-delete" value="<%=list.getReviewNo()%>">삭제</button>
+				<%} %>
 			</td>
 		</tr>
 		<%}

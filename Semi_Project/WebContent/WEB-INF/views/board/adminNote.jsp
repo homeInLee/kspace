@@ -6,7 +6,6 @@
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 <%
 	ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
-	String pageBar = (String) request.getAttribute("pageBar");
 %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/sub.css" />
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css" />
@@ -79,7 +78,7 @@
 									</div>
 								</li>
 								<li>
-								<%-- <%if(memberLoggedIn != null &&"admin".equals(memberLoggedIn.getMemberId())){ %> --%>
+								<%if(memberLoggedIn != null &&"admin".equals(memberLoggedIn.getUserId())){ %>
 								<input type="button" value="수정" onclick="updateBoard();"/>
 								<input type="button" value="삭제"  onclick="deleteBoard();"/>
 								<form action="<%=request.getContextPath()%>/admin/adminNoteDel"
@@ -98,7 +97,7 @@
 									$("#boardDelete").submit();
 								}
 								</script>
-								<%-- <%} %> --%>
+								<%} %>
 								</li>
 							</ul>
 						</li>
@@ -115,7 +114,9 @@
 			    <jsp:param value="${paging.prev}" name="prev"/>
 			    <jsp:param value="${paging.next}" name="next"/>
 			</jsp:include>
+			<%if(memberLoggedIn != null &&"admin".equals(memberLoggedIn.getUserId())){ %>
 			<input type="button" value="등록" id="btn-add" onclick="upload();"/>
+			<%} %>
 		</article>
 	</section>
 </div>
