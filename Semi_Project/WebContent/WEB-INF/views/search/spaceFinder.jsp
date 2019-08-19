@@ -4,7 +4,7 @@
 <%@ page import = "java.util.*, com.kh.host.model.vo.*" %>
 <%
 	List<SpaceJoin> spaceList = (List<SpaceJoin>)request.getAttribute("list");
-	String spaceSrch = request.getParameter("spaceSrch");
+	String spaceSrch = request.getParameter("spaceSrch") == null ? "" : request.getParameter("spaceSrch");
 	String spaceType = request.getParameter("spaceType") == null ? "" : request.getParameter("spaceType");
 	String spaceArea = request.getParameter("spaceArea") == null ? "" : request.getParameter("spaceArea");
 	List<SpaceImageFile> imageList = (List<SpaceImageFile>)request.getAttribute("imageList");
@@ -203,7 +203,7 @@ $("#spaceArea-select .select-items").click(function() {
                     	</a>
                 	</li>
                 <% }} else { %>
-            	<li>조회된 공간이 없습니다.</li>
+            	<div>조회된 공간이 없습니다.</div>
             <% } %>
             </ul>
         </article>

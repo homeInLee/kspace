@@ -29,11 +29,13 @@ $(document).ready(function(){
 			success: function(result) {
 				if (result == 1) {
                     $("#hostIdCheck").html("아이디를 6글자 이상 입력해주세요");
+                    checkHostId = 1;
                 } else if(result == -1) {
                 	$("#hostIdCheck").html("중복된 아이디입니다");
                 	checkHostId = -1;
                 } else {
                 	$("#hostIdCheck").html("좋은 아이디에요!");
+                	checkHostId = 0;
                 }
 			}
 		});
@@ -77,11 +79,13 @@ $(document).ready(function(){
 			success: function(result) {
 				if (result == 1) {
                     $("#memberIdCheck").html("아이디를 6글자 이상 입력해주세요");
+                    checkMemberId = 1;
                 } else if(result == -1) {
                 	$("#memberIdCheck").html("중복된 아이디입니다");
-                	checkMemberId = -1
+                	checkMemberId = -1;
                 } else {
                 	$("#memberIdCheck").html("좋은 아이디에요!");
+                	checkMemberId = 0;
                 }
 			}
 		});
@@ -339,7 +343,7 @@ function memberEnrollCheck() {
 		            <input type="text" placeholder="이메일" id="hostEmail" name="hostEmail">
 		            <input type="text" placeholder="회사 이름" id="companyName" name="companyName" required>
 		            <input type="text" placeholder="회사 주소" id="companyPlace" name="companyPlace" required>
-		            <input type="number" placeholder="수수료" id="companyFee" name="companyFee">
+		            <input type="number" placeholder="수수료" id="companyFee" name="companyFee" step="10">
 		            <span id="companyFeeCheck" class="effectCheck"></span>
 					<div class="txt_center">
 						<input type="submit" value="회원가입">
