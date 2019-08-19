@@ -36,15 +36,23 @@ public class BookingService {
 	}
 
 
-	public int insertBooking(String userId, int spaceNo) {
+	public int insertBooking(String userId, int spaceNo, String timepicker1, String timepicker2, String request1, int people) {
 		Connection conn = getConnection();
-		int result = new BookingDAO().insertBooking(conn, userId, spaceNo);
+		int result = new BookingDAO().insertBooking(conn, userId, spaceNo, timepicker1, timepicker2, request1, people);
 		if(result > 0)
 			commit(conn);
 		else
 			rollback(conn);
 		close(conn);
 		return result;
+	}
+
+
+	public List<Booking> spaceBookingListBySpaceNo(int spaceNo) {
+		Connection conn = getConnection();
+		List<Booking> list = new BookingDAO().spaceBookingListBySpaceNo(conn,spaceNo);
+		close(conn);
+		return list;
 	}
 
 

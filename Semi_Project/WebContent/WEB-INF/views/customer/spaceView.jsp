@@ -44,11 +44,16 @@
 	SpaceDibs jjimCheck = (SpaceDibs)request.getAttribute("jjimCheck");
 	User u = (User)request.getAttribute("user");
 %>
+<script src="<%=request.getContextPath()%>/js/datepicker.min.js"></script>
+<!-- 언어설정 -->
+<script src="<%=request.getContextPath()%>/js/i18n/datepicker.en.js"></script>
+<script src="<%=request.getContextPath()%>/js/i18n/datepicker.ko.js"></script>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/datepicker.min.css" />
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/jquery.timepicker.css" />
+<script src="<%=request.getContextPath()%>/js/jquery.timepicker.min.js"></script>
 <script>
-function insertBooking(){
-	location.href = "<%=request.getContextPath()%>/customer/insertBooking?userId=datbot&spaceNo=1";
-}
-
 $(()=>{
 	$("#jjim-btn").click(function(e){
 		if(<%=memberLoggedIn==null %>){
@@ -129,6 +134,26 @@ function goDelMySpace(){
 		background:url('<%=request.getContextPath() %>/upload/host/<%=yImg %>') no-repeat center center;
 		background-size:cover;
 	}
+	#my-calendar {
+		border: #ccc solid 1px;
+		font-size: 30px;
+		height: 40px;
+		width: 160px;
+		text-align: center;
+	}
+	.time {
+		width: 120px;
+		height: 40px;
+		border: #ccc solid 1px;
+		font-size: 30px;
+		text-align: center;
+	}
+	#request1{
+		width: 369px;
+		height: 31px;
+		font-size: 20px;
+		border: #ccc solid 1px;
+	}
 </style>
 <div class="sub_container">
 	<form action="<%=request.getContextPath() %>/host/delMySpace" name="delMySpaceFrm" method="post">
@@ -153,7 +178,59 @@ function goDelMySpace(){
 	</section>
     <section class="spaceView-container subPage">
         <article>
-        	<button onclick="insertBooking();">예약하기</button>
+        	<form method="post" action="<%=request.getContextPath()%>/customer/insertBooking">
+				<h1>AIR DATEPICKER</h1>
+				<div>
+					<input id="my-calendar" name="myCalendar" type="text" class="datepicker-here" data-language="ko" /> 
+					<input type="text" id="timepicker1" name="timepicker1" class="time" /> 
+					<input type="text" id="timepicker2" name="timepicker2" class="time" />
+				</div>
+				<script>
+				var date = new Date();
+				var year = date.getFullYear();
+				var month = date.getMonth()+3;
+				var month2 = date.getMonth()+1;
+				var clockDate = date.getDate()+2;
+				var strDate = year+"-"+month+"-"+clockDate
+				var strDate2 = year+"-"+month2+"-"+clockDate
+				var nonpdate = new Date(strDate2)
+				var plusdate = new Date(strDate);
+				$("#my-calendar").datepicker({
+					dateFormat: 'yyyy-mm-dd',
+					minDate: nonpdate,
+					maxDate: plusdate
+				});
+				</script>
+				<script>
+				$('#timepicker1').timepicker({
+					'minTime' : '<%=s.getBookingTime().substring(0,2)%>:00',
+					'maxTime' : '<%=s.getBookingTime().substring(6,8)%>:00',
+					'showDuration': true,
+					'timeFormat': 'H:i',
+				});
+				$('#timepicker2').timepicker({
+					'minTime' : '<%=s.getBookingTime().substring(0,2)%>:00',
+					'maxTime' : '<%=s.getBookingTime().substring(6,8)%>:00',
+					'showDuration': true,
+					'timeFormat': 'H:i',
+				});
+				</script>
+				<input type="hidden" name="spaceNo" value="<%=s.getSpaceNo()%>" />
+				<input type="hidden" name="userId" value="<%=memberLoggedIn == null ? "" : memberLoggedIn.getUserId() %>" />
+				<br />
+				요구사항 
+				<input type="text" name="request1" id="request1"/>
+				<br />
+				<br />
+				<select name="people">
+					<option value="">인원수</option>
+					<%for(int i=s.getMinBookingPeople(); i<s.getMaxBookingPeople(); i++){ %>
+					<option value="<%=i%>"><%=i%>명
+					</option>
+					<%} %>
+				</select> 
+				<input type="submit" value="예약하기" />
+			</form>
         	<div class="spaceInfo-container">
         		<h3 class="tit"><%=s.getSpaceName()!=null?s.getSpaceName():"" %></h3>
 	            <p class="fw300"><%=s.getSpaceSlogan()!=null?s.getSpaceSlogan():"" %></p>

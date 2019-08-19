@@ -34,7 +34,10 @@
 				<option value="">변경요청</option>
 			</select>
 			<ul class="recom-space clearfix">
-				<%for(int i=0; i<list.size(); i++){ %>
+				<%if(list == null || list.isEmpty()){%>
+					<h2 style="text-align: center;">결제 내역이 존재하지 않습니다.</h2>
+				<%}
+				for(int i=0; i<list.size(); i++){ %>
 					<li><a href="<%=request.getContextPath() %>/customer/bookingSelect?userId=datbot&bookingNo=<%=list.get(i).getBookingNo() %>" class="dp_block">
 							<div class="recom-space-img">
 								<img src="<%=request.getContextPath()%>/images/example.jpeg"
