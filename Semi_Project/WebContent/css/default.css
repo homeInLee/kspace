@@ -249,18 +249,9 @@ span.srchVal{
     cursor: pointer;
 }
 
-.nav-ico {
-    float: left;
-    width: 100px;
-    height: 100px;
-    background: #fff;
-    border-radius: 50%;
-}
-
 #nav-top p {
-    float: left;
     font-size: 20px;
-    padding: 37px 0 0 20px;
+    padding: 20px 0 20px 20px;
     box-sizing: border-box;
 }
 
