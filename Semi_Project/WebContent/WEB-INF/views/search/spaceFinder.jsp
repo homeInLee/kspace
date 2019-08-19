@@ -203,7 +203,7 @@ $("#spaceArea-select .select-items").click(function() {
                     	</a>
                 	</li>
                 <% }} else { %>
-            	<div>조회된 공간이 없습니다.</div>
+            	<div class="no_space">조회된 공간이 없습니다</div>
             <% } %>
             </ul>
         </article>

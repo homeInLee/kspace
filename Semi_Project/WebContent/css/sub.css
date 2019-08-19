@@ -1030,3 +1030,8 @@
 	padding:10px 0;
 	cursor:pointer;
 }
+
+.no_space {
+	font-size: 20px;
+	color:#bdbdbd;
+}
