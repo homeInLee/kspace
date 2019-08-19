@@ -29,10 +29,10 @@ $(document).ready(function(){
 					method="post" enctype="multipart/form-data">
 					<table id="banner_insert">
 						<tr height="60px">
-							<th width="80px">
+							<th width="20%">
 								<label for="upFile">사진 선택</label>
 							</th>
-							<td width="300px">
+							<td width="80%">
 								<input type="file" name="upFile" id="upFile" />							
 							</td>
 						</tr>
@@ -41,7 +41,7 @@ $(document).ready(function(){
 								<label for="content">멘트</label><br/>							
 							</th>
 							<td>
-								<textarea name="content" id="content" cols="30" rows="10"></textarea>							
+								<textarea name="content" id="content" cols="80" rows="10"></textarea>							
 							</td>
 						</tr>
 						<tr>

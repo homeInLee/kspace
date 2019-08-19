@@ -1,18 +1,16 @@
 @charset "UTF-8";
-button.btn-delete, .btn-update {
-	display: none;
-}
-
-tr:hover button.btn-delete, tr:hover .btn-update {
-	display: inline;
-}
 
 #update {
-	border: 1px solid green;
+	border: 1px solid #ACC800;
+}
+
+#content {
+	border: 1px solid #ACC800;
 }
 
 #banner_insert, #banner_list {
 	margin: auto;
+	width: 100%;
 }
 
 #banner_list {
