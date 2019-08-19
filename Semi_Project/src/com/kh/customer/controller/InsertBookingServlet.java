@@ -19,14 +19,14 @@ import com.kh.customer.model.vo.Booking;
 @WebServlet(urlPatterns="/customer/insertBooking",name="InsertBookingServlet")
 public class InsertBookingServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public InsertBookingServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public InsertBookingServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -40,7 +40,7 @@ public class InsertBookingServlet extends HttpServlet {
 		int people = Integer.parseInt(request.getParameter("people"));
 		String request1 = "없음";
 		//request받아야함
-//		'2019-08-05 13:00:00', 'yyyy-mm-dd hh24:mi:ss'
+		//		'2019-08-05 13:00:00', 'yyyy-mm-dd hh24:mi:ss'
 		System.out.println("userId="+userId);
 		System.out.println("spaceNo="+spaceNo);
 		System.out.println("myCalendar="+myCalendar);
@@ -53,44 +53,48 @@ public class InsertBookingServlet extends HttpServlet {
 		SimpleDateFormat format2 = new SimpleDateFormat ("yyyy-MM-dd");
 		SimpleDateFormat format1 = new SimpleDateFormat ("dd");
 		SimpleDateFormat format3 = new SimpleDateFormat ("HH:mm");
-		
+
 		List<Booking> blist = new BookingService().spaceBookingListBySpaceNo(spaceNo);
-		
+		System.out.println("blist="+blist);
 		String msg = "";
 		String loc = "/customer/spaceView?spaceNo="+spaceNo;
 		String view = "/WEB-INF/views/common/msg.jsp";
 
 
-		for(int i=0; i<blist.size(); i++) {
+		if(blist == null || blist.isEmpty()){
+			msg = "예약이 성공하였습니다.";
+		}
+		else {
+			for(int i=0; i<blist.size(); i++) {
 
-			if(myCalendar.equals(format2.format(blist.get(i).getMinTime()))) {
-				if(Integer.parseInt(timepicker1.substring(0,2))<Integer.parseInt(format3.format(blist.get(i).getMinTime()).substring(0,2))) {
-					if(Integer.parseInt(timepicker2.substring(0,2))<=Integer.parseInt(format3.format(blist.get(i).getMinTime()).substring(0,2))) {
-						msg = "예약이 성공하였습니다.";
+				if(myCalendar.equals(format2.format(blist.get(i).getMinTime()))) {
+					if(Integer.parseInt(timepicker1.substring(0,2))<Integer.parseInt(format3.format(blist.get(i).getMinTime()).substring(0,2))) {
+						if(Integer.parseInt(timepicker2.substring(0,2))<=Integer.parseInt(format3.format(blist.get(i).getMinTime()).substring(0,2))) {
+							msg = "예약이 성공하였습니다.";
+						}
+						else {
+							msg = myCalendar+"은"+format3.format(blist.get(i).getMinTime()).substring(0,2)+"~"+format3.format(blist.get(i).getMaxTime()).substring(0,2)+"에 예약이 차있습니다.";
+							break;
+						}
+					}
+					else if(Integer.parseInt(timepicker1.substring(0,2))>=Integer.parseInt(format3.format(blist.get(i).getMaxTime()).substring(0,2))) {
+						msg = myCalendar+"은"+format3.format(blist.get(i).getMinTime()).substring(0,2)+"~"+format3.format(blist.get(i).getMaxTime()).substring(0,2)+"에 예약이 차있습니다.";
+						if(Integer.parseInt(timepicker2.substring(0,2))>Integer.parseInt(format3.format(blist.get(i).getMaxTime()).substring(0,2))) {
+							msg = "예약이 성공하였습니다.";
+						}
+						else {
+							msg = myCalendar+"은"+format3.format(blist.get(i).getMinTime()).substring(0,2)+"~"+format3.format(blist.get(i).getMaxTime()).substring(0,2)+"에 예약이 차있습니다.";
+							break;
+						}
 					}
 					else {
-						msg = myCalendar+"은"+format3.format(blist.get(i).getMinTime()).substring(0,2)+"~"+format3.format(blist.get(i).getMaxTime()).substring(0,2)+"에 예약이 차있습니다1.";
-						break;
-					}
-				}
-				else if(Integer.parseInt(timepicker1.substring(0,2))>=Integer.parseInt(format3.format(blist.get(i).getMaxTime()).substring(0,2))) {
-					msg = myCalendar+"은"+format3.format(blist.get(i).getMinTime()).substring(0,2)+"~"+format3.format(blist.get(i).getMaxTime()).substring(0,2)+"에 예약이 차있습니다2.";
-					if(Integer.parseInt(timepicker2.substring(0,2))>Integer.parseInt(format3.format(blist.get(i).getMaxTime()).substring(0,2))) {
-						msg = "예약이 성공하였습니다.";
-					}
-					else {
-						msg = myCalendar+"은"+format3.format(blist.get(i).getMinTime()).substring(0,2)+"~"+format3.format(blist.get(i).getMaxTime()).substring(0,2)+"에 예약이 차있습니다3.";
+						msg = myCalendar+"은"+format3.format(blist.get(i).getMinTime()).substring(0,2)+"~"+format3.format(blist.get(i).getMaxTime()).substring(0,2)+"에 예약이 차있습니다.";
 						break;
 					}
 				}
 				else {
-					msg = myCalendar+"은"+format3.format(blist.get(i).getMinTime()).substring(0,2)+"~"+format3.format(blist.get(i).getMaxTime()).substring(0,2)+"에 예약이 차있습니다4.";
-					break;
+					msg = "예약이 성공하였습니다.";
 				}
-			}
-			else {
-				msg = "예약이 성공하였습니다.";
-			}
 			System.out.println(format2.format(blist.get(i).getMinTime()));
 			System.out.println("예약테이블="+Integer.parseInt(format3.format(blist.get(i).getMinTime()).substring(0,2)));
 			System.out.println("예약테이블="+Integer.parseInt(format3.format(blist.get(i).getMaxTime()).substring(0,2)));
@@ -98,6 +102,7 @@ public class InsertBookingServlet extends HttpServlet {
 			System.out.println("예약하려는 시간"+Integer.parseInt(timepicker2.substring(0,2)));
 			System.out.println(blist.get(i).getMinTime());
 			System.out.println(blist.get(i).getMaxTime());
+			}
 		}
 		if(msg.equals("예약이 성공하였습니다.")) {
 			int result = new BookingService().insertBooking(userId, spaceNo, mintime, maxtime, request1, people);			

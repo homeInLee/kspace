@@ -497,4 +497,31 @@ public class SpaceDAO {
 		return c;
 	}
 
+	public SpaceImageFile selectSpaceImgBySpaceNoSelY(Connection conn, int spaceNo) {
+		SpaceImageFile spaceImg = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectSpaceImgBySpaceNoSelY");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, spaceNo);
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				spaceImg = new SpaceImageFile();
+				spaceImg.setSpaceNo(rset.getInt("space_no"));
+				spaceImg.setImageOriginalFileName(rset.getString("image_original_filename"));
+				spaceImg.setImageRenamedFileName(rset.getString("image_renamed_filename"));
+				spaceImg.setFlag(rset.getString("flag"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return spaceImg;
+	}
+
 }

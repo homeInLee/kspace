@@ -20,6 +20,7 @@ import com.kh.customer.model.vo.Booking;
 import com.kh.host.model.service.SpacePriceService;
 import com.kh.host.model.service.SpaceService;
 import com.kh.host.model.vo.Space;
+import com.kh.host.model.vo.SpaceImageFile;
 import com.kh.host.model.vo.SpacePrice;
 
 /**
@@ -59,6 +60,7 @@ public class BookingListServlet extends HttpServlet {
 		Calendar cal = Calendar.getInstance(); 
 		int dayNum = 0;
 		 
+		List<SpaceImageFile> spaceImg = new ArrayList<>();
 		String day = "";
 		for(int i=0; i<list.size(); i++) {
 			System.out.println(i);
@@ -99,6 +101,8 @@ public class BookingListServlet extends HttpServlet {
 			spacelist.add(new SpaceService().spaceSelectOneBySpaceNo(list.get(i).getSpaceNo()));
 			System.out.println("spacelist="+spacelist);
 			
+			SpaceImageFile Img = new SpaceService().selectSpaceImgBySpaceNoSelY(list.get(i).getSpaceNo());
+			spaceImg.add(Img);
 			for(int y=0; y<pricemap.get(list.get(i).getSpaceNo()).size(); y++) {
 				System.out.println("bookingsize="+i+"pricemap size="+y);
 				
@@ -124,9 +128,11 @@ public class BookingListServlet extends HttpServlet {
 				}
 			}
 		}
+		System.out.println("spaceImg="+spaceImg);
 		request.setAttribute("list", list);
 		request.setAttribute("realprice", realprice);
 		request.setAttribute("spacelist", spacelist);
+		request.setAttribute("spaceImg", spaceImg);
 		request.getRequestDispatcher("/WEB-INF/views/customer/bookingList.jsp").forward(request, response);
 	}
 

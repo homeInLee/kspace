@@ -1,3 +1,4 @@
+<%@page import="com.kh.host.model.vo.SpaceImageFile"%>
 <%@page import="com.kh.host.model.vo.Space"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.HashMap"%>
@@ -13,6 +14,7 @@
 	List<Booking> list = (ArrayList<Booking>)request.getAttribute("list");
 	Map<Integer,Integer> realprice = (HashMap<Integer,Integer>)request.getAttribute("realprice");
 	List<Space> spacelist = (ArrayList<Space>)request.getAttribute("spacelist");
+	List<SpaceImageFile> spaceImg = (ArrayList<SpaceImageFile>)request.getAttribute("spaceImg");
 	SimpleDateFormat format1 = new SimpleDateFormat ("HH:mm");
 	SimpleDateFormat format2 = new SimpleDateFormat ("yyyy-MM-dd");
 %>
@@ -38,16 +40,15 @@
 					<h2 style="text-align: center;">결제 내역이 존재하지 않습니다.</h2>
 				<%}
 				for(int i=0; i<list.size(); i++){ %>
-					<li><a href="<%=request.getContextPath() %>/customer/bookingSelect?userId=datbot&bookingNo=<%=list.get(i).getBookingNo() %>" class="dp_block">
+					<li><a href="<%=request.getContextPath() %>/customer/bookingSelect?userId=admin&bookingNo=<%=list.get(i).getBookingNo() %>" class="dp_block">
 							<div class="recom-space-img">
-								<img src="<%=request.getContextPath()%>/images/example.jpeg"
-									alt="이미지영역" class="dp_block">
+								<img src="<%=request.getContextPath() %>/upload/host/<%=spaceImg.get(i).getImageRenamedFileName() %>" alt="" />
 							</div>
 							<div class="recom-space-conts">
 								<h4 class="recom-tit"><%=spacelist.get(i).getSpaceName() %></h4>
 								<p class="recom-cont">
 									<span class="dp_ib fw600">이용일시:<%=format2.format(list.get(i).getMinTime()) %></span><br />
-									<span class="dp_ib">이용시간:<%=format1.format(list.get(i).getMaxTime()) %>~<%=format1.format(list.get(i).getMinTime()) %></span>
+									<span class="dp_ib">이용시간:<%=format1.format(list.get(i).getMinTime()) %>~<%=format1.format(list.get(i).getMaxTime()) %></span>
 								</p>
 								<p class="recom-price">
 									<span class="fw600">
