@@ -121,6 +121,17 @@ $(document).ready(function(){
 			$("#companyFeeCheck").html("");
 		}
 	});
+	
+	$("#hostResetButton").on("click", function() {
+		$("#hostIdCheck").html("");
+		$("#hostPwd2Check").html("");
+		$("#companyFeeCheck").html("");
+	});
+	
+	$("#memberResetButton").on("click", function() {
+		$("#memberIdCheck").html("");
+		$("#memberPwd2Check").html("");
+	});
 });
 
 function hostEnrollCheck() {
@@ -309,7 +320,7 @@ function memberEnrollCheck() {
 		            <input type="text" placeholder="이메일" id="memberEmail" name="memberEmail">
 					<div class="txt_center">
 						<input type="submit" value="회원가입">
-						<input type="reset" value="초기화">
+						<input type="reset" id="memberResetButton" value="초기화">
 					</div>
 				</form>
             </div>
@@ -332,7 +343,7 @@ function memberEnrollCheck() {
 		            <span id="companyFeeCheck" class="effectCheck"></span>
 					<div class="txt_center">
 						<input type="submit" value="회원가입">
-						<input type="reset" value="초기화">
+						<input type="reset" id="hostResetButton" value="초기화">
 					</div>
 				</form>
             </div>

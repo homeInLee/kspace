@@ -172,7 +172,6 @@ $(()=> {
     	<div>
 	        <div id="nav-top" class="clearfix">
 	            <div class="menu-close"><img src="<%=request.getContextPath() %>/images/close.png" alt="" width="24px"></div>
-	            <div class="nav-ico"></div>
 	            <p>
 	                <%if(memberLoggedIn == null){%>
 	                <a href="<%=request.getContextPath()%>/customer/login" class="dp_ib fw600">로그인</a>이 필요합니다.
