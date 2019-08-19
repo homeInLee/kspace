@@ -95,7 +95,9 @@
                     	</a>
                 	</li>
                 	<% index++; %>
-                <% }} %>
+                <% }} else { %>
+                	<div>조회된 공간이 없습니다.</div>
+                <% } %>
                 </ul>
             </article>
         </section>
