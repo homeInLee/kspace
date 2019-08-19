@@ -9,12 +9,12 @@
 	Booking b = (Booking) request.getAttribute("b");
 	Space s = (Space) request.getAttribute("s");
 	User u = (User) request.getAttribute("u");
-	Company c = (Company) request.getAttribute("c");
+	Company company = (Company) request.getAttribute("c");
 	User hu = (User) request.getAttribute("hu");
 	int realprice = (int) request.getAttribute("realprice");
 	int price = (int) request.getAttribute("price");
 %>
-<include file="/WEB-INF/views/common/header.jsp">
+<%@ include file="/WEB-INF/views/common/header.jsp" %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/sub.css" />
 <style>
 .booking_data_name {
@@ -26,7 +26,6 @@
 	top: 244px;
 	left: 53px;
 	width: 500px;
-	height: 420px;
 }
 
 .booking_data_list {
@@ -53,7 +52,6 @@
 	font-size: 17px;
 	border-top: 1px solid #ccc;
 	padding: 13px 0;
-	vertical-align: center;
 }
 </style>
 <script>
@@ -86,18 +84,21 @@ function bookingCancle(){
 					</ul>
 					</div>
 				</div>
-				<%-- <li class="sub_li">예약자:<%=u.getUserName()%></li>
+				<ul>
+					<li class="sub_li">예약자:<%=u.getUserName()%></li>
 				<li class="sub_li">연락처:<%=u.getPhone()%></li>
 				<li class="sub_li">이메일:<%=u.getEmail()%></li>
 				<li class="sub_li">요청사항:<%=b.getRequest()%></li>
 				<li class="sub_li">호스트:<%=hu.getUserName()%></li>
 				<li class="sub_li">연락처:<%=hu.getPhone()%></li>
 				<li class="sub_li">공간명:<%=s.getSpaceName()%></li>
-				<li class="sub_li">주소:<%=c.getCompanyPlace()%></li>
+				<li class="sub_li">주소:<%=company.getCompanyPlace()%></li>
 				<li class="sub_li">예약날짜:<%=b.getMaxTime()%></li>
 				<li class="sub_li">예약시간:<%=(int) Math.ceil((b.getMinTime().getTime() - b.getMaxTime().getTime()) / 1000.0 / 3600.0)%></li>
 				<li class="sub_li">예약인원:<%=b.getBookingPeople()%></li>
-				<li class="sub_li">가격:<%=realprice%></li> --%>
+				<li class="sub_li">가격:<%=realprice%></li>
+				</ul>
+				
 			</div>
 			<button onclick="bookingCancle();">예약 취소하기</button>
 		</article>
