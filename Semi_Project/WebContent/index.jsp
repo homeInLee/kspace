@@ -11,6 +11,15 @@
 %>
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/slick/slick.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/index.js"></script>
+<style>
+	.member-recom-wrap > li.no-list {
+		border:none;
+		background:transparent;
+		text-align:center;
+		width:100%;
+		padding:60px 0;
+	}
+</style>
     <div id="main_container">
         <section id="main-sec1">
         	<div id="main-banner-container">
@@ -98,7 +107,7 @@
                 	</li>
                 	<% index++; %>
                 <% }} else { %>
-                	<li>조회된 공간이 없습니다.</li>
+                	<li class="no-list">조회된 공간이 없습니다.</li>
                 <% } %>
                 </ul>
             </article>
@@ -164,7 +173,7 @@
                     	</li>
                     	<% k++; %>
                     <% }}}} else { %>
-                	<li>조회된 공간이 없습니다.</li>
+                	<li class="no-list">조회된 공간이 없습니다.</li>
                 <% } %>
                 </ul>
             </article>

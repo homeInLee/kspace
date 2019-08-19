@@ -55,6 +55,10 @@
 <script src="<%=request.getContextPath()%>/js/jquery.timepicker.min.js"></script>
 <script>
 $(()=>{
+	$(".call-close").click(function(){
+		$("#search-call-wrap").fadeOut();
+	});
+	
 	$("#jjim-btn").click(function(e){
 		if(<%=memberLoggedIn==null %>){
 			alert("로그인 후 이용하실 수 있습니다.");
@@ -128,6 +132,10 @@ function goDelMySpace(){
 	<%-- 로그인한 아이디와 <%=c.getUserId() %>가 맞는지 검사하기 --%>
 	$("form[name=delMySpaceFrm]").submit();
 }
+
+function openCall(){
+	$("#search-call-wrap").fadeIn();
+}
 </script>
 <style>
 	#spaceViewTitleImg {
@@ -177,7 +185,7 @@ function goDelMySpace(){
 		</button>
 	</section>
     <section class="spaceView-container subPage">
-        <article>
+        <article class="clearfix">
         	<form method="post" action="<%=request.getContextPath()%>/customer/insertBooking">
 				<h1>AIR DATEPICKER</h1>
 				<div>
@@ -273,20 +281,19 @@ function goDelMySpace(){
 	            <h5 class="spaceInfo-tit mt50">환불 규정 안내</h5>
 	            <p class="refund-info">
 	            	<span class="dp_block req">이용당일(첫 날) 이후에 환불 관련 사항은 호스트에게 직접 문의하셔야 합니다.</span>
-	            	결제 후 2시간 이내 어쩌구
 	            </p>
 	            <table class="spaceInfo-tb refund-desk">
 	            	<tr>
-	            		<td>이용 8일전</td>
-	            		<td>총 금액의 100% 환불</td>
+	            		<td>이용 2일전</td>
+	            		<td>총 금액의 80% 환불</td>
 	            	</tr>
 	            	<tr>
-	            		<td>이용 8일전</td>
-	            		<td>총 금액의 100% 환불</td>
+	            		<td>이용 1일전</td>
+	            		<td>총 금액의 20% 환불</td>
 	            	</tr>
 	            	<tr>
-	            		<td>이용 8일전</td>
-	            		<td>총 금액의 100% 환불</td>
+	            		<td>이용 당일</td>
+	            		<td>환불 불가</td>
 	            	</tr>
 	            </table>
 	            <div class="spaceCompanyInfo-wrap">
@@ -294,8 +301,18 @@ function goDelMySpace(){
 	            		<h3><%=s.getSpaceName()!=null?s.getSpaceName():"" %></h3>
 	            		<p><%=company.getCompanyPlace()!=null?company.getCompanyPlace():"" %></p>
 	            		<div class="txt_right">
-	            			<a href="tel:<%=u.getPhone() %>" class="searchMap dp_ib txt_center">전화 걸기</a>
+	            			<a href="javascript:openCall();" class="searchMap dp_ib txt_center">전화 걸기</a>
 	            			<a id="searchMap" href="" class="searchMap dp_ib txt_center" target="_blank">길찾기</a>
+	            		</div>
+	            		<div id="search-call-wrap">
+	            			<div class="txt_center">
+	            				<h3>"KH 스페이스를 통해 연락드렸어요~"<br>라고 말씀하시면 더 친절하게 안내 받으실 수 있습니다.</h3>
+	            				<p class="call-info">
+	            					<%=s.getSpaceName()!=null?s.getSpaceName():"" %> <br />
+	            					<span><%=u.getPhone() %></span>
+	            				</p>
+	            				<p class="call-close">확인</p>
+	            			</div>
 	            		</div>
 	            	</div>
 	            	<div id="spaceCompanyInfo-map" class="spaceCompanyInfo-map" style="height:450px;"></div>

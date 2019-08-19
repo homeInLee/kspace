@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kh.board.model.vo.Board;
-import com.kh.paging.model.vo.Paging;
+import com.kh.common.paging.Paging;
 import com.kh.board.model.service.BoardService;
 
 /**
@@ -33,7 +33,7 @@ public class BoardAdminListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//파라미터 핸들링
-		final int numPerPage = 5;
+		final int numPerPage = 10;
 		int cPage = 1;
 		try {
 			cPage = Integer.parseInt(request.getParameter("cPage"));
