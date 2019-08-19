@@ -80,6 +80,11 @@
 								<li>
 								<%if(memberLoggedIn != null &&"admin".equals(memberLoggedIn.getUserId())){ %>
 								<input type="button" value="수정" onclick="updateBoard();"/>
+								<form action="<%=request.getContextPath()%>/admin/adminNoteUpdate"
+										id="boardUpdate" method="post">
+										<input type="hidden" name="boardNo" value="<%=b.getBoardNo()%>" /> 
+										<input type="hidden" name="renamedFileName" value="<%=b.getRenameFileName() != null ? b.getRenameFileName() : ""%>" />
+								</form>
 								<input type="button" value="삭제"  onclick="deleteBoard();"/>
 								<form action="<%=request.getContextPath()%>/admin/adminNoteDel"
 										id="boardDelete" method="post">
@@ -88,7 +93,9 @@
 								</form> 
 								<script>
 								function updateBoard() {
-									location.href ="<%=request.getContextPath()%>/admin/adminNoteUpdate?boardNo=<%=b.getBoardNo()%>";
+									<%-- location.href ="<%=request.getContextPath()%>/admin/adminNoteUpdate?boardNo=<%=b.getBoardNo()%>"; --%>
+									console.log(<%=b.getBoardNo()%>);
+									$("#boardUpdate").submit();
 								}
 								function deleteBoard() {
 									if(!confirm("정말하시겠습니까?")){
