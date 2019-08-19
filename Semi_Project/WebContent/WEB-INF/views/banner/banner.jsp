@@ -5,37 +5,61 @@
 <%
 	List<Banner> list = new BannerService().selectAllBanner();
 %>
-<style>
-button.btn-delete, .btn-update {
-	display: none;
-}
-
-tr:hover button.btn-delete, tr:hover .btn-update {
-	display: inline;
-}
-
-#update {
-	border: 1px solid green;
-}
-</style>
+<script>
+$(document).ready(function(){
+	$("#submit").on("click", function() {	
+		var str = $('#content').val();
+		str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+		$('#content').val(str);
+	});
+	
+	$(".btn-update").on("click", function() {
+		var str = $('#update').val();
+		str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+		$('#update').val(str);
+	});
+});
+</script>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/banner.css" />
 	<div class="sub_container">
 		<section class="subPage">
 			<article>
-				<h3 class="tit txt_center">서브페이지 제목</h3>
+				<h3 class="tit txt_center">배너 등록</h3>
 				<form action="<%=request.getContextPath()%>/banner/bannerInsert"
 					method="post" enctype="multipart/form-data">
-					<label for="upFile">배너 사진 넣기</label>&nbsp;&nbsp;|&nbsp;&nbsp; <input
-						type="file" name="upFile" id="upFile" /> <label for="content">배너에
-						들어갈 멘트</label> <input type="text" name="content" id="content" /> <input
-						type="submit" value="등록" />
+					<table id="banner_insert">
+						<tr height="60px">
+							<th width="80px">
+								<label for="upFile">사진 선택</label>
+							</th>
+							<td width="300px">
+								<input type="file" name="upFile" id="upFile" />							
+							</td>
+						</tr>
+						<tr>
+							<th>
+								<label for="content">멘트</label><br/>							
+							</th>
+							<td>
+								<textarea name="content" id="content" cols="30" rows="10"></textarea>							
+							</td>
+						</tr>
+						<tr>
+							<th colspan="2">
+								<input type="submit" id="submit" value="등록" />						
+							</th>
+						</tr>
+					</table>
 				</form>
 				<br /><br />
-				<h2>배너 목록</h2>
-				<table>
+				<h2 class="tit txt_center">현재 배너 목록</h2>
+				<table id="banner_list">
 					<tr>
-						<th>배너사진</th>
-						<th>배너설명</th>
-						<th>수정할 내용</th>
+						<th width="200px">배너사진</th>
+						<th width="200px">배너설명</th>
+						<th width="200px">수정할 내용</th>
+						<th width="70px"></th>
+						<th width="70px"></th>
 					</tr>
 					<% if(!list.isEmpty()) { %>
 					<% for(Banner b : list) { %>
@@ -45,10 +69,12 @@ tr:hover button.btn-delete, tr:hover .btn-update {
 						</td>
 						<td><%=b.getBannerContent() %></td>
 						<form action="<%=request.getContextPath()%>/banner/bannerUpdate?bannerNo=<%=b.getBannerNo()%>&renamedFileName=<%=b.getBannerRenamedFileName()%>" method="post">
-						<td><input type="text" name="update" id="update" /></td>
+						<td>
+						<textarea name="update" id="update" cols="30" rows="7"></textarea>
+						</td>
 						<td><input type="submit" class="btn-update" value="수정" /></td>						
-						</form>
 						<td><button class="btn-delete" onclick="location.href='<%=request.getContextPath()%>/banner/bannerDelete?bannerNo=<%=b.getBannerNo()%>&renamedFileName=<%=b.getBannerRenamedFileName()%>'">삭제</button></td>
+						</form>
 					</tr>
 					<% }} else { %>
 						<td colspan="3">조회된 배너가 없습니다.</td>
