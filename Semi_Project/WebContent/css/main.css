@@ -9,6 +9,17 @@
 	position:relative;
 }
 
+.main-banner > div {
+	color:#fff;
+	font-size:30px;
+	position:absolute;
+	width:835px;
+	top:50%;
+	left:50%;
+	transform: translate(-50%, -50%);
+	-webkit-transform: translate(-50%, -50%);	
+}
+
 #main-banner-container .prev {
 	position:absolute;
 	top: 50%;
@@ -29,6 +40,7 @@
 
 #main-banner-wrap .main-banner {
     float: left;
+    position:relative;
 }
 
 #main-banner-wrap .main-banner img {
