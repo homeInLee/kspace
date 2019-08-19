@@ -18,6 +18,7 @@ $(document).ready(function(){
 	$("#hostId").on("change paste keyup", function() {
 		
 		var hostId = $(this).val();
+		var hostPwd = $("#hostPwd").val();
 		
 		$.ajax({
 			type: "post",
@@ -39,6 +40,23 @@ $(document).ready(function(){
                 }
 			}
 		});
+		
+		if(hostPwd == hostId) {
+			$("#hostPwdCheck").html("비밀번호가 ID와 같습니다");
+		} else {
+			$("#hostPwdCheck").html("");
+		}
+	});
+	
+	$('#hostPwd').on("change paste keyup", function(){
+		var hostPwd = $(this).val();
+		var hostId = $("#hostId").val();
+		
+		   if(hostPwd == hostId) {
+			   $("#hostPwdCheck").html("비밀번호가 ID와 같습니다");
+		   } else {
+			   $("#hostPwdCheck").html("");
+		   }
 	});
 	
 	$('#hostPwd2').on("change paste keyup", function(){
@@ -67,6 +85,7 @@ $(document).ready(function(){
 	$("#memberId").on("change paste keyup", function() {
 		
 		var memberId = $(this).val();
+		var memberPwd = $("#memberPwd").val();
 		check = -1;
 		
 		$.ajax({
@@ -89,6 +108,23 @@ $(document).ready(function(){
                 }
 			}
 		});
+		
+		if(memberPwd == memberId) {
+			$("#memberPwdCheck").html("비밀번호가 ID와 같습니다");
+		} else {
+			$("#memberPwdCheck").html("");
+		}
+	});
+	
+	$('#memberPwd').on("change paste keyup", function(){
+		var memberPwd = $(this).val();
+		var memberId = $("#memberId").val();
+		
+		   if(memberPwd == memberId) {
+			   $("#memberPwdCheck").html("비밀번호가 ID와 같습니다");
+		   } else {
+			   $("#memberPwdCheck").html("");
+		   }
 	});
 	
 	$('#memberPwd2').on("change paste keyup", function(){
@@ -318,6 +354,7 @@ function memberEnrollCheck() {
 		            <span id="memberIdCheck" class="effectCheck"></span>
 		            <input type="text" placeholder="이름" id="memberName" name="memberName" required>
 		            <input type="password" placeholder="비밀번호 (영어, 숫자만 가능 6~12글자)"" id="memberPwd" name="memberPwd" required>
+		            <span id="memberPwdCheck" class="effectCheck"></span>
 		            <input type="password" placeholder="비밀번호 확인" id="memberPwd2" name="memberPwd2" required>
 		            <span id="memberPwd2Check" class="effectCheck"></span>
 		            <input type="text" placeholder="전화번호 (- 제외)" id="memberPhone" name="memberPhone" required>
@@ -337,6 +374,7 @@ function memberEnrollCheck() {
 		            <span id="hostIdCheck" class="effectCheck"></span>
 		            <input type="text" placeholder="이름" id="hostName" name="hostName" required>
 		            <input type="password" placeholder="비밀번호 (영어, 숫자만 가능 6~12글자)" id="hostPwd" name="hostPwd" required>
+		            <span id="hostPwdCheck" class="effectCheck"></span>
 		            <input type="password" placeholder="비밀번호 확인" id="hostPwd2" name="hostPwd2" required>
 		            <span id="hostPwd2Check" class="effectCheck"></span>
 		            <input type="text" placeholder="전화번호 (- 제외)" id="hostPhone" name="hostPhone" required>
