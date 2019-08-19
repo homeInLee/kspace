@@ -89,7 +89,7 @@
                                 			String[] HashArr = s.getHashtag().split(",");
                                 			for(int i=0; i<HashArr.length; i++) {
                                 	%>
-                                	# <%=HashArr[i] %>
+                                	#<%=HashArr[i] %>
                                 	<% }} else { %>
                                 		# <%=s.getHashtag() %>
                                 	<% }} %>
@@ -149,7 +149,7 @@
                                 			String[] HashArr = s.getHashtag().split(",");
                                 			for(int j=0; j<HashArr.length; j++) {
                                 	%>
-                                	<span class="dp_ib"><%=HashArr[j] %></span>
+                                	<span class="dp_ib">#<%=HashArr[j] %></span>
                                 	<% }} else { %>
                                 		<span class="dp_ib"><%=s.getHashtag() %></span>
                                 	<% }} %>
