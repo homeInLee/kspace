@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.kh.common.paging.Paging;
 import com.kh.customer.model.service.CustomerService;
 import com.kh.customer.model.service.ReviewService;
 import com.kh.customer.model.service.UserService;
@@ -21,7 +22,7 @@ import com.kh.host.model.vo.Company;
 import com.kh.host.model.vo.Space;
 import com.kh.host.model.vo.SpaceDayOff;
 import com.kh.host.model.vo.SpaceImageFile;
-import com.kh.paging.model.vo.Paging;
+
 
 /**
  * Servlet implementation class SpaceViewServlet
@@ -42,7 +43,7 @@ public class SpaceViewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		final int numPerPage = 5;
+		final int numPerPage = 10;
 		int cPage = 1;
 		try {
 			cPage = Integer.parseInt(request.getParameter("cPage"));
