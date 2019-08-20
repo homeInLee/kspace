@@ -11,6 +11,17 @@
 	ArrayList<Review> review = (ArrayList<Review>)request.getAttribute("review");
 	Space sp = (Space)request.getAttribute("space");
 	
+	int pointSum = 0;
+    for(Review r : review) {
+        pointSum += r.getSpacePoint();
+    }
+    
+    double pointAvg = 0;
+    
+    pointAvg = pointSum / review.size();
+    
+    System.out.println("pointAvg=" + pointAvg);
+	
 %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/sub.css" />
 <script src="<%=request.getContextPath()%>/js/jquery-3.4.1.js"></script>
@@ -90,7 +101,7 @@ $(document).ready(function() {
 </script>
 	<div class="review-tit mt50 clearfix">
 		<h5 class="spaceInfo-tit">
-			이용후기 <span class="dp_ib" id="reviewCnt"></span>
+			이용후기 <span class="dp_ib" id="reviewCnt"></span> · 평균평점 <span class="dp_ib" id="strCnt"><%= pointAvg%></span> 
 		</h5>
 	</div>
 	 <!-- 리뷰작성 -->
