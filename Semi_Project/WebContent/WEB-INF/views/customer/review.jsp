@@ -18,9 +18,10 @@
     
     double pointAvg = 0;
     
-    pointAvg = pointSum / review.size();
+    if(review.size()!=0){
+    	pointAvg = pointSum / review.size();
+    }
     
-    System.out.println("pointAvg=" + pointAvg);
 	
 %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/sub.css" />
@@ -101,7 +102,7 @@ $(document).ready(function() {
 </script>
 	<div class="review-tit mt50 clearfix">
 		<h5 class="spaceInfo-tit">
-			이용후기 <span class="dp_ib" id="reviewCnt"></span> · 평균평점 <span class="dp_ib" id="strCnt"><%= pointAvg%></span> 
+			이용후기 <span class="dp_ib" id="reviewCnt"></span> · 평균평점 <span class="dp_ib" id="strCnt"><%=pointAvg==0?"0":pointAvg%></span> 
 		</h5>
 	</div>
 	 <!-- 리뷰작성 -->
