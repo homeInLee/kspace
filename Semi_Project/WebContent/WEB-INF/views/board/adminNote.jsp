@@ -84,7 +84,7 @@ float: right;
 								<li>
 									<div class="noteBox">
 										<input type="hidden" value="<%=b.getBoardNo() %>"/>
-										<p style="text-align: center;">
+										<p style="text-align: left;">
 										<%=b.getBoardContent() %>
 										</p>
 										<p>
