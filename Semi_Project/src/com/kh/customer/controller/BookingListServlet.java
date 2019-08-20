@@ -108,22 +108,22 @@ public class BookingListServlet extends HttpServlet {
 				
 				//키값이 공간번호(i)인 방의 y번째 가격이유가 null이면 평소가격
 				if(pricemap.get(list.get(i).getSpaceNo()).get(y).getPriceEvent() == null){
-					realprice.put(list.get(i).getSpaceNo(), pricemap.get(list.get(i).getSpaceNo()).get(y).getSpacePrice());
+					realprice.put(list.get(i).getBookingNo(), pricemap.get(list.get(i).getSpaceNo()).get(y).getSpacePrice());
 					System.out.println(realprice);
 				}
 				//키값이 공간번호(i)인 방의 y번째 가격이유가 빌린날짜의 요일이 포함되어 있다면 이벤트 가격
 				else if(pricemap.get(list.get(i).getSpaceNo()).get(y).getPriceEvent().contains(day)) {
-					realprice.put(list.get(i).getSpaceNo(), pricemap.get(list.get(i).getSpaceNo()).get(y).getSpacePrice());
+					realprice.put(list.get(i).getBookingNo(), pricemap.get(list.get(i).getSpaceNo()).get(y).getSpacePrice());
 					System.out.println(realprice);
 				}
 				
 				else if(format1.format(list.get(i).getMaxTime()).equals(pricemap.get(list.get(i).getSpaceNo()).get(y).getPriceEvent())) {
-					realprice.put(list.get(i).getSpaceNo(), pricemap.get(list.get(i).getSpaceNo()).get(y).getSpacePrice());
+					realprice.put(list.get(i).getBookingNo(), pricemap.get(list.get(i).getSpaceNo()).get(y).getSpacePrice());
 				}
 				
 				//키값이 공간번호(i)인 방의 y번째 가격이유가 빌린날짜의 년월일과 같다면 이벤트 가격
 				else if(format2.format(list.get(i).getMaxTime()).equals(pricemap.get(list.get(i).getSpaceNo()).get(y).getPriceEvent())) {
-					realprice.put(list.get(i).getSpaceNo(), pricemap.get(list.get(i).getSpaceNo()).get(y).getSpacePrice());
+					realprice.put(list.get(i).getBookingNo(), pricemap.get(list.get(i).getSpaceNo()).get(y).getSpacePrice());
 					System.out.println(realprice);
 				}
 			}

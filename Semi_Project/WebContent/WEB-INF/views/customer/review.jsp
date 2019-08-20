@@ -1,3 +1,4 @@
+<%@page import="java.sql.ResultSet"%>
 <%@page import="com.kh.customer.model.vo.User"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.kh.host.model.vo.Space"%>
@@ -8,8 +9,6 @@
 	pageEncoding="UTF-8"%>
 <%
 	ArrayList<Review> review = (ArrayList<Review>)request.getAttribute("review");
-	
-	
 	
 %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/sub.css" />
@@ -82,12 +81,16 @@ $(()=>{
         //삭제처리후 돌아올 현재게시판번호도 함께 전송함.
 		location.href="<%=request.getContextPath()%>/customer/customerReviewDelete?spaceNo=<%=s.getSpaceNo()%>&reviewNo="+$(this).val();
 	});
-
 });
+$(document).ready(function() {
+	$("#reviewCnt").append($("#cnt").length);
+	$("#strCnt").append($("#str").length);
+});
+
 </script>
 	<div class="review-tit mt50 clearfix">
 		<h5 class="spaceInfo-tit">
-			이용후기 <span class="dp_ib">후기갯수</span> · 평균평점 <span class="dp_ib">평점</span>
+			이용후기 <span class="dp_ib" id="reviewCnt"></span> · 평균평점 <span class="dp_ib" id="strCnt"></span>
 		</h5>
 	</div>
 	 <!-- 리뷰작성 -->
@@ -125,9 +128,9 @@ $(()=>{
 			<td>
 				<div class="review-conts">
 					<strong>후기 남긴 아이디</strong>
-					<p class="review-con"><%=list.getReviewContent() %></p>
+					<p class="review-con" id="cnt"><%=list.getReviewContent() %></p>
 					<p class="review-time"><%=list.getReviewDate() %></p>
-					<p class="star_rating">
+					<p class="star_rating" id="str">
 					<%
 					System.out.println("별점길이는?="+list.getSpacePoint());
 						if(list.getSpacePoint()==1){

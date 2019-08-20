@@ -4,7 +4,7 @@
 <%@ page import = "java.util.*, com.kh.host.model.vo.*" %>
 <%
 	List<SpaceJoin> spaceList = (List<SpaceJoin>)request.getAttribute("list");
-	String spaceSrch = request.getParameter("spaceSrch");
+	String spaceSrch = request.getParameter("spaceSrch") == null ? "" : request.getParameter("spaceSrch");
 	String spaceType = request.getParameter("spaceType") == null ? "" : request.getParameter("spaceType");
 	String spaceArea = request.getParameter("spaceArea") == null ? "" : request.getParameter("spaceArea");
 	List<SpaceImageFile> imageList = (List<SpaceImageFile>)request.getAttribute("imageList");
@@ -37,8 +37,8 @@ $(()=> {
                 <div class="noFilter">
                     <div>
                         <p>공간 유형</p>
-                        <div class="custom-select">
-                            <select name="spaceType" id="spaceType-select">
+                        <div class="custom-select" id="spaceType-select">
+                            <select name="spaceType">
                             	<option value="">전체</option>
                                 <option value="스터디룸" <%=spaceType.equals("스터디룸")?"selected":"" %>>스터디룸</option>
                                 <option value="공연장" <%=spaceType.equals("공연장")?"selected":"" %>>공연장</option>
@@ -203,7 +203,7 @@ $(()=> {
                     	</a>
                 	</li>
                 <% }} else { %>
-            	<li>조회된 공간이 없습니다.</li>
+            	<div class="no_space">조회된 공간이 없습니다</div>
             <% } %>
             </ul>
         </article>

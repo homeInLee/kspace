@@ -26,7 +26,7 @@
 		<article>
 			<h3 class="tit txt_center">예약 내역 리스트</h3>
 			<!--예약 리스트-->
-			<select name="bookingListSearch" id="">
+			<!-- <select name="bookingListSearch" id="">
 				<option value="">전체</option>
 				<option value="">승인대기</option>
 				<option value="">결제대기</option>
@@ -34,7 +34,7 @@
 				<option value="">이용완료</option>
 				<option value="">취소환불</option>
 				<option value="">변경요청</option>
-			</select>
+			</select> -->
 			<ul class="recom-space clearfix">
 				<%if(list == null || list.isEmpty()){%>
 					<h2 style="text-align: center;">결제 내역이 존재하지 않습니다.</h2>
@@ -53,7 +53,7 @@
 								<p class="recom-price">
 									<span class="fw600">
 									<%=
-										realprice.get(list.get(i).getSpaceNo())
+										realprice.get(list.get(i).getBookingNo())
 									%>
 									</span>원/시간
 								</p>

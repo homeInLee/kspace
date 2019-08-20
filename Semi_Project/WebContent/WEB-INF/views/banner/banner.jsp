@@ -73,8 +73,8 @@ $(document).ready(function(){
 						<textarea name="update" id="update" cols="30" rows="7"></textarea>
 						</td>
 						<td><input type="submit" class="btn-update" value="수정" /></td>						
-						<td><button class="btn-delete" onclick="location.href='<%=request.getContextPath()%>/banner/bannerDelete?bannerNo=<%=b.getBannerNo()%>&renamedFileName=<%=b.getBannerRenamedFileName()%>'">삭제</button></td>
 						</form>
+						<td><button class="btn-delete" onclick="location.href='<%=request.getContextPath()%>/banner/bannerDelete?bannerNo=<%=b.getBannerNo()%>&renamedFileName=<%=b.getBannerRenamedFileName()%>'">삭제</button></td>
 					</tr>
 					<% }} else { %>
 						<td colspan="3">조회된 배너가 없습니다.</td>

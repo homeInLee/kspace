@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="com.kh.host.model.vo.SpaceImageFile"%>
 <%@page import="com.kh.host.model.vo.Company"%>
 <%@page import="com.kh.customer.model.vo.User"%>
@@ -15,6 +16,7 @@
 	int realprice = (int) request.getAttribute("realprice");
 	int price = (int) request.getAttribute("price");
 	SpaceImageFile Img = (SpaceImageFile) request.getAttribute("Img");
+	SimpleDateFormat format1 = new SimpleDateFormat ("yyyy-MM-dd");
 %>
 <%@ include file="/WEB-INF/views/common/header.jsp"%>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/sub.css" />
@@ -78,8 +80,7 @@
 </style>
 <script>
 function bookingCancle(){
-	location.href = "<%=request.getContextPath()%>/customer/bookingCancle?bookingNo=<%=b.getBookingNo()%>
-	"
+	location.href = "<%=request.getContextPath()%>/customer/bookingCancle?bookingNo=<%=b.getBookingNo()%>"
 	}
 </script>
 <div class="sub_container">
@@ -104,12 +105,12 @@ function bookingCancle(){
 						<div
 							style="width: 100%; height: 200px; padding: 10px 30px 10px 30px;">
 							<ul>
-								<li class="sub_li">공간유형&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=s.getSpaceThema()%></li>
-								<li class="sub_li">예약인원&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=s.getMaxBookingPeople()%>~<%=s.getMinBookingPeople()%></li>
+								<li class="sub_li">공간유형&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=s.getSpaceThema() == null ? "없음" : s.getSpaceThema()%></li>
+								<li class="sub_li">예약인원&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=s.getMinBookingPeople()%>~<%=s.getMaxBookingPeople()%></li>
 								<li class="sub_li">추가인원&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1명 초과시
 									<%=price%>원 추가
 								</li>
-								<li class="sub_li">편의시설&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=s.getSpaceFacilities()%></li>
+								<li class="sub_li">편의시설&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=s.getSpaceFacilities() == null ? "없음" : s.getSpaceFacilities()%></li>
 							</ul>
 						</div>
 					</div>
@@ -126,7 +127,7 @@ function bookingCancle(){
 								<li class="sub_li">예약자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=u.getUserName()%></li>
 								<li class="sub_li">연락처&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=u.getPhone()%></li>
 								<li class="sub_li">이메일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=u.getEmail()%></li>
-								<li class="sub_li">요청사항&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=b.getRequest()%></li>
+								<li class="sub_li">요청사항&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=b.getRequest() == null ? "없음" : b.getRequest()%></li>
 							</ul>
 						</div>
 					</div>
@@ -153,10 +154,9 @@ function bookingCancle(){
 				<div class="booking_data_frame2">
 						<div class="booking_data_name">결제 금액</div>
 							<div class="booking_data_list3">
-								<div
-									style="width: 100%; height: 200px; padding: 10px 30px 10px 30px;">
+								<div style="width: 100%; height: 200px; padding: 10px 30px 10px 30px;">
 									<ul>
-										<li class="sub_li">예약날짜&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=b.getMaxTime()%></li>
+										<li class="sub_li">예약날짜&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=format1.format(b.getMinTime())%></li>
 										<li class="sub_li">예약시간&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=(int) Math.ceil((b.getMaxTime().getTime() - b.getMinTime().getTime()) / 1000.0 / 3600.0)%></li>
 										<li class="sub_li">예약인원&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=b.getBookingPeople()%></li>
 										<li class="sub_li">가격&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=realprice%></li>

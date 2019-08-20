@@ -709,6 +709,15 @@
 /*공간 상세보기*/
 .spaceInfo-container {
 	width: 624px;
+	float: left;
+}
+
+.reservation-container {
+	float:right;
+	width: 250px;
+	border:3px solid #ACC800;
+	box-sizing:border-box;
+	background:#fff;
 }
 
 #spaceViewTitleImg {
@@ -967,4 +976,62 @@
 
 .searchMap:first-child {
 	margin-right:15px;
+}
+
+#search-call-wrap {
+	position:fixed;
+	top:0;
+	left:0;
+	background:rgba(0,0,0,0.7);
+	width:100%;
+	height:100%;
+	z-index:99;
+	display:none;
+}
+
+#search-call-wrap > div {
+	position:fixed;
+	width:470px;
+	background:#fff;
+	padding: 60px 30px 30px;
+	top: 50%;
+	left: 50%;
+	transform:translate(-50%, -50%);
+	-webkit-transform:translate(-50%, -50%);
+	box-sizing:border-box;
+	border-radius:10px;
+}
+
+#search-call-wrap > div h3 {
+	font-size:23px;
+	font-weight:400;
+}
+
+#search-call-wrap > div p.call-info {
+	margin:30px 0 40px;
+	padding:15px 0;
+	font-size:20px;
+	border-top:1px solid #ccc;
+	border-bottom:1px solid #ccc;
+	box-sizing:border-box;
+}
+
+#search-call-wrap > div p.call-info span {
+	font-weight:600;
+	color:#ACC800;
+}
+
+#search-call-wrap > div p.call-close {
+	border-radius:10px;
+	background:#ACC800;
+	color:#fff;
+	font-size:18px;
+	padding-top:0;
+	padding:10px 0;
+	cursor:pointer;
+}
+
+.no_space {
+	font-size: 20px;
+	color:#bdbdbd;
 }

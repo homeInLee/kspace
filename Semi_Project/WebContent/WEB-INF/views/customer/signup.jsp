@@ -18,6 +18,7 @@ $(document).ready(function(){
 	$("#hostId").on("change paste keyup", function() {
 		
 		var hostId = $(this).val();
+		var hostPwd = $("#hostPwd").val();
 		
 		$.ajax({
 			type: "post",
@@ -29,14 +30,33 @@ $(document).ready(function(){
 			success: function(result) {
 				if (result == 1) {
                     $("#hostIdCheck").html("아이디를 6글자 이상 입력해주세요");
+                    checkHostId = 1;
                 } else if(result == -1) {
                 	$("#hostIdCheck").html("중복된 아이디입니다");
                 	checkHostId = -1;
                 } else {
                 	$("#hostIdCheck").html("좋은 아이디에요!");
+                	checkHostId = 0;
                 }
 			}
 		});
+		
+		if(hostPwd == hostId) {
+			$("#hostPwdCheck").html("비밀번호가 ID와 같습니다");
+		} else {
+			$("#hostPwdCheck").html("");
+		}
+	});
+	
+	$('#hostPwd').on("change paste keyup", function(){
+		var hostPwd = $(this).val();
+		var hostId = $("#hostId").val();
+		
+		   if(hostPwd == hostId) {
+			   $("#hostPwdCheck").html("비밀번호가 ID와 같습니다");
+		   } else {
+			   $("#hostPwdCheck").html("");
+		   }
 	});
 	
 	$('#hostPwd2').on("change paste keyup", function(){
@@ -65,6 +85,7 @@ $(document).ready(function(){
 	$("#memberId").on("change paste keyup", function() {
 		
 		var memberId = $(this).val();
+		var memberPwd = $("#memberPwd").val();
 		check = -1;
 		
 		$.ajax({
@@ -77,14 +98,33 @@ $(document).ready(function(){
 			success: function(result) {
 				if (result == 1) {
                     $("#memberIdCheck").html("아이디를 6글자 이상 입력해주세요");
+                    checkMemberId = 1;
                 } else if(result == -1) {
                 	$("#memberIdCheck").html("중복된 아이디입니다");
-                	checkMemberId = -1
+                	checkMemberId = -1;
                 } else {
                 	$("#memberIdCheck").html("좋은 아이디에요!");
+                	checkMemberId = 0;
                 }
 			}
 		});
+		
+		if(memberPwd == memberId) {
+			$("#memberPwdCheck").html("비밀번호가 ID와 같습니다");
+		} else {
+			$("#memberPwdCheck").html("");
+		}
+	});
+	
+	$('#memberPwd').on("change paste keyup", function(){
+		var memberPwd = $(this).val();
+		var memberId = $("#memberId").val();
+		
+		   if(memberPwd == memberId) {
+			   $("#memberPwdCheck").html("비밀번호가 ID와 같습니다");
+		   } else {
+			   $("#memberPwdCheck").html("");
+		   }
 	});
 	
 	$('#memberPwd2').on("change paste keyup", function(){
@@ -314,6 +354,7 @@ function memberEnrollCheck() {
 		            <span id="memberIdCheck" class="effectCheck"></span>
 		            <input type="text" placeholder="이름" id="memberName" name="memberName" required>
 		            <input type="password" placeholder="비밀번호 (영어, 숫자만 가능 6~12글자)"" id="memberPwd" name="memberPwd" required>
+		            <span id="memberPwdCheck" class="effectCheck"></span>
 		            <input type="password" placeholder="비밀번호 확인" id="memberPwd2" name="memberPwd2" required>
 		            <span id="memberPwd2Check" class="effectCheck"></span>
 		            <input type="text" placeholder="전화번호 (- 제외)" id="memberPhone" name="memberPhone" required>
@@ -333,13 +374,14 @@ function memberEnrollCheck() {
 		            <span id="hostIdCheck" class="effectCheck"></span>
 		            <input type="text" placeholder="이름" id="hostName" name="hostName" required>
 		            <input type="password" placeholder="비밀번호 (영어, 숫자만 가능 6~12글자)" id="hostPwd" name="hostPwd" required>
+		            <span id="hostPwdCheck" class="effectCheck"></span>
 		            <input type="password" placeholder="비밀번호 확인" id="hostPwd2" name="hostPwd2" required>
 		            <span id="hostPwd2Check" class="effectCheck"></span>
 		            <input type="text" placeholder="전화번호 (- 제외)" id="hostPhone" name="hostPhone" required>
 		            <input type="text" placeholder="이메일" id="hostEmail" name="hostEmail">
 		            <input type="text" placeholder="회사 이름" id="companyName" name="companyName" required>
 		            <input type="text" placeholder="회사 주소" id="companyPlace" name="companyPlace" required>
-		            <input type="number" placeholder="수수료" id="companyFee" name="companyFee">
+		            <input type="number" placeholder="수수료" id="companyFee" name="companyFee" step="10">
 		            <span id="companyFeeCheck" class="effectCheck"></span>
 					<div class="txt_center">
 						<input type="submit" value="회원가입">
