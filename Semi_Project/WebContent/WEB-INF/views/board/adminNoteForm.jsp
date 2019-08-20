@@ -4,6 +4,16 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/sub.css" />
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css" />
 <script src="<%=request.getContextPath()%>/js/jquery-3.4.1.js"></script>
+<style>
+#add{
+background: #FDBB00;
+	width: 70px;
+	height: 30px;
+	text-align: center;
+	display: block;
+	margin: auto;
+}
+</style>
 <div class="sub_container">
     <section class="subPage">
         <article>
@@ -27,9 +37,9 @@
          			<td><input type="file" name="file"/></td>
          		</tr>
          		<tr>
-         			<th>
-         				<input type="submit" value="등록" onclick="return validate();"/>
-         			</th>
+         			<td colspan="2">
+         				<input type="submit" id="add" value="등록" onclick="return validate();"/>         			
+         			</td>
          		</tr>
          	</table>
          	</form>
