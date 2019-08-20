@@ -718,6 +718,12 @@
 	border:3px solid #ACC800;
 	box-sizing:border-box;
 	background:#fff;
+	padding:25px 15px 15px 15px;
+	box-sizing:border-box;
+}
+
+.reservation-container ul li {
+	padding:10px 0;
 }
 
 #spaceViewTitleImg {
