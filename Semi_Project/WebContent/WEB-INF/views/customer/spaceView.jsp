@@ -46,6 +46,10 @@
 %>
 <script>
 $(()=>{
+	$(".call-close").click(function(){
+		$("#search-call-wrap").fadeOut();
+	});
+	
 	$("#jjim-btn").click(function(e){
 		if(<%=memberLoggedIn==null %>){
 			alert("로그인 후 이용하실 수 있습니다.");
@@ -128,21 +132,20 @@ function goUpdateMySpace(){
 </script>
 <style>
 #spaceViewTitleImg {
-	background: url('<%=request.getContextPath() %>/upload/host/<%=yImg %>')
-		no-repeat center center;
-	background-size: cover;
+	background:url('<%=request.getContextPath() %>/upload/host/<%=yImg %>') no-repeat center center;
+	background-size:cover;
 }
 
 #my-calendar {
 	border: #ccc solid 1px;
 	font-size: 27px;
 	height: 40px;
-	width: 150px;
+	width: 214px;
 	text-align: center;
 }
 
 .time {
-	width: 75px;
+	width: 105px;
 	height: 40px;
 	border: #ccc solid 1px;
 	font-size: 27px;
@@ -150,43 +153,30 @@ function goUpdateMySpace(){
 }
 
 #request1 {
-	width: 234px;
+	width: 214px;
 	height: 100px;
 	font-size: 20px;
 	border: #ccc solid 1px;
-	margin-left: 5px;
 }
 
 #paybtn {
-
-    width:100px;
-
+    width:214px;
     background-color: #ACC800;
-
     border: none;
-
     color:#fff;
-
-    padding: 15px 0;
-
+    padding: 10px 0;
     text-align: center;
-
     text-decoration: none;
-
     display: inline-block;
-
     font-size: 15px;
-
-    margin: 4px;
-
     cursor: pointer;
-
 }
 div#select_box {
   position: relative;
-  width: 200px;
+  width: 214px;
   height: 32px;
-  background: url(http://cfile1.uf.tistory.com/image/27423E43565F8EF627B215) 0 center no-repeat;
+  background:url(http://cfile1.uf.tistory.com/image/27423E43565F8EF627B215) 0 center no-repeat;
+  background-size:100%;
   /* 화살표 이미지 */
 }
 
@@ -329,28 +319,34 @@ function goUpdateMySpace(){
 				<script
 					src="<%=request.getContextPath()%>/js/jquery.timepicker.min.js"></script>
 				<form method="post" action="<%=request.getContextPath()%>/customer/insertBooking" id="insertBookingFrm">
-						&nbsp;&nbsp;<h5 class="spaceInfo-tit">예약 하기</h5>
+						<h5 class="spaceInfo-tit">예약 하기</h5>
 									<ul>
-										<label for="my-calendar">&nbsp;&nbsp;예약 날짜&nbsp;&nbsp;&nbsp;&nbsp;</label>
-										<input id="my-calendar" name="myCalendar" type="text" class="datepicker-here" data-language="ko"/><br /><br />
-										<label for="timepicker1">&nbsp;&nbsp;예약시간&nbsp;&nbsp;&nbsp;&nbsp;</label>
-										<input type="text" id="timepicker1" name="timepicker1" class="time"/>
-										<input type="text" id="timepicker2" name="timepicker2" class="time"/>
-										<br>
-										<br />
-										&nbsp;&nbsp;요구사항<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="request1" id="request1" />
-										<br>
-										<br> 
-										&nbsp;&nbsp;예약 인원&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										<div id="select_box">
-										  <label for="color">인원수</label>
-										  <select name="people" id="color" title="select color">
-										<%for(int i=s.getMinBookingPeople(); i<s.getMaxBookingPeople(); i++){ %>
-										<option value="<%=i%>"><%=i%>명</option>
-										<%} %>
-										</select>
-										</div>
-										&nbsp;&nbsp;<input type="button" value="예약하기" id="paybtn"/>
+										<li>
+											<label for="my-calendar">예약 날짜</label>
+											<input id="my-calendar" name="myCalendar" type="text" class="datepicker-here" data-language="ko"/>
+										</li>
+										<li>
+											<label for="timepicker1">예약시간</label><br />
+											<input type="text" id="timepicker1" name="timepicker1" class="time"/>
+											<input type="text" id="timepicker2" name="timepicker2" class="time"/>
+										</li>
+										<li>
+											요구사항<br><input type="text" name="request1" id="request1" />
+										</li>
+										<li>
+											예약 인원
+											<div id="select_box">
+											  <label for="color">인원수</label>
+											  <select name="people" id="color" title="select color">
+											<%for(int i=s.getMinBookingPeople(); i<s.getMaxBookingPeople(); i++){ %>
+											<option value="<%=i%>"><%=i%>명</option>
+											<%} %>
+											</select>
+											</div>
+										</li>
+										<li>
+											<input type="button" value="예약하기" id="paybtn"/>
+										</li>
 									</ul>
 								</div>
 							</div>
