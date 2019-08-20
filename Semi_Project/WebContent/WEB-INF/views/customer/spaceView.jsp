@@ -136,6 +136,10 @@ function goDelMySpace(){
 function openCall(){
 	$("#search-call-wrap").fadeIn();
 }
+
+function goUpdateMySpace(){
+	location.href="<%=request.getContextPath() %>/host/spaceHostListView?spaceNo=<%=s.getSpaceNo() %>";
+}
 </script>
 <style>
 	#spaceViewTitleImg {
@@ -239,6 +243,7 @@ function openCall(){
 				</select> 
 				<input type="submit" value="예약하기" />
 			</form>
+			<div class="clearfix">
         	<div class="spaceInfo-container">
         		<h3 class="tit"><%=s.getSpaceName()!=null?s.getSpaceName():"" %></h3>
 	            <p class="fw300"><%=s.getSpaceSlogan()!=null?s.getSpaceSlogan():"" %></p>
@@ -322,8 +327,10 @@ function openCall(){
             <div class="reservation-container">
             <!-- 예약 -->
             </div>
+            </div>
             <%if(memberLoggedIn!=null && memberLoggedIn.getUserId().equals(company.getUserId())){ %>
             	<div class="spaceEnroll-btn txt_center clearfix">
+            		<a href="javascript:goUpdateMySpace();" class="dp_ib fw600">수정</a>
             		<a href="javascript:goDelMySpace();" class="dp_ib fw600">삭제</a>
             	</div>
             <%} %>
