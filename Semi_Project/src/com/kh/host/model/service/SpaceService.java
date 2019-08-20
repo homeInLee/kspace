@@ -177,5 +177,11 @@ public class SpaceService {
 		close(conn);
 		return spaceImg;
 	}
+	public List<Space> spaceListbyCompanyNo(int companyNo) {
+		Connection conn = getConnection();
+		List<Space> slist = new SpaceDAO().spaceListbyCompanyNo(conn, companyNo);
+		close(conn);
+		return slist;
+	}
 	
 }

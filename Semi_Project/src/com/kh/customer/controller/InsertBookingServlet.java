@@ -69,6 +69,7 @@ public class InsertBookingServlet extends HttpServlet {
 
 				if(myCalendar.equals(format2.format(blist.get(i).getMinTime()))) {
 					if(Integer.parseInt(timepicker1.substring(0,2))<Integer.parseInt(format3.format(blist.get(i).getMinTime()).substring(0,2))) {
+						
 						if(Integer.parseInt(timepicker2.substring(0,2))<=Integer.parseInt(format3.format(blist.get(i).getMinTime()).substring(0,2))) {
 							msg = "예약이 성공하였습니다.";
 						}
@@ -78,7 +79,7 @@ public class InsertBookingServlet extends HttpServlet {
 						}
 					}
 					else if(Integer.parseInt(timepicker1.substring(0,2))>=Integer.parseInt(format3.format(blist.get(i).getMaxTime()).substring(0,2))) {
-						msg = myCalendar+"은"+format3.format(blist.get(i).getMinTime()).substring(0,2)+"~"+format3.format(blist.get(i).getMaxTime()).substring(0,2)+"에 예약이 차있습니다.";
+						
 						if(Integer.parseInt(timepicker2.substring(0,2))>Integer.parseInt(format3.format(blist.get(i).getMaxTime()).substring(0,2))) {
 							msg = "예약이 성공하였습니다.";
 						}

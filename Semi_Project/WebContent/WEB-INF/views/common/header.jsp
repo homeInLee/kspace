@@ -196,7 +196,7 @@ $(()=> {
 	                	<%} 
 	                	if(!memberLoggedIn.getUserId().equals("admin") && memberLoggedIn.getFlag().equals("H")){%>
 	                <li><a href="<%=request.getContextPath()%>/host/mySpaceList" class="dp_block">호스트 공간 리스트</a></li>
-	                <li><a href="<%-- <%=request.getContextPath()%>/host/hostBookingList<%=memberLoggedIn == null ? "":"?userId="+memberLoggedIn.getUserId() %> --%>" class="dp_block">예약 현황 리스트</a></li>
+	                <li><a href="<%=request.getContextPath()%>/host/hostBookingList<%=memberLoggedIn == null ? "":"?userId="+memberLoggedIn.getUserId() %>" class="dp_block">예약 현황 리스트</a></li>
 	                	<%}
 	                } %>
 	            </ul>
