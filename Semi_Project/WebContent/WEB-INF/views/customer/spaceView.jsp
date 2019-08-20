@@ -136,6 +136,10 @@ function goDelMySpace(){
 function openCall(){
 	$("#search-call-wrap").fadeIn();
 }
+
+function goUpdateMySpace(){
+	location.href="<%=request.getContextPath() %>/host/spaceHostListView?spaceNo=<%=s.getSpaceNo() %>";
+}
 </script>
 <style>
 	#spaceViewTitleImg {
@@ -239,6 +243,7 @@ function openCall(){
 				</select> 
 				<input type="submit" value="예약하기" />
 			</form>
+			<div class="clearfix">
         	<div class="spaceInfo-container">
         		<h3 class="tit"><%=s.getSpaceName()!=null?s.getSpaceName():"" %></h3>
 	            <p class="fw300"><%=s.getSpaceSlogan()!=null?s.getSpaceSlogan():"" %></p>
@@ -322,8 +327,10 @@ function openCall(){
             <div class="reservation-container">
             <!-- 예약 -->
             </div>
+            </div>
             <%if(memberLoggedIn!=null && memberLoggedIn.getUserId().equals(company.getUserId())){ %>
             	<div class="spaceEnroll-btn txt_center clearfix">
+            		<a href="javascript:goUpdateMySpace();" class="dp_ib fw600">수정</a>
             		<a href="javascript:goDelMySpace();" class="dp_ib fw600">삭제</a>
             	</div>
             <%} %>
@@ -355,7 +362,7 @@ function openCall(){
 			});
 			// 인포윈도우로 장소에 대한 설명을 표시합니다
 			var infowindow = new kakao.maps.InfoWindow({
-			    content: '<div style="width:150px;text-align:center;padding:6px 0;"><%=company.getCompanyName()%></div>'
+			    content: '<div style="width:150px;text-align:center;padding:6px 0;"><%=s.getSpaceName()%></div>'
 			});
 			infowindow.open(map, marker);
 			// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
