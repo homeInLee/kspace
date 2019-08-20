@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/common/header.jsp" %>
+	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/views/common/header.jsp"%>
 <%@page import="com.kh.admin.banner.model.vo.SpaceAll"%>
 <%@page import="java.util.List"%>
 <%@page import="com.kh.host.model.vo.Company"%>
@@ -44,21 +44,8 @@
 	SpaceDibs jjimCheck = (SpaceDibs)request.getAttribute("jjimCheck");
 	User u = (User)request.getAttribute("user");
 %>
-<script src="<%=request.getContextPath()%>/js/datepicker.min.js"></script>
-<!-- 언어설정 -->
-<script src="<%=request.getContextPath()%>/js/i18n/datepicker.en.js"></script>
-<script src="<%=request.getContextPath()%>/js/i18n/datepicker.ko.js"></script>
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/datepicker.min.css" />
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/css/jquery.timepicker.css" />
-<script src="<%=request.getContextPath()%>/js/jquery.timepicker.min.js"></script>
 <script>
 $(()=>{
-	$(".call-close").click(function(){
-		$("#search-call-wrap").fadeOut();
-	});
-	
 	$("#jjim-btn").click(function(e){
 		if(<%=memberLoggedIn==null %>){
 			alert("로그인 후 이용하실 수 있습니다.");
@@ -132,40 +119,100 @@ function goDelMySpace(){
 	<%-- 로그인한 아이디와 <%=c.getUserId() %>가 맞는지 검사하기 --%>
 	$("form[name=delMySpaceFrm]").submit();
 }
-
 function openCall(){
-	$("#search-call-wrap").fadeIn();
+    $("#search-call-wrap").fadeIn();
+}
+function goUpdateMySpace(){
+    location.href="<%=request.getContextPath() %>/host/spaceHostListView?spaceNo=<%=s.getSpaceNo() %>";
+}
+</script>
+<style>
+#spaceViewTitleImg {
+	background: url('<%=request.getContextPath() %>/upload/host/<%=yImg %>')
+		no-repeat center center;
+	background-size: cover;
+}
+
+#my-calendar {
+	border: #ccc solid 1px;
+	font-size: 27px;
+	height: 40px;
+	width: 150px;
+	text-align: center;
+}
+
+.time {
+	width: 75px;
+	height: 40px;
+	border: #ccc solid 1px;
+	font-size: 27px;
+	text-align: center;
+}
+
+#request1 {
+	width: 234px;
+	height: 100px;
+	font-size: 20px;
+	border: #ccc solid 1px;
+	margin-left: 5px;
+}
+
+#paybtn {
+
+    width:100px;
+
+    background-color: #ACC800;
+
+    border: none;
+
+    color:#fff;
+
+    padding: 15px 0;
+
+    text-align: center;
+
+    text-decoration: none;
+
+    display: inline-block;
+
+    font-size: 15px;
+
+    margin: 4px;
+
+    cursor: pointer;
+
+}
+div#select_box {
+  position: relative;
+  width: 200px;
+  height: 32px;
+  background: url(http://cfile1.uf.tistory.com/image/27423E43565F8EF627B215) 0 center no-repeat;
+  /* 화살표 이미지 */
+}
+
+div#select_box label {
+  position: absolute;
+  font-size: 14px;
+  color: #fff;
+  top: 7px;
+  left: 12px;
+  letter-spacing: 1px;
+}
+
+div#select_box select#color {
+  width: 100%;
+  height: 32px;
+  min-height: 32px;
+  line-height: 32px;
+  padding: 0 10px;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  /* IE 8 */
 }
 
 function goUpdateMySpace(){
 	location.href="<%=request.getContextPath() %>/host/spaceHostListView?spaceNo=<%=s.getSpaceNo() %>";
 }
-</script>
-<style>
-	#spaceViewTitleImg {
-		background:url('<%=request.getContextPath() %>/upload/host/<%=yImg %>') no-repeat center center;
-		background-size:cover;
-	}
-	#my-calendar {
-		border: #ccc solid 1px;
-		font-size: 30px;
-		height: 40px;
-		width: 160px;
-		text-align: center;
-	}
-	.time {
-		width: 120px;
-		height: 40px;
-		border: #ccc solid 1px;
-		font-size: 30px;
-		text-align: center;
-	}
-	#request1{
-		width: 369px;
-		height: 31px;
-		font-size: 20px;
-		border: #ccc solid 1px;
-	}
 </style>
 <div class="sub_container">
 	<form action="<%=request.getContextPath() %>/host/delMySpace" name="delMySpaceFrm" method="post">
@@ -190,59 +237,7 @@ function goUpdateMySpace(){
 	</section>
     <section class="spaceView-container subPage">
         <article class="clearfix">
-        	<form method="post" action="<%=request.getContextPath()%>/customer/insertBooking">
-				<h1>AIR DATEPICKER</h1>
-				<div>
-					<input id="my-calendar" name="myCalendar" type="text" class="datepicker-here" data-language="ko" /> 
-					<input type="text" id="timepicker1" name="timepicker1" class="time" /> 
-					<input type="text" id="timepicker2" name="timepicker2" class="time" />
-				</div>
-				<script>
-				var date = new Date();
-				var year = date.getFullYear();
-				var month = date.getMonth()+3;
-				var month2 = date.getMonth()+1;
-				var clockDate = date.getDate()+2;
-				var strDate = year+"-"+month+"-"+clockDate
-				var strDate2 = year+"-"+month2+"-"+clockDate
-				var nonpdate = new Date(strDate2)
-				var plusdate = new Date(strDate);
-				$("#my-calendar").datepicker({
-					dateFormat: 'yyyy-mm-dd',
-					minDate: nonpdate,
-					maxDate: plusdate
-				});
-				</script>
-				<script>
-				$('#timepicker1').timepicker({
-					'minTime' : '<%=s.getBookingTime().substring(0,2)%>:00',
-					'maxTime' : '<%=s.getBookingTime().substring(6,8)%>:00',
-					'showDuration': true,
-					'timeFormat': 'H:i',
-				});
-				$('#timepicker2').timepicker({
-					'minTime' : '<%=s.getBookingTime().substring(0,2)%>:00',
-					'maxTime' : '<%=s.getBookingTime().substring(6,8)%>:00',
-					'showDuration': true,
-					'timeFormat': 'H:i',
-				});
-				</script>
-				<input type="hidden" name="spaceNo" value="<%=s.getSpaceNo()%>" />
-				<input type="hidden" name="userId" value="<%=memberLoggedIn == null ? "" : memberLoggedIn.getUserId() %>" />
-				<br />
-				요구사항 
-				<input type="text" name="request1" id="request1"/>
-				<br />
-				<br />
-				<select name="people">
-					<option value="">인원수</option>
-					<%for(int i=s.getMinBookingPeople(); i<s.getMaxBookingPeople(); i++){ %>
-					<option value="<%=i%>"><%=i%>명
-					</option>
-					<%} %>
-				</select> 
-				<input type="submit" value="예약하기" />
-			</form>
+			<div class="clearfix">
 			<div class="clearfix">
         	<div class="spaceInfo-container">
         		<h3 class="tit"><%=s.getSpaceName()!=null?s.getSpaceName():"" %></h3>
@@ -325,20 +320,126 @@ function goUpdateMySpace(){
 	            <%@ include file="/WEB-INF/views/customer/review.jsp" %>
         	</div>
             <div class="reservation-container">
-            <!-- 예약 -->
-            </div>
-            </div>
-            <%if(memberLoggedIn!=null && memberLoggedIn.getUserId().equals(company.getUserId())){ %>
-            	<div class="spaceEnroll-btn txt_center clearfix">
-            		<a href="javascript:goUpdateMySpace();" class="dp_ib fw600">수정</a>
-            		<a href="javascript:goDelMySpace();" class="dp_ib fw600">삭제</a>
-            	</div>
-            <%} %>
-        </article>
-    </section>
+				<script src="<%=request.getContextPath()%>/js/datepicker.min.js"></script>
+				<!-- 언어설정 -->
+				<script src="<%=request.getContextPath()%>/js/i18n/datepicker.en.js"></script>
+				<script src="<%=request.getContextPath()%>/js/i18n/datepicker.ko.js"></script>
+				<link rel="stylesheet" href="<%=request.getContextPath()%>/css/datepicker.min.css" />
+				<link rel="stylesheet" href="<%=request.getContextPath()%>/css/jquery.timepicker.css" />
+				<script
+					src="<%=request.getContextPath()%>/js/jquery.timepicker.min.js"></script>
+				<form method="post" action="<%=request.getContextPath()%>/customer/insertBooking" id="insertBookingFrm">
+						&nbsp;&nbsp;<h5 class="spaceInfo-tit">예약 하기</h5>
+									<ul>
+										<label for="my-calendar">&nbsp;&nbsp;예약 날짜&nbsp;&nbsp;&nbsp;&nbsp;</label>
+										<input id="my-calendar" name="myCalendar" type="text" class="datepicker-here" data-language="ko"/><br /><br />
+										<label for="timepicker1">&nbsp;&nbsp;예약시간&nbsp;&nbsp;&nbsp;&nbsp;</label>
+										<input type="text" id="timepicker1" name="timepicker1" class="time"/>
+										<input type="text" id="timepicker2" name="timepicker2" class="time"/>
+										<br>
+										<br />
+										&nbsp;&nbsp;요구사항<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="request1" id="request1" />
+										<br>
+										<br> 
+										&nbsp;&nbsp;예약 인원&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<div id="select_box">
+										  <label for="color">인원수</label>
+										  <select name="people" id="color" title="select color">
+										<%for(int i=s.getMinBookingPeople(); i<s.getMaxBookingPeople(); i++){ %>
+										<option value="<%=i%>"><%=i%>명</option>
+										<%} %>
+										</select>
+										</div>
+										&nbsp;&nbsp;<input type="button" value="예약하기" id="paybtn"/>
+									</ul>
+								</div>
+							</div>
+					</div>
+					
+					<input type="hidden" name="spaceNo" value="<%=s.getSpaceNo()%>" />
+					<input type="hidden" name="userId" value="<%=memberLoggedIn == null ? "" : memberLoggedIn.getUserId() %>" />
+					<script>
+				var date = new Date();
+				var year = date.getFullYear();
+				var month = date.getMonth()+3;
+				var month2 = date.getMonth()+1;
+				var clockDate = date.getDate()+2;
+				var strDate = year+"-"+month+"-"+clockDate
+				var strDate2 = year+"-"+month2+"-"+clockDate
+				var nonpdate = new Date(strDate2)
+				var plusdate = new Date(strDate);
+				$("#my-calendar").datepicker({
+					dateFormat: 'yyyy-mm-dd',
+					minDate: nonpdate,
+					maxDate: plusdate
+				});
+				</script>
+					<script>
+				$('#timepicker1').timepicker({
+					'minTime' : '<%=s.getBookingTime().substring(0,2)%>:00',
+					'maxTime' : '<%=s.getBookingTime().substring(6,8)%>:00',
+					'timeFormat': 'H:i',
+					'step': 60 
+				});
+				$('#timepicker2').timepicker({
+					'minTime' : '<%=s.getBookingTime().substring(0,2)%>:00',
+					'maxTime' : '<%=s.getBookingTime().substring(6,8)%>:00',
+					'timeFormat': 'H:i',
+					'step': 60 
+				});
+				</script>
+				</form>
+			</div>
+			<%if(memberLoggedIn!=null && memberLoggedIn.getUserId().equals(company.getUserId())){ %>
+               <div class="spaceEnroll-btn txt_center clearfix">
+                   <a href="javascript:goUpdateMySpace();" class="dp_ib fw600">수정</a>
+                   <a href="javascript:goDelMySpace();" class="dp_ib fw600">삭제</a>
+               </div>
+           <%} %>
+
+			
+		</article>
+	</section>
 </div>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script>
+$(()=>{
+	$(function() {
+		  var select = $("select#color");
+
+		  select.change(function() {
+		    var select_name = $(this).children("option:selected").text();
+		    $(this).siblings("label").text(select_name);
+		  });
+		});
+	
+$("#paybtn").click(function(e){
+IMP.init('imp06794372');
+IMP.request_pay({
+    pg : 'kakaopay',
+    pay_method : 'card',
+    merchant_uid : 'merchant_' + new Date().getTime(),
+    name : '<%=s.getSpaceName()%>예약 결제',
+    amount : 1400,
+    buyer_email : '<%=memberLoggedIn == null ? "" : memberLoggedIn.getEmail()%>',
+    buyer_name : '<%=memberLoggedIn == null ? "" : memberLoggedIn.getUserName()%>',
+    buyer_tel : '<%=memberLoggedIn == null ? "" : memberLoggedIn.getPhone()%>',
+    buyer_postcode : '123-456'
+}, function (rsp) {
+    if ( rsp.success ) {
+    	$("#insertBookingFrm").submit();
+    } 
+    else {
+        var msg = '결제를 취소하였습니다.';
+        
+        alert(msg);
+    }
+});
+});
+});
+</script>
 <script type="text/javascript"
-		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=17a175acb43ce7feb97791cd23eb85e7&libraries=services"></script>
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=17a175acb43ce7feb97791cd23eb85e7&libraries=services"></script>
 <script>
 	var mapContainer = document.getElementById('spaceCompanyInfo-map'), // 지도를 표시할 div 
 	mapOption = {
@@ -372,4 +473,4 @@ function goUpdateMySpace(){
 		}	 
 	});
 </script>
-<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+<%@ include file="/WEB-INF/views/common/footer.jsp"%>

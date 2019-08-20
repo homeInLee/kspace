@@ -194,7 +194,7 @@ $(()=> {
 	                <li><a href="<%=request.getContextPath()%>/banner/information" class="dp_block">배너 등록</a></li>
 	                <li><a href="<%=request.getContextPath()%>/admin/spaceChkList" class="dp_block">관리자 공간 검수 리스트</a></li>
 	                	<%} 
-	                	if(memberLoggedIn.getFlag().equals("H")){%>
+	                	if(!memberLoggedIn.getUserId().equals("admin") && memberLoggedIn.getFlag().equals("H")){%>
 	                <li><a href="<%=request.getContextPath()%>/host/mySpaceList" class="dp_block">호스트 공간 리스트</a></li>
 	                	<%}
 	                } %>

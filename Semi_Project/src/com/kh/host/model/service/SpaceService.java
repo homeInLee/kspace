@@ -171,5 +171,11 @@ public class SpaceService {
 		close(conn);
 		return company;
 	}
+	public SpaceImageFile selectSpaceImgBySpaceNoSelY(int spaceNo) {
+		Connection conn = getConnection();
+		SpaceImageFile spaceImg = new SpaceDAO().selectSpaceImgBySpaceNoSelY(conn, spaceNo);
+		close(conn);
+		return spaceImg;
+	}
 	
 }

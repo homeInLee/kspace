@@ -21,6 +21,7 @@ import com.kh.host.model.service.SpacePriceService;
 import com.kh.host.model.service.SpaceService;
 import com.kh.host.model.vo.Company;
 import com.kh.host.model.vo.Space;
+import com.kh.host.model.vo.SpaceImageFile;
 import com.kh.host.model.vo.SpacePrice;
 
 /**
@@ -78,11 +79,12 @@ public class BookingSelectServlet extends HttpServlet {
 		//주소 = company = c.getCompanyPlace()
 		
 		//결제금액 = bookingNo로 날짜, 시간, 인원, spaceNo구하고 spaceNo로 price_tbl로가서  날짜에 맞는 가격 구하기
-		System.out.println((int)Math.ceil((b.getMinTime().getTime()-b.getMaxTime().getTime())/1000.0/3600.0));
+		System.out.println((int)Math.ceil((b.getMaxTime().getTime()-b.getMinTime().getTime())/1000.0/3600.0));
 		//예약날짜 = booking = b.getMaxTime()
 		//예약시간 = booking = (int)Math.ceil((b.getMinTime().getTime()-b.getMaxTime().getTime())/1000.0/3600.0)
 		//인원 = booking = b.getBookingPeople()
 		//총가격 = price_tbl(price)*booking_tbl(people)*booking_tbl(time)
+		SpaceImageFile Img = new SpaceService().selectSpaceImgBySpaceNoSelY(s.getSpaceNo());
 		SimpleDateFormat format2 = new SimpleDateFormat ("yyyy-MM-dd");
 		int price = 0;
 		Calendar cal = Calendar.getInstance(); 
@@ -133,7 +135,7 @@ public class BookingSelectServlet extends HttpServlet {
 				price = sp.get(i).getSpacePrice();
 			}
 		}
-		int realprice = price*b.getBookingPeople()*(int)Math.ceil((b.getMinTime().getTime()-b.getMaxTime().getTime())/1000.0/3600.0);
+		int realprice = price*b.getBookingPeople()*(int)Math.ceil((b.getMaxTime().getTime()-b.getMinTime().getTime())/1000.0/3600.0);
 		
 		System.out.println(realprice);
 		
@@ -144,6 +146,7 @@ public class BookingSelectServlet extends HttpServlet {
 		request.setAttribute("hu", hu);//hostuser
 		request.setAttribute("realprice", realprice);//realprice
 		request.setAttribute("price", price);
+		request.setAttribute("Img", Img);
 		request.getRequestDispatcher("/WEB-INF/views/customer/bookingSelect.jsp").forward(request, response);
 	}
 
