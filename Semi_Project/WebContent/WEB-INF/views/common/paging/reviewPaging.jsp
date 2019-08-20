@@ -12,15 +12,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="<%=request.getContextPath()%>/js/jquery-3.4.1.js"></script>
 <style type="text/css">
-/* body{
-    text-align:center;
-} */
 #paging{
     font-size: 15pt;
 }
 </style>
 <div id="paging">
-<!-- 1~10까지 있는 페이지의 페이징 -->
 <c:url var="action" value="/customer/spaceView"/>
 <c:if test="${param.prev}">
     <a href="${action}?spaceNo=<%=space.getSpaceNo() %>&cPage=${param.startPage}">prev</a>

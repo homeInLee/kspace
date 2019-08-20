@@ -32,6 +32,32 @@
 						+"&rName="+rName;
 	}
 </script>
+<style>
+.assFrm{
+overflow: hidden;
+}
+#btn-add{
+	background: #FDBB00;
+	width: 70px;
+	height: 30px;
+	text-align: center;
+	display: block;
+	margin: auto;
+	margin-top: 30px;
+}
+#delBtn{
+ background: #FDBB00;
+ width: 70px;
+height: 30px;
+float: right;
+}
+#upBtn{
+background: #FDBB00;
+width: 70px;
+height: 30px;
+float: right;	
+}
+</style>
 <div class="sub_container">
 	<section class="subPage">
 		<article>
@@ -58,13 +84,13 @@
 								<li>
 									<div class="noteBox">
 										<input type="hidden" value="<%=b.getBoardNo() %>"/>
-										<p>
+										<p style="text-align: center;">
 										<%=b.getBoardContent() %>
 										</p>
 										<p>
 										<input type="hidden" value="<%=b.getBoardDate() %>"/>
 										</p>
-										<p>										
+										<p style="text-align: center;">										
 										<%if(b.getOriginalFileName() != null){ %>								
 										<img src="<%=request.getContextPath()%>/upload/board/<%=b.getRenameFileName() %>" alt="" />
 										<%} %>
@@ -77,15 +103,15 @@
 										</p>
 									</div>
 								</li>
-								<li>
+								<li class="addFrm">
 								<%if(memberLoggedIn != null &&"admin".equals(memberLoggedIn.getUserId())){ %>
-								<input type="button" value="수정" onclick="updateBoard();"/>
+								<input type="button" id="upBtn" value="수정" onclick="updateBoard();"/>
 								<form action="<%=request.getContextPath()%>/admin/adminNoteUpdate"
 										id="boardUpdate" method="post">
 										<input type="hidden" name="boardNo" value="<%=b.getBoardNo()%>" /> 
 										<input type="hidden" name="renamedFileName" value="<%=b.getRenameFileName() != null ? b.getRenameFileName() : ""%>" />
 								</form>
-								<input type="button" value="삭제"  onclick="deleteBoard();"/>
+								<input type="button" id="delBtn" value="삭제"  onclick="deleteBoard();"/>
 								<form action="<%=request.getContextPath()%>/admin/adminNoteDel"
 										id="boardDelete" method="post">
 										<input type="hidden" name="boardNo" value="<%=b.getBoardNo()%>" /> 
@@ -99,7 +125,8 @@
 								}
 								function deleteBoard() {
 									if(!confirm("정말하시겠습니까?")){
-										return;
+										return;.
+										000
 									}
 									$("#boardDelete").submit();
 								}
@@ -114,6 +141,9 @@
 					</ul>
 				</div>
 			</div>
+			<%if(memberLoggedIn != null &&"admin".equals(memberLoggedIn.getUserId())){ %>
+			<input type="button" value="등록" id="btn-add" onclick="upload();"/>
+			<%} %>
 			<jsp:include page="/WEB-INF/views/common/paging/notePaging.jsp">
 			    <jsp:param value="${paging.page}" name="page"/>
 			    <jsp:param value="${paging.startPage}" name="startPage"/>
@@ -121,9 +151,6 @@
 			    <jsp:param value="${paging.prev}" name="prev"/>
 			    <jsp:param value="${paging.next}" name="next"/>
 			</jsp:include>
-			<%if(memberLoggedIn != null &&"admin".equals(memberLoggedIn.getUserId())){ %>
-			<input type="button" value="등록" id="btn-add" onclick="upload();"/>
-			<%} %>
 		</article>
 	</section>
 </div>
