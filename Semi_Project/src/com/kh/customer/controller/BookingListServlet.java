@@ -117,7 +117,7 @@ public class BookingListServlet extends HttpServlet {
 					System.out.println(realprice);
 				}
 				
-				else if(format1.format(list.get(i).getMaxTime()).equals(pricemap.get(list.get(i).getSpaceNo()).get(y).getPriceEvent())) {
+				else if((format1.format(list.get(i).getMaxTime())+"일").equals(pricemap.get(list.get(i).getSpaceNo()).get(y).getPriceEvent())) {
 					realprice.put(list.get(i).getBookingNo(), pricemap.get(list.get(i).getSpaceNo()).get(y).getSpacePrice());
 				}
 				
