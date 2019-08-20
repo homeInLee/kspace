@@ -9,6 +9,7 @@
 	pageEncoding="UTF-8"%>
 <%
 	ArrayList<Review> review = (ArrayList<Review>)request.getAttribute("review");
+	Space sp = (Space)request.getAttribute("space");
 	
 %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/sub.css" />
@@ -83,14 +84,14 @@ $(()=>{
 	});
 });
 $(document).ready(function() {
-	$("#reviewCnt").append($("#cnt").length);
-	$("#strCnt").append($("#str").length);
+	$("#reviewCnt").append($(".review-conts").length);
+	
 });
 
 </script>
 	<div class="review-tit mt50 clearfix">
 		<h5 class="spaceInfo-tit">
-			이용후기 <span class="dp_ib" id="reviewCnt"></span> · 평균평점 <span class="dp_ib" id="strCnt"></span>
+			이용후기 <span class="dp_ib" id="reviewCnt"></span>
 		</h5>
 	</div>
 	 <!-- 리뷰작성 -->
@@ -98,8 +99,8 @@ $(document).ready(function() {
 		method="post" name="reviewFrm">
 		<table>
 			<tr>
-				<th><input type="hidden" name="reviewWriter" value="datbot" />
-					<input type="hidden" name="spaceNo" value="1" /> <input
+				<th><input type="hidden" name="reviewWriter" value="<%=memberLoggedIn != null ? memberLoggedIn.getUserId(): "" %>" />
+					<input type="hidden" name="spaceNo" value="<%=sp.getSpaceNo() %>" /> <input
 					type="hidden" id="spacePoint" name="spacePoint" value="1" /></th>
 				<th>
 					<div class="star">
@@ -127,10 +128,10 @@ $(document).ready(function() {
 		<tr>
 			<td>
 				<div class="review-conts">
-					<strong>후기 남긴 아이디</strong>
+					<strong><%=list.getReviewWriter() %></strong>
 					<p class="review-con" id="cnt"><%=list.getReviewContent() %></p>
 					<p class="review-time"><%=list.getReviewDate() %></p>
-					<p class="star_rating" id="str">
+					<p class="star_rating" class="str">
 					<%
 					System.out.println("별점길이는?="+list.getSpacePoint());
 						if(list.getSpacePoint()==1){
