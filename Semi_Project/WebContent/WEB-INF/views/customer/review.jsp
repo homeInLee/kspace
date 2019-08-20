@@ -85,7 +85,6 @@ $(()=>{
 });
 $(document).ready(function() {
 	$("#reviewCnt").append($(".review-conts").length);
-	
 });
 
 </script>
