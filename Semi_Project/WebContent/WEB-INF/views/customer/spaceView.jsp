@@ -385,15 +385,13 @@ function goUpdateMySpace(){
 				});
 				</script>
 				</form>
+				<%if(memberLoggedIn!=null && memberLoggedIn.getUserId().equals(company.getUserId())){ %>
+	               <div class="spaceEnroll-btn txt_center clearfix">
+	                   <a href="javascript:goUpdateMySpace();" class="dp_ib fw600">수정</a>
+	                   <a href="javascript:goDelMySpace();" class="dp_ib fw600">삭제</a>
+	               </div>
+	           <%} %>
 			</div>
-			<%if(memberLoggedIn!=null && memberLoggedIn.getUserId().equals(company.getUserId())){ %>
-               <div class="spaceEnroll-btn txt_center clearfix">
-                   <a href="javascript:goUpdateMySpace();" class="dp_ib fw600">수정</a>
-                   <a href="javascript:goDelMySpace();" class="dp_ib fw600">삭제</a>
-               </div>
-           <%} %>
-
-			
 		</article>
 	</section>
 </div>
