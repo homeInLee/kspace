@@ -523,5 +523,43 @@ public class SpaceDAO {
 		
 		return spaceImg;
 	}
+	public List<Space> spaceListbyCompanyNo(Connection conn, int companyNo) {
+		List<Space> slist = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("spaceListbyCompanyNo");
+		try {
+			//1.PrepareStatement준비(미완성쿼리 완성)
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, companyNo);
+			//2.실행 및 ResultSet 리턴받기
+			rset = pstmt.executeQuery();
+			//3.ResultSet -> result
+			while(rset.next()) {
+				Space s = new Space();
+				s.setSpaceNo(rset.getInt("space_no"));
+				s.setCompanyNo(rset.getInt("company_no"));
+				s.setSpaceIntro(rset.getString("space_intro"));
+				s.setBookingTime(rset.getString("booking_time"));
+				s.setMaxBookingPeople(rset.getInt("max_booking_people"));
+				s.setMinBookingPeople(rset.getInt("min_booking_people"));
+				s.setSpaceThema(rset.getString("space_thema"));
+				s.setSpaceCheck(rset.getString("space_check"));
+				s.setHashtag(rset.getString("hashtag"));
+				s.setSpaceName(rset.getString("space_name"));
+				s.setSpaceFacilities(rset.getString("space_facilities"));
+				s.setSpaceSlogan(rset.getString("space_slogan"));
+				slist.add(s);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return slist;
+	}
+
 
 }

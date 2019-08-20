@@ -40,7 +40,7 @@
 	background-color: rgb(255, 255, 255);
 	border-width: 2px 0px 1px;
 	border-style: solid;
-	border-color: rgb(142, 68, 173) rgb(51, 51, 51) rgb(224, 224, 224);
+	border-color: #ACC800;
 	height: 420px;
 }
 
@@ -48,7 +48,7 @@
 	background-color: rgb(255, 255, 255);
 	border-width: 2px 0px 1px;
 	border-style: solid;
-	border-color: rgb(142, 68, 173) rgb(51, 51, 51) rgb(224, 224, 224);
+	border-color: #ACC800;
 	height: 260px;
 }
 
@@ -56,8 +56,8 @@
 	background-color: rgb(255, 255, 255);
 	border-width: 2px 0px 1px;
 	border-style: solid;
-	border-color: rgb(142, 68, 173) rgb(51, 51, 51) rgb(224, 224, 224);
-	height: 260px;
+	border-color: #ACC800;
+	height: 280px;
 }
 
 .booking_img {
@@ -76,6 +76,18 @@
 	font-size: 17px;
 	border-top: 1px solid #ccc;
 	padding: 13px 0;
+}
+#btn {
+    width:214px;
+    background-color: #ACC800;
+    border: none;
+    color:#fff;
+    padding: 10px 0;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    cursor: pointer;
 }
 </style>
 <script>
@@ -160,7 +172,7 @@ function bookingCancle(){
 										<li class="sub_li">예약시간&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=(int) Math.ceil((b.getMaxTime().getTime() - b.getMinTime().getTime()) / 1000.0 / 3600.0)%></li>
 										<li class="sub_li">예약인원&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=b.getBookingPeople()%></li>
 										<li class="sub_li">가격&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=realprice%></li>
-										<button onclick="bookingCancle();">예약 취소하기</button>
+										<button id="btn" onclick="bookingCancle();">예약 취소하기</button>
 									</ul>
 								</div>
 							</div>
